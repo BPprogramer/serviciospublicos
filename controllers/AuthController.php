@@ -9,7 +9,7 @@
     class AuthController{
 
         public static function index(){
-            header('Location:/servicios/login');
+            header('Location:/login');
         }
         public static function login(Router $router){
             

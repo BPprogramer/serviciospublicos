@@ -155,15 +155,7 @@ class ActiveRecord {
         return array_shift( $resultado ) ;
     }
 
-    //consultar el ultimo registro de la tabla
-    // public static function top($columna) {
-    //     $query = "SELECT TOP 1 * FROM " . static::$tabla . " ORDER BY $columna DESC";
-        
-    //     $resultado = self::consultarSQL($query);
-    
-    //     return array_shift( $resultado ) ;
-    // }
-
+   
 
     public static function fechas($fecha) {
         $query = "SELECT * FROM " . static::$tabla . " WHERE LEFT(mes_facturado, 7) = '$fecha'";

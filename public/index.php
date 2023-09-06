@@ -25,7 +25,7 @@ $router = new Router();
 
 
 // Login
-$router->get('/servicios/', [AuthController::class, 'index']);
+$router->get('/', [AuthController::class, 'index']);
 $router->get('/servicios/login', [AuthController::class, 'login']);
 $router->post('/servicios/login', [AuthController::class, 'login']);
 $router->post('servicios/logout', [AuthController::class, 'logout']);
