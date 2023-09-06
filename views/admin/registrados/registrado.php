@@ -1,6 +1,6 @@
 <h3 class="dashboard__heading dashboard__heading--subscriptor"><span>Subscriptor: </span> <?php echo $titulo?></h3>
 <div class="dashboard__contenedor-boton">
-    <a class="dashboard__boton" href="/servicios/admin/registrados">
+    <a class="dashboard__boton" href="/admin/registrados">
         <i class="fa-solid fa-circle-plus"></i>
         Volver
     </a>

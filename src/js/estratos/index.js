@@ -47,7 +47,7 @@
 
         async function infoEstrato(e){
             const id = e.currentTarget.dataset.estratoId;
-            const url = `/servicios/api/estratos/info?id=${id}`;
+            const url = `/api/estratos/info?id=${id}`;
   
             try {
                 const respuesta = await fetch(url);
@@ -180,7 +180,7 @@
         }
         async function enviarInformacionEliminar(id){
       
-            url = `/servicios/api/estratos/eliminar?id=${id}`;
+            url = `/api/estratos/eliminar?id=${id}`;
             try {
                 const respuesta = await fetch(url)
                 const resultado = await respuesta.json();
@@ -214,7 +214,7 @@
             $("#tablaEstratos").dataTable().fnDestroy(); //por si me da error de reinicializar
     
             tablaEstratosData = $('#tablaEstratos').DataTable({
-                ajax: '/servicios/api/estratos',
+                ajax: '/api/estratos',
                 "deferRender":true,
                 "retrieve":true,
                 "proccesing":true,

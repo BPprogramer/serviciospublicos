@@ -51,11 +51,11 @@ use MVC\Router;
             $id = $_GET['id'];
             $id = filter_var($id, FILTER_VALIDATE_INT);
             if(!$id){
-                header('Location:/servicios/admin/registrados');
+                header('Location:/admin/registrados');
             }
             $registrado = Registrado::find($id);
             if(!$registrado){
-                header('Location:/servicios/admin/registrados');
+                header('Location:/admin/registrados');
             }
             $estratos = Estrato::all();
       
@@ -86,16 +86,16 @@ use MVC\Router;
 
         public static function registradoInfo(Router $router){
             if(!is_auth()){
-                header('Location:/servicios/login');
+                header('Location:/login');
             }
             $id = $_GET['id'];
             $id = filter_var($id, FILTER_VALIDATE_INT);
             if(!$id){
-                header('Location:/servicios/admin/registrados');
+                header('Location:/admin/registrados');
             }
             $registrado = Registrado::find($id);
             if(!$registrado){
-                header('Location:/servicios/admin/registrados');
+                header('Location:/admin/registrados');
             }
             $estrato = new Estrato();
             $registrado->estrato = $estrato;

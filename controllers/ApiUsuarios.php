@@ -17,7 +17,7 @@
  
                     $nombreCompleto = $usuario->nombre.' '.$usuario->apellido;
                     $acciones = "<div class='table__td--acciones'>";
-                    $acciones .= "<a class='table__accion table__accion--editar' href='/servicios/admin/usuarios/editar?id=$usuario->id'><i class='fa-solid fa-pen'></i></a> ";
+                    $acciones .= "<a class='table__accion table__accion--editar' href='/admin/usuarios/editar?id=$usuario->id'><i class='fa-solid fa-pen'></i></a> ";
                     $acciones .= "<button  class='table__accion table__accion--eliminar' id='btn_eliminar_usuario' data-usuario-id='$usuario->id'><i class='fa-solid fa-trash'></i></button>";
                     //$acciones .= "<button  class='table__accion table__accion--eliminar' id='btn_eliminar_usuario' data-usuario-id='$usuario->id'><i class='fa-solid fa-circle-xmark'></i>Eliminar</button>";
                     $acciones .= "</div>";

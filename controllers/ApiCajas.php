@@ -27,7 +27,7 @@ use Model\Usuario;
  
                  
                     $acciones = "<div class='table__td--acciones'>";
-                    $acciones .= "<a class='table__accion table__accion--editar' href='/servicios/admin/cajas/pagos?id=$caja->id'><i class='fa-solid fa-search'></i></a> ";
+                    $acciones .= "<a class='table__accion table__accion--editar' href='/admin/cajas/pagos?id=$caja->id'><i class='fa-solid fa-search'></i></a> ";
                  
 
                     $acciones .= "</div>";

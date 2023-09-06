@@ -45,7 +45,7 @@
 
                             }
                            
-                            header('Location:/servicios/admin/dashboard');
+                            header('Location:/admin/dashboard');
                             
                      
                            // header('Location:/dashboard');
@@ -65,7 +65,7 @@
         public static function logout(){
             session_start();
             $_SESSION = [];
-            header('Location:/servicios/login');
+            header('Location:/login');
 
            
         }

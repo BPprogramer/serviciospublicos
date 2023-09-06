@@ -20,7 +20,7 @@ echo "</pre>"; */
 
         public static function facturas(){
             if(!is_auth()){
-                header('Location:/servicios/login');
+                header('Location:/login');
             }
             $fecha = date('Y-m', strtotime('-1 month'));
             $facturas = Factura::fechas($fecha);
@@ -677,17 +677,17 @@ echo "</pre>"; */
 
         public static function facturasRegistrado(){
             if(!is_auth()){
-                header('Location:/servicios/login');
+                header('Location:/login');
             }
             $id = $_POST['id'];
             $id = filter_var($id, FILTER_VALIDATE_INT);
             if(!$id){
-                header('Location:/servicios/admin/registrados');
+                header('Location:/admin/registrados');
             }
           
             $registrado = Registrado::find($id);
             if(!$registrado){
-                header('Location:/servicios/admin/registrados');
+                header('Location:/admin/registrados');
             }
            
             $facturas = Factura::whereArray(['registrado_id'=>$registrado->id]);

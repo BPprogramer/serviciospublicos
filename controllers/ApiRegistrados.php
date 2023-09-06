@@ -28,9 +28,9 @@ use Model\Registrado;
                      $nombreCompleto = $registrado->nombre.' '.$registrado->apellido;
                     
                      $acciones = "<div class='table__td--acciones'>";
-                     $acciones .= "<a class='table__accion table__accion--editar' href='/servicios/admin/registrados/editar?id=$registrado->id'><i class='fa-solid fa-pen'></i></a> ";
+                     $acciones .= "<a class='table__accion table__accion--editar' href='/admin/registrados/editar?id=$registrado->id'><i class='fa-solid fa-pen'></i></a> ";
                      $acciones .= "<button  class='table__accion table__accion--eliminar' id='btn_eliminar_registrado' data-registrado-id='$registrado->id'><i class='fa-solid fa-trash'></i></button>";
-                     $acciones .= "<a href='/servicios/admin/registrados/registrado?id=$registrado->id' class='table__accion table__accion--info' id='btn_info_registrado' data-registrado-id='$registrado->id'><i class='fa-solid fa-search'></a>";
+                     $acciones .= "<a href='/admin/registrados/registrado?id=$registrado->id' class='table__accion table__accion--info' id='btn_info_registrado' data-registrado-id='$registrado->id'><i class='fa-solid fa-search'></a>";
                      $acciones .= "</div>";
  
                   

@@ -22,7 +22,7 @@ use Model\Usuario;
             $id = $_GET['id'];
             $id = filter_var($id, FILTER_VALIDATE_INT);
             if(!$id){
-                header(('Location:/servicios/admin/cajas'));
+                header(('Location:/admin/cajas'));
             }
             $caja = Caja::find($id);
             $usuario = Usuario::find($caja->usuario_id);
@@ -130,11 +130,11 @@ use Model\Usuario;
       
             $id = filter_var($id, FILTER_VALIDATE_INT);
             if(!$id){
-                header('Location:/servicios/admin/estratos');
+                header('Location:/admin/estratos');
             }
             $estratos = Estrato::find($id);
             if(!$estratos){
-                header('location:/servicios/admin/estratos');
+                header('location:/admin/estratos');
             }
             $estratos->formatearDatosNumber();
             if($_SERVER['REQUEST_METHOD']=='POST'){

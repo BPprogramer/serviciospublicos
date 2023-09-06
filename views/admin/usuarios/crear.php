@@ -1,6 +1,6 @@
 <h2 class="dashboard__heading"><?php echo $titulo?></h2>
 <div class="dashboard__contenedor-boton">
-    <a class="dashboard__boton" href="/servicios/admin/usuarios">
+    <a class="dashboard__boton" href="/admin/usuarios">
         <i class="fa-solid fa-arrow-left"></i>
         volver
     </a>
@@ -8,7 +8,7 @@
 
 <div class="dashboard__formulario">
     <?php include_once __DIR__.'/../../templates/alertas.php'?>
-    <form   class="formulario" method="POST" action="/servicios/admin/usuarios/crear" id="formulario_crear">
+    <form   class="formulario" method="POST" action="/admin/usuarios/crear" id="formulario_crear">
 
         <?php include_once __DIR__.'/formulario.php'?>
 

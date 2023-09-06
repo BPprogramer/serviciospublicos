@@ -2,14 +2,14 @@
     <div class="header__contenedor">
         <nav class="header__navegacion">
             <div class="header__contenido">
-                <a href="/servicios/">
+                <a href="/">
                     <h1 class="header__logo">ServiciosPublicos</h1>
                     
                 </a>
             </div>
             <div class="header__login-registro">
              
-                <a href="/servicios/login" class="header__enlace">Login</a>
+                <a href="/login" class="header__enlace">Login</a>
             </div>
             
         </nav>

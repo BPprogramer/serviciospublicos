@@ -15,7 +15,7 @@ use Model\Usuario;
             $id =$_GET['id'];
             $id = filter_var($id, FILTER_VALIDATE_INT);
             if(!$id){
-                header('Location:/servicios/admin/cajas');
+                header('Location:/admin/cajas');
             }
 
             $cajas_pagos = CajaPago::whereArray(['caja_id'=>$_GET['id']]);

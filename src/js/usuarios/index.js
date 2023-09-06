@@ -74,7 +74,7 @@
         }
         async function enviarInformacionEliminar(id){
            
-            url = `/servicios/api/usuarios/eliminar?id=${id}`;
+            url = `/api/usuarios/eliminar?id=${id}`;
             try {
                 const respuesta = await fetch(url)
                 const resultado = await respuesta.json();
@@ -133,7 +133,7 @@
         }
 
         async function enviarInformacionEstado(id){
-            url = `/servicios/api/usuarios/editar-estado?id=${id}`;
+            url = `/api/usuarios/editar-estado?id=${id}`;
             try {
                 const respuesta = await fetch(url)
                 const resultado = await respuesta.json();
@@ -163,7 +163,7 @@
             $("#tablaUsuarios").dataTable().fnDestroy(); //por si me da error de reinicializar
     
             tablaUsuariosData = $('#tablaUsuarios').DataTable({
-                ajax: '/servicios/api/usuarios',
+                ajax: '/api/usuarios',
                 "deferRender":true,
                 "retrieve":true,
                 "proccesing":true,

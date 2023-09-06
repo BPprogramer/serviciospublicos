@@ -2,7 +2,7 @@
 <h2 class="dashboard__heading"><?php echo $titulo?></h2>
 
 <div class="dashboard__contenedor-boton">
-    <a class="dashboard__boton" href="/servicios/admin/cajas">
+    <a class="dashboard__boton" href="/admin/cajas">
         <i class="fa-solid fa-arrow-left"></i>
         Volver
     </a>

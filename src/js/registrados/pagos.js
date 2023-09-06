@@ -52,7 +52,7 @@
                 
                 try {
                     //const url = 'http://localhost:3000/api/pagos'//desarrollo 
-                    const url = '/servicios/api/pagos' //produccion
+                    const url = '/api/pagos' //produccion
                     const respuesta = await fetch(url, {
                         method:'POST',
                         body: datos
@@ -263,7 +263,7 @@
             async function previsualizarComprobante(numero_pago){
                
 
-                const url =`/servicios/api/previsualizar-pago?key=${btoa(numero_pago)}`;
+                const url =`/api/previsualizar-pago?key=${btoa(numero_pago)}`;
                 // Abre la URL en una nueva pestaña
                 window.open(url, '_blank');
 
@@ -272,7 +272,7 @@
 
            
             async function enviarInformacionPagar(id){
-                const url =  '/servicios/api/pagar';
+                const url =  '/api/pagar';
                 const datos = new FormData();
                 datos.append('id',id);
                 try {
