@@ -11,7 +11,7 @@ use Controllers\ApiUsuarios;
 use Controllers\ApiCajasPagos;
 use MVC\Router;
 use Controllers\AuthController;
-use Controllers\cajasController;
+use Controllers\CajasController;
 use Controllers\DashboardController;
 
 
