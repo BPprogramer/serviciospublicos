@@ -1,0 +1,103 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+
+.modal{
+    position: absolute;
+    position: fixed;
+    background-color: rgb(0 0 0 / .8);
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+
+
+    &__informacion{
+        max-width: 100rem;
+        background-color: v.$blanco;
+        padding: 2rem;
+        margin: 0 auto;
+        border-radius: 1rem;
+        transform: translateY(-90rem); //el modal inicia por encima y no alcanza a verse
+        transition-property: transform opacity;
+        transition-duration:500ms;
+        transition-timing-function: ease-in-out;//la animacion arranca lento y termina rapido
+        opacity: 0;
+
+  
+        //animacion del modal
+        &--animar{
+            position: relative;
+            top: 50%; 
+            transform: translateY(-50%);
+            opacity: 1;
+        }
+        &--cerrar{
+            transform: translateY(-200%);
+            opacity: 0; 
+        }
+    }
+    &__lista{
+        list-style: none;
+        padding: 0;
+    }
+    &__elemento{
+
+        background-color: v.$blanco;
+        border-bottom: 1px solid lighten(v.$gris-oscuro, 50);
+        transition-property: background-color ease-in-out;
+        transition-duration: 300ms;
+       
+        &:last-of-type{
+            border-bottom: none
+        }
+
+        @include m.telefono{
+            &--grid{
+                @include m.grid(2,2rem);
+                
+            }
+        }
+      
+        &:hover{
+            
+            background-color: darken(v.$blanco, 10);
+        }
+     
+    }
+    
+    &__opciones{
+    
+        
+        @include m.telefono{
+            display: flex;
+            justify-content: flex-end
+        }
+       
+      
+    
+    }
+ 
+    &__cerrar-modal{
+        @include m.boton(v.$rojo, v.$blanco);
+        @include m.telefono{
+            width: auto;
+        }
+        
+
+
+ 
+       
+        
+    }
+
+  
+   
+    &__info{
+        margin:   1.2rem 0;;
+        span{
+            font-weight: v.$bold;
+        }
+    }
+
+}

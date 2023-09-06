@@ -1,0 +1,12 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.auth{
+    @include m.contenedor-sm;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
+    padding: 0 2rem 2rem 2rem;
+    border-radius: 1rem;
+    &__heading{
+        padding: 2rem 0 0 0;
+    }
+}

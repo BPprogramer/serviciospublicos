@@ -1,0 +1,168 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+
+.table{
+   
+    
+    padding-top: 2rem;
+    width: 100% !important;
+
+    border-collapse: collapse;
+
+
+    &__thead,
+    thead{
+
+        background-color: v.$gris-oscuro;
+        color: v.$blanco;
+    }
+
+ 
+    &__th,
+    th{
+        padding: 1rem;
+        text-align: left;
+        &.sorting.sorting_asc{
+            width: 1rem;
+        }
+        
+    }
+    
+    &__td,
+    td{
+        padding: 1rem 1rem !important;
+        border-bottom: 1px solid lighten(v.$gris-oscuro,70);
+        border-top: 1px solid lighten(v.$gris-oscuro,70);
+      
+      
+     
+        &--acciones{
+            @extend .table__td;
+            display: flex;
+           justify-content: flex-start;
+            gap: 2rem;
+            // align-items: center;
+        }
+        &--activo,
+        &--inactivo, 
+        &--neutro{
+            padding: 1rem;
+            border-radius: 1rem;
+            color: v.$blanco;
+            font-weight: v.$bold;
+            text-transform: uppercase;
+            display: inline-block;
+            min-width: 10rem;
+            text-align: center;
+            font-size: 1.2rem;
+            &:hover{
+                cursor: pointer;
+                
+            }
+
+            
+        }
+        &--activo{
+           
+            background-color: v.$azul;
+            &:hover{
+                background-color: darken(v.$azul,10);
+                
+            }
+        }
+        &--inactivo{
+            background-color: lighten(v.$gris-oscuro, 20);
+            &:hover{
+                background-color: v.$gris-oscuro;
+                
+            }
+        }
+        &--neutro{
+            background-color: lighten(v.$gris-oscuro, 20);
+            // &:hover{
+            //     background-color: darken(v.$gris-oscuro, 30);
+                
+            // }
+  
+        }
+        
+    
+    }
+    &__span{
+        font-weight: v.$bold;
+    }
+
+    /* boton de pago o impago en la tabla de facturas */
+    &__boton{
+        color: v.$blanco;
+        font-weight: v.$regular;
+        padding: .4rem .8rem ;
+        border-radius: .5rem;
+        &--impaga{
+            background-color: #F0BB17;
+        }
+        &--pagado{
+            background-color: lighten(v.$azul, 10);
+        }
+        &--vencida{
+            background-color: lighten(v.$rojo, 5);
+        }
+    }
+    &__tr
+    {
+        &:nth-child(even){
+            background-color: v.$gris-claro;
+        }
+    }
+
+    &__accion{
+        all: unset;
+        text-transform: uppercase;
+        font-size: 1.4rem;
+        font-weight: v.$bold;
+
+        &--editar{
+            background-color: v.$azul;
+            color: v.$blanco;
+            padding: 1rem 1rem;
+            border-radius: 1rem;
+            &:hover{
+                background-color: darken(v.$azul,10);
+                
+            }
+        }
+        &--eliminar{
+       
+            background-color: lighten(v.$rojo, 5);
+      
+            color: v.$blanco;
+            padding: 1rem 1rem;
+            border-radius: 1rem;
+            &:hover{
+                background-color: darken(v.$rojo,8);
+                
+            }
+        }
+        
+        &--info{
+            background-color: v.$azul;
+            color: v.$blanco;
+            padding: 1rem 1rem;
+            border-radius: 1rem;
+            &:hover{
+                background-color: darken(v.$azul,10);
+                
+            }
+        }
+        &:hover{
+         cursor: pointer;
+        }
+    }
+   
+    &__seleccion{
+        background-color:  darken(v.$gris-claro,10) !important;
+    }
+
+   
+}
