@@ -16,7 +16,7 @@
                 $("#tablaCajasPagos").dataTable().fnDestroy(); //por si me da error de reinicializar
         
                 tablaCajasPagos = $('#tablaCajasPagos').DataTable({
-                    ajax:'/api/cajas/pagos?id='+id,
+                    ajax:'/servicios/api/cajas/pagos?id='+id,
                     "deferRender":true,
                     "retrieve":true,
                     "proccesing":true,
@@ -24,7 +24,7 @@
                 });
             
                 $.ajax({
-                    url:'/api/cajas/pagos?id='+id,
+                    url:'/servicios/api/cajas/pagos?id='+id,
                     
                     success:function(req){
                         console.log(req)

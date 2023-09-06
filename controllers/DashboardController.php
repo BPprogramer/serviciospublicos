@@ -7,7 +7,7 @@
     class DashboardController{
         public static function index(Router $router){
             if(!is_auth()){
-                header('Location:/login');
+                header('Location:/servicios/login');
             }
             $router->render('admin/dashboard/index',[
                 'titulo'=>'Panel de Administración'

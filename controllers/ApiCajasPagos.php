@@ -15,7 +15,7 @@ use Model\Usuario;
             $id =$_GET['id'];
             $id = filter_var($id, FILTER_VALIDATE_INT);
             if(!$id){
-                header('Location:/admin/cajas');
+                header('Location:/servicios/admin/cajas');
             }
 
             $cajas_pagos = CajaPago::whereArray(['caja_id'=>$_GET['id']]);
@@ -50,20 +50,7 @@ use Model\Usuario;
                     }
  
                  
-                    // $acciones = "<div class='table__td--acciones'>";
-                    // $acciones .= "<a class='table__accion table__accion--editar' href='/admin/cajas/pagos?id=$caja->id'><i class='fa-solid fa-search'></i></a> ";
-                 
-
-                    // $acciones .= "</div>";
-
-                    // $efectivo_inicial = number_format($caja->efectivo_inicial);
-                    // $total_recaudo = number_format($caja->total_recaudo);
-                    // $total_efectivo = number_format($caja->total_efectivo);
-                    // $total_transferencias = number_format($caja->total_transferencias);
-                    // $estado = "<span data-caja-id = '$caja->id'  class='table__td--activo'>Abierta</span>";
-                    // if($caja->estado == 0){
-                    //     $estado = "<span  class='table__td--neutro'>Cerrada</span>";
-                    // }
+              
                 
        
                     $datoJson.= '[

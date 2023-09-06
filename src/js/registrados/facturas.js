@@ -16,7 +16,7 @@
                 datos.append('id',id);
                 
                 try {
-                    const url = 'http://localhost:3000/api/facturas-registrado'
+                    const url = '/servicios/api/facturas-registrado'
                     const respuesta = await fetch(url, {
                         method:'POST',
                         body: datos
@@ -266,7 +266,7 @@
             async function previsualizarFactura(numero_factura){
                
 
-                const url =`/api/previsualizar-factura?key=${btoa(numero_factura)}`;
+                const url =`/servicios/api/previsualizar-factura?key=${btoa(numero_factura)}`;
                 // Abre la URL en una nueva pestaña
                 window.open(url, '_blank');
 
@@ -376,7 +376,7 @@
 
             async function enviarInformacionPagar(id, metodo, btnPagar, btnBanco){
                 //const url =  'http://localhost:3000/api/pagar'; //desarrollo
-                const url =  '/api/pagar';
+                const url =  '/servicios/api/pagar';
                 const datos = new FormData();
                 datos.append('id',id);
                 datos.append('metodo', metodo);
@@ -386,9 +386,8 @@
                         method:'POST'
                     })
                     const resultado = await respuesta.json();
-                    console.log(resultado)
-                    btnPagar.style.display = 'block'
-                    btnBanco.style.display = 'block'
+            
+               
                  
                     if(resultado.tipo == 'error'){
                         Swal.fire({

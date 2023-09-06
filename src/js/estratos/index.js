@@ -43,22 +43,11 @@
         }
 
 
-        // tablaEstratos.addEventListener('click',function(e){
-        //     leerAccion(e);
-        // })
-        // function leerAccion(e){
-        
-        //     if(e.target.id=='btn_eliminar_estrato'){
-        //         eliminarEstrato(e);
-        //     }
-        //     if(e.target.id=='btn_info_estrato'){
-        //         infoEstrato(e);
-        //     }
-        // }
+      
 
         async function infoEstrato(e){
             const id = e.currentTarget.dataset.estratoId;
-            const url = `/api/estratos/info?id=${id}`;
+            const url = `/servicios/api/estratos/info?id=${id}`;
   
             try {
                 const respuesta = await fetch(url);
@@ -191,7 +180,7 @@
         }
         async function enviarInformacionEliminar(id){
       
-            url = `/api/estratos/eliminar?id=${id}`;
+            url = `/servicios/api/estratos/eliminar?id=${id}`;
             try {
                 const respuesta = await fetch(url)
                 const resultado = await respuesta.json();
@@ -225,7 +214,7 @@
             $("#tablaEstratos").dataTable().fnDestroy(); //por si me da error de reinicializar
     
             tablaEstratosData = $('#tablaEstratos').DataTable({
-                ajax: '/api/estratos',
+                ajax: '/servicios/api/estratos',
                 "deferRender":true,
                 "retrieve":true,
                 "proccesing":true,

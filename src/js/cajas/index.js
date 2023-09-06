@@ -89,7 +89,7 @@
             $("#tablaCajas").dataTable().fnDestroy(); //por si me da error de reinicializar
         
             tablaCajasData = $('#tablaCajas').DataTable({
-                ajax: '/api/cajas',
+                ajax: '/servicios/api/cajas',
                 "deferRender":true,
                 "retrieve":true,
                 "proccesing":true,

@@ -17,17 +17,17 @@ use Model\Usuario;
 
         public static function pagosRegistrado(){
             if(!is_auth()){
-                header('Location:/login');
+                header('Location:/servicios/login');
             }
             $id = $_POST['id'];
             $id = filter_var($id, FILTER_VALIDATE_INT);
             if(!$id){
-                header('Location:/admin/registrados');
+                header('Location:/servicios/admin/registrados');
             }
           
             $registrado = Registrado::find($id);
             if(!$registrado){
-                header('Location:/admin/registrados');
+                header('Location:/servicios/admin/registrados');
             }
            
             $pagos = Pago::whereArray(['registrado_id'=>$registrado->id]);
@@ -59,7 +59,7 @@ use Model\Usuario;
           
 
             if(!is_auth()){
-                header('Location:/login');
+                header('Location:/servicios/login');
             }
 
 
@@ -151,7 +151,7 @@ use Model\Usuario;
 
         public static function previsualizarPago(){
             if(!is_auth()){
-                header('Location:/login');
+                header('Location:/servicios/login');
             }
             
            

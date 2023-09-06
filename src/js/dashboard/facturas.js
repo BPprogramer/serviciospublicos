@@ -32,7 +32,7 @@
 
         async function eliminarFacturas(){
             try {
-                const respuesta = await fetch('/api/eliminar-facturas');
+                const respuesta = await fetch('/servicios/api/eliminar-facturas');
                 const resultado = await respuesta.json();
                 console.log(resultado)
                 Swal.fire({
@@ -46,7 +46,7 @@
         }
 
         btnImprimirFacturas.addEventListener('click',function(){
-            const url = '/api/facturas'
+            const url = '/servicios/api/facturas'
             //const url = `${location.origin}/api/facturas`
             window.open(url, '_blank');
         })
@@ -73,7 +73,7 @@
             btnGenerarFacturas.classList.add('inicio__boton-generar--inactivo');
               
             try {
-                const respuesta = await fetch('/api/generar-facturas-manual');
+                const respuesta = await fetch('/servicios/api/generar-facturas-manual');
             
                 const resultado = await respuesta.json()
                 btnGenerarFacturas.classList.remove('inicio__boton-generar--inactivo');
@@ -105,7 +105,7 @@
             datos.append('id',1)
             datos.append('auto',auto);
 
-            const url = `{location.origin}/api/generar-auto`;
+            const url = `/servicios/api/generar-auto`;
            
             try {
                 await fetch(url,{
@@ -126,7 +126,7 @@
 
          
             try {
-                const respuesta = await fetch('/api/generar-auto');
+                const respuesta = await fetch('/servicios/api/generar-auto');
                
                 const resultado = await respuesta.json()
                 console.log(resultado)

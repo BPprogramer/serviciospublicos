@@ -20,14 +20,17 @@ echo "</pre>"; */
 
         public static function facturas(){
             if(!is_auth()){
-                header('Location:/login');
+                header('Location:/servicios/login');
             }
             $fecha = date('Y-m', strtotime('-1 month'));
             $facturas = Factura::fechas($fecha);
+        
 
             $pdf = new FPDF('P','mm','Letter');
             $contador = 0;
             foreach($facturas as $factura){
+
+                if(!$factura->registrado_id) continue;
                 $contador = $contador + 1;
                  //calculamos el total a pagar copago - ajuste
                 $total = number_format($factura->copago - $factura->ajuste);
@@ -44,16 +47,27 @@ echo "</pre>"; */
             
                 $factura->fecha_limite  = date('d-m-y',strtotime(date('t-m-Y', strtotime($factura->fecha_emision))));
         
-            
 
+    
+                
+   
+                   
                 $registrado = Registrado::find($factura->registrado_id);
+              
+       
+                    
+               
+      
+              
+                   
+            
 
                 $estrato = Estrato::find($registrado->estrato_id);
                 mb_internal_encoding('UTF-8');
                 $factura->formatearDatosNumber();
 
 
-
+           
             
                 $pdf->SetMargins(17,10,17);
                 $pdf->AddPage();
@@ -663,17 +677,17 @@ echo "</pre>"; */
 
         public static function facturasRegistrado(){
             if(!is_auth()){
-                header('Location:/login');
+                header('Location:/servicios/login');
             }
             $id = $_POST['id'];
             $id = filter_var($id, FILTER_VALIDATE_INT);
             if(!$id){
-                header('Location:/admin/registrados');
+                header('Location:/servicios/admin/registrados');
             }
           
             $registrado = Registrado::find($id);
             if(!$registrado){
-                header('Location:/admin/registrados');
+                header('Location:/servicios/admin/registrados');
             }
            
             $facturas = Factura::whereArray(['registrado_id'=>$registrado->id]);

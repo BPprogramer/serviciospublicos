@@ -9,14 +9,17 @@
     class AuthController{
 
         public static function index(){
-            header('Location:/login');
+            header('Location:/servicios/login');
         }
         public static function login(Router $router){
             
             $alertas = [];
             if($_SERVER['REQUEST_METHOD']=='POST'){
+                
                 $auth = new Usuario($_POST);
                 $alertas = $auth->validarLogin();
+ 
+               
                 if(empty($alertas)){
                     //verificar que el usuario existe
                     $usuario = Usuario::where('email', $auth->email);
@@ -41,7 +44,8 @@
                                $_SESSION['admin'] = false;
 
                             }
-                            header('Location:/admin/dashboard');
+                           
+                            header('Location:/servicios/admin/dashboard');
                             
                      
                            // header('Location:/dashboard');
@@ -61,7 +65,7 @@
         public static function logout(){
             session_start();
             $_SESSION = [];
-            header('Location:/login');
+            header('Location:/servicios/login');
 
            
         }

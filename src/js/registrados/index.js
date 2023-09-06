@@ -62,7 +62,7 @@
         }
         async function enviarInformacionEliminar(id){
       
-            url = `/api/registrados/eliminar?id=${id}`;
+            url = `/servicios/api/registrados/eliminar?id=${id}`;
             try {
                 const respuesta = await fetch(url)
                 const resultado = await respuesta.json();
@@ -99,7 +99,7 @@
             $("#tablaRegistrados").dataTable().fnDestroy(); //por si me da error de reinicializar
     
             tablaRegistradosData = $('#tablaRegistrados').DataTable({
-                ajax: '/api/registrados',
+                ajax: '/servicios/api/registrados',
                 "deferRender":true,
                 "retrieve":true,
                 "proccesing":true,

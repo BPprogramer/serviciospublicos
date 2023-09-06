@@ -52,11 +52,11 @@
       
             $id = filter_var($id, FILTER_VALIDATE_INT);
             if(!$id){
-                header('Location:/admin/estratos');
+                header('Location:/servicios/admin/estratos');
             }
             $estratos = Estrato::find($id);
             if(!$estratos){
-                header('location:/admin/estratos');
+                header('location:/servicios/admin/estratos');
             }
             $estratos->formatearDatosNumber();
             if($_SERVER['REQUEST_METHOD']=='POST'){

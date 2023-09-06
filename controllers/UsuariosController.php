@@ -25,7 +25,7 @@ use Model\Usuario;
         public static function crear(Router $router){
           
             if(!is_admin()){
-                header('Location:/login');
+                header('Location:/servicios/login');
             }
 
    
@@ -71,7 +71,7 @@ use Model\Usuario;
         public static function editar(Router $router){
              
             if(!is_admin()){
-                header('Location:/login');
+                header('Location:/servicios/login');
             }
 
             $alertas = [];
@@ -88,7 +88,7 @@ use Model\Usuario;
            
          
             if(!$usuario){
-                header('Location:/admin/usuarios');
+                header('Location:/servicios/admin/usuarios');
             }  
             if($_SERVER['REQUEST_METHOD']=='POST'){
                  
