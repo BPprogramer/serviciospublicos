@@ -9,7 +9,14 @@
     class AuthController{
 
         public static function index(){
-            header('Location:/login');
+            if(is_auth()){
+                header('Location:/admin/dashboard');
+                return;
+            }else{
+                header('Location:/login');
+                return;
+            }
+            
         }
         public static function login(Router $router){
             

@@ -9,7 +9,7 @@
     use Model\Registrado;
     use Model\GeneraAuto;
 
-    require '../vendor/setasign/fpdf/fpdf.php';
+    // require __DIR__.'/../vendor/setasign/fpdf/fpdf.php';
 
 
 /* echo "<pre>";

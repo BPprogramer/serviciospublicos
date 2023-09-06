@@ -12,7 +12,7 @@ use Model\Usuario;
 
     class CajasController{
         public static function index(Router $router){
-            
+  
             $router->render('admin/cajas/index',[
                 'titulo'=>'Cajas'
             ]);
