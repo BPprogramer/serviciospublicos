@@ -34,6 +34,7 @@ use Model\Usuario;
             if($_SERVER['REQUEST_METHOD']=='POST'){
         
                 $usuario->sincronizar($_POST);
+               
            
                 $alertas = $usuario->validar_cuenta();
 
@@ -48,6 +49,8 @@ use Model\Usuario;
                         $usuario->hashPassword();
                         //eliminar password 2
                         unset($usuario->password2);
+                        $usuario->nombre = trim($usuario->nombre);
+                        $usuario->apellido = trim($usuario->apellido);
                         $resultado = $usuario->guardar();
                 
                         if($resultado){

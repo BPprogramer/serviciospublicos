@@ -27,7 +27,9 @@ use Model\Usuario;
             $caja = Caja::find($id);
             $usuario = Usuario::find($caja->usuario_id);
       
-            $caja->responsable = $usuario->nombre. ' '.$usuario->apellido ;
+            $primer_nombre = explode(" ", trim($usuario->nombre));
+            $primer_apellido = explode(" ", $usuario->apellido);
+            $caja->responsable =$primer_nombre[0]. ' '.$primer_apellido[0] ;
             $cajaPagos = CajaPago::whereArray(['caja_id'=>$caja->id]);
             $recaudo = 0;
             $efectivo_caja = 0;
