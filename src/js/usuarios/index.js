@@ -42,8 +42,6 @@
         }
 
 
-
-
         function leerAccion(e){
         
             // if(e.target.id=='btn_eliminar_usuario'){

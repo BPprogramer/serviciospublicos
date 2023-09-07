@@ -42,7 +42,7 @@ use Model\Usuario;
 
                     $responsable = '';
                     if($usuario){
-                        $responsable= explode(' ',$usuario->nombre)[1] .' '. explode(' ',$usuario->apellido)[0];
+                        $responsable= explode(' ',trim($usuario->nombre))[0] .' '. explode(' ',trim($usuario->apellido))[0];
                     }
                     $metodo = 'Efectivo';
                     if($pago->metodo ==0){
