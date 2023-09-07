@@ -34,7 +34,7 @@
             try {
                 const respuesta = await fetch('/api/eliminar-facturas');
                 const resultado = await respuesta.json();
-                console.log(resultado)
+           
                 Swal.fire({
                     icon: resultado.type,
         
@@ -52,7 +52,7 @@
         })
 
         function alertaGenerarFacturasAuto(){
-            console.log('asdf')
+         
             Swal.fire({
                 title: 'Esta seguro de generar las facturas de este mes?',
               
@@ -129,7 +129,7 @@
                 const respuesta = await fetch('/api/generar-auto');
                
                 const resultado = await respuesta.json()
-                console.log(resultado)
+               
                 const auto = resultado.auto;
                 generarCheckBox(auto);
                

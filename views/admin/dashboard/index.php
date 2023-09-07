@@ -1,11 +1,44 @@
 <h2 class="dashboard__heading"><?php echo $titulo?></h2>
     
-<div class="dashboard__contenedor-boton">
-    <span class="dashboard__boton" id="btnImprimirFacturas" >
-        <i class="fa-solid fa-print"></i>
-        Imprimir Facturas
-    </span>
-</div>
+
+
+<section class="cajas" id="cajas">
+    <div class="cajas__grid">
+        <div class="cajas__caja">
+            <p class="cajas__descripcion">Total de Subscriptores</p>
+            <span class="cajas__dato" id="subscriptores"></span>
+        </div>
+       
+
+        <div class="cajas__caja">
+            <p class="cajas__descripcion">Usuarios Vigentes</p>
+            <span class="cajas__dato" id="subscriptoresVigentes"></span>
+        </div>
+
+        <div class="cajas__caja">
+            <p class="cajas__descripcion" >Inactivos</p>
+            <span class="cajas__dato" id="subscriptoresInactivos"></span>
+        </div>
+        <div class="cajas__caja">
+            <p class="cajas__descripcion" >Pagos Vigentes</p>
+            <span class="cajas__dato" id="pagosVigentes"></span>
+        </div>
+        <div class="cajas__caja">
+            <p class="cajas__descripcion" >Total Recaudos</p>
+            <span class="cajas__dato" id="totalPagos"></span>
+        </div>
+        <div class="cajas__caja">
+            <div class="cajas__caja-contenedor">
+                <p class="cajas__descripcion">Recaudos a la Fecha</p>
+                <input type="date" class="cajas__fecha" id="fecha" max="<?php echo date('Y-m-d')?>">
+            </div>
+         
+            <span class="cajas__dato" id="ingreso">50</span>
+        </div>
+    </div>
+</section>
+
+
 
 <section class="inicio">
     <div class="inicio__grid dashboard__contenedor">
@@ -35,7 +68,10 @@
                     Generar Facturas del último mes
                 </span>
             </div>
+           
+            
         </div>
+        
         
     </div>
 
@@ -43,5 +79,10 @@
 
 </section>
 
-
+<div class="dashboard__contenedor-boton">
+    <span class="dashboard__boton" id="btnImprimirFacturas" >
+        <i class="fa-solid fa-print"></i>
+        Imprimir Facturas
+    </span>
+</div>
 

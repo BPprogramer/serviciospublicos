@@ -66,6 +66,7 @@ use Model\Registrado;
         }
 
         public static function eliminar(){
+
           
             $id = $_GET['id'];
             
@@ -89,6 +90,7 @@ use Model\Registrado;
             echo json_encode(['tipo'=>'success', 'mensaje'=>'Subscriptor eliminado correctamente']);
             
          }
+       
 
        
     }

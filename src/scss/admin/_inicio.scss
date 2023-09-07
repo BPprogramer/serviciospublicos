@@ -4,9 +4,14 @@
 .inicio{
 
     &__grid{
-        display: flex;
-        gap: 4rem;
-        align-items: flex-start;
+      
+       
+        @include m.tablet{
+          display: flex;
+          gap: 4rem;
+          align-items: flex-start;
+        }
+       
     }
 
     &__formulario{
@@ -35,6 +40,10 @@
     &__eliminar-facturas{
         @include m.boton(lighten(v.$rojo, 60), v.$rojo);
         border: 1px solid v.$rojo;
+        margin-bottom: 1rem;
+        @include m.tablet{
+          margin-bottom: 0;
+        }
     }
     &__boton-generar{
         @include m.boton(lighten(v.$verde, 55), darken(v.$verde,10));
@@ -46,9 +55,9 @@
             cursor: not-allowed;
           }
         }
+      
     }
    
-    
 }
 
 

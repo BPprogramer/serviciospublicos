@@ -9,6 +9,7 @@ use Controllers\ApiPagos;
 use Controllers\ApiRegistrados;
 use Controllers\ApiUsuarios;
 use Controllers\ApiCajasPagos;
+use Controllers\ApiInicio;
 use MVC\Router;
 use Controllers\AuthController;
 use Controllers\CajasController;
@@ -28,7 +29,7 @@ $router = new Router();
 $router->get('/', [AuthController::class, 'index']);
 $router->get('/login', [AuthController::class, 'login']);
 $router->post('/login', [AuthController::class, 'login']);
-$router->post('servicios/logout', [AuthController::class, 'logout']);
+$router->post('/logout', [AuthController::class, 'logout']);
 
 // Crear Cuenta
 $router->get('/registro', [AuthController::class, 'registro']);
@@ -74,11 +75,16 @@ $router->post('/admin/cajas/abrir', [CajasController::class, 'abrir']);
 $router->get('/admin/cajas/pagos', [CajasController::class, 'cajasPagos']);
 
 
+$router->get('/api/inicio/registrados',[ApiInicio::class, 'registrados'] );
+$router->post('/api/inicio/fecha',[ApiInicio::class, 'fecha'] );
+
 $router->get('/api/facturas',[ApiFacturas::class, 'facturas']);
 
 $router->get('/api/registrados',[ApiRegistrados::class, 'index'] );
 $router->get('/api/registrados/eliminar',[ApiRegistrados::class, 'eliminar'] );
 $router->get('/api/registrados/info',[ApiRegistrados::class, 'informacion'] );
+
+
 
 
 $router->get('/api/usuarios',[ApiUsuarios::class, 'index'] );
