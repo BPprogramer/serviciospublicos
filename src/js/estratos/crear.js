@@ -44,7 +44,9 @@
             if(porcentaje<0 || porcentaje>100){
              
                 e.target.value = '';
+              
             }
+            console.log(e.target.value)
             calcularSubsidioCopago();
             revisarValores();
             ajusteInput.value = '';
@@ -183,14 +185,17 @@
         function calcularSubsidioCopago(){
             const tarifa_plena_formateada = tarifaPlenaInput.value;
             const porcentaje_subsidio = (porcentajeSubsidioInput.value)/100;
-       
-            if(tarifa_plena_formateada!='' && porcentaje_subsidio!=''){
+            console.log(porcentaje_subsidio)
+          
+            if(tarifa_plena_formateada!='' && porcentaje_subsidio>=0){
+             
                 const tarifa_plena = parseFloat(tarifa_plena_formateada.replace(/,/g, ''));
                 const subsidio = tarifa_plena*porcentaje_subsidio;
                 const copago = ((tarifa_plena*(1-porcentaje_subsidio)).toFixed(2))*1;
           
                 insertarDatos(subsidio, copago, subsidioInput, copagoInput);
             }else{
+                
                 subsidioInput.value = '' ;
                 copagoInput.value = '';
             }
