@@ -133,15 +133,28 @@ echo "</pre>"; */
                 $pdf->Cell(100,6,"$registrado->nombre $registrado->apellido", 'R',0,0,'L',true);
                 $pdf->Cell(3);
 
+       
+
                 $pdf->SetDrawColor(11,78,187);
                 $pdf->SetFont('dejavusans','',10);
                 $pdf->Cell(76,6,"  Mes Factuardo",1,0,'L',true);
                 $pdf->Cell(1);
                 $pdf->SetFont('dejavusans','B',10);
-                $pdf->Cell(54,6,$factura->mes_facturado.'  ',1,0,'R',true);
+                $pdf->Cell(54,6,date('Y-m',strtotime($factura->mes_facturado)).'  ',1,0,'R',true);
 
-
+                
                 $pdf->Ln(6);
+
+                            
+                $year = date('Y',strtotime($factura->fecha_emision)); // Año con 4 dígitos
+                $month = date('m',strtotime($factura->fecha_emision)); // Mes con 2 dígitos
+
+                // Calcular el último día del mes
+                $lastDay = date('t', strtotime("$year-$month-01"));
+
+                // Crear la fecha completa con el último día del mes
+                $lastDayOfMonth = date("$year-$month-$lastDay");
+
 
                 $pdf->SetFont('dejavusans','',10);
                 $pdf->Cell(30,6,"  Cedula/Nit: ", 'L',0,0,'L',true);
@@ -153,7 +166,7 @@ echo "</pre>"; */
                 $pdf->Cell(76,6,"  Fecha de Pago Oportuno",1,0,'L',true);
                 $pdf->Cell(1);
                 $pdf->SetFont('dejavusans','B',10);
-                $pdf->Cell(54,6,$factura->fecha_emision.'-26  ',1,0,'R',true);
+                $pdf->Cell(54,6,$lastDayOfMonth.'  ',1,0,'R',true);
 
             
 
@@ -807,10 +820,20 @@ echo "</pre>"; */
             $pdf->Cell(76,6,"  Mes Factuardo",1,0,'L',true);
             $pdf->Cell(1);
             $pdf->SetFont('dejavusans','B',10);
-            $pdf->Cell(54,6,$factura->mes_facturado.'  ',1,0,'R',true);
+            $pdf->Cell(54,6,date('Y-m',strtotime($factura->mes_facturado)).'  ',1,0,'R',true);
 
 
             $pdf->Ln(6);
+
+         
+            $year = date('Y',strtotime($factura->fecha_emision)); // Año con 4 dígitos
+            $month = date('m',strtotime($factura->fecha_emision)); // Mes con 2 dígitos
+
+            // Calcular el último día del mes
+            $lastDay = date('t', strtotime("$year-$month-01"));
+
+            // Crear la fecha completa con el último día del mes
+            $lastDayOfMonth = date("$year-$month-$lastDay");
 
             $pdf->SetFont('dejavusans','',10);
             $pdf->Cell(30,6,"  Cedula/Nit: ", 'L',0,0,'L',true);
@@ -822,7 +845,7 @@ echo "</pre>"; */
             $pdf->Cell(76,6,"  Fecha de Pago Oportuno",1,0,'L',true);
             $pdf->Cell(1);
             $pdf->SetFont('dejavusans','B',10);
-            $pdf->Cell(54,6,$factura->fecha_emision.'-26  ',1,0,'R',true);
+            $pdf->Cell(54,6,$lastDayOfMonth. '  ',1,0,'R',true);
 
      
 

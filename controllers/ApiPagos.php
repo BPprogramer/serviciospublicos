@@ -301,7 +301,7 @@ use TCPDF;
             $pdf->Cell(76,6,"  Mes Facturado",1,0,'L',true);
             $pdf->Cell(1);
             $pdf->SetFont('dejavusans','B',10);
-            $pdf->Cell(54,6,$factura->mes_facturado.' ',1,0,'R',true);
+            $pdf->Cell(54,6,date('Y-m',strtotime($factura->mes_facturado)).'  ',1,0,'R',true);
 
      
 
