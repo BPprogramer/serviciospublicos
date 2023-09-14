@@ -21,7 +21,7 @@
           
             datos.append('pagos', JSON.stringify(arregloPagos));
             try {
-                const respuesta = await fetch('http://localhost:3000/api/subir-pagos', {
+                const respuesta = await fetch('/api/subir-pagos', {
                     body:datos,
                     method:'POST'
                 }) 
