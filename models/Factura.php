@@ -5,7 +5,7 @@
     class Factura extends ActiveRecord{
         protected static $tabla = 'facturas';
         protected static $columnasDB = ['id','numero_factura','registrado_id','mes_facturado','fecha_emision','estrato','tarifa_plena','subsidio','copago',
-                                        'subsidio_acu','copago_acu','subsidio_alc','copago_alc','subsidio_aseo','copago_aseo', 'ajuste', 'pagado'];
+                                        'subsidio_acu','copago_acu','subsidio_alc','copago_alc','subsidio_aseo','copago_aseo', 'ajuste', 'pagado', 'combinado', 'saldo_anterior'];
 
         public $id;
         public $numero_factura;
@@ -25,6 +25,8 @@
         public $copago_aseo;
         public $ajuste;
         public $pagado;
+        public $combinado;
+        public $saldo_anterior;
 
         public function __construct($args = [])
         {
@@ -46,6 +48,8 @@
             $this->copago_aseo = $args['copago_aseo']??'';
             $this->ajuste = $args['ajuste']??'';
             $this->pagado = $args['pagado']??'';
+            $this->combinado = $args['combinado']??'';
+            $this->saldo_anterior = $args['saldo_anterior']??'';
         }
 
         public function validarAjuste(){

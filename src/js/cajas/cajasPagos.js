@@ -13,6 +13,7 @@
         function mostrarEstratos(){
             
             if(Number.isInteger(parseInt(id))){
+         
                 $("#tablaCajasPagos").dataTable().fnDestroy(); //por si me da error de reinicializar
         
                 tablaCajasPagos = $('#tablaCajasPagos').DataTable({
@@ -23,17 +24,17 @@
                     responsive:true
                 });
             
-                $.ajax({
-                    url:'/api/cajas/pagos?id='+id,
+                // $.ajax({
+                //     url:'/api/cajas/pagos?id='+id,
                     
-                    success:function(req){
-                        console.log(req)
-                    },
-                    error:function(error){
-                        console.log(error.responseText);
-                    }
+                //     success:function(req){
+                //         console.log(req)
+                //     },
+                //     error:function(error){
+                //         console.log(error.responseText);
+                //     }
                     
-                })
+                // })
               
             }else{
                 window.location.href='/admin/cajas'

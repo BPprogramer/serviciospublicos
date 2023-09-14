@@ -54,7 +54,7 @@
 
                 facturas.forEach(factura => {
   
-                    const {id, numero_factura, fecha_emision, periodo_fin, periodo_inicio, copago, pagado, ajuste} = factura
+                    const {id, numero_factura, fecha_emision, periodo_fin, periodo_inicio, copago, pagado, ajuste, combinado, saldo_anterior} = factura
                     const dateFechaActual = new Date();
                     const mesActual = dateFechaActual.getMonth()+1;
                  
@@ -63,7 +63,8 @@
                     
                    
                    const diferenciaFechas = mesActual - mesEmision;
-                   
+                    
+            
                    
                 
               
@@ -87,9 +88,10 @@
                     tdPeriodo.classList.add('table__td');
                     tdPeriodo.innerHTML = `<span class="table__span">Periodo:&nbsp; </span>&nbsp; ${periodo_inicio} &nbsp; - &nbsp;${periodo_fin}`
 
+                    const montoTotal = parseFloat(copago)+parseFloat(saldo_anterior)-parseFloat(ajuste)
                     const tdMonto = document.createElement('TD');
                     tdMonto.classList.add('table__td');
-                    tdMonto.innerHTML = ` <span class="table__span">Monto:&nbsp; </span>$ ${parseFloat((copago-ajuste)).toLocaleString('en')}`
+                    tdMonto.innerHTML = ` <span class="table__span">Monto:&nbsp; </span>$ ${parseFloat(montoTotal).toLocaleString('en')}`
 
                     const tdEstado = document.createElement('TD');
                     tdEstado.classList.add('table__td');
@@ -99,6 +101,10 @@
                         tdEstado.innerHTML = ` <span class="table__boton table__boton--${ pagado== 1?'pagado':'impaga'}">${pagado == 1?'Pagado':'Impaga'}</span>`
                     
                     }   
+                    if(combinado == 1){
+                        tdEstado.innerHTML = ` <span class="table__boton table__boton--vencida">Combinada</span>`
+                    }
+
                      
                    
 
@@ -122,7 +128,7 @@
             }
 
             function informacionFactura(factura){
-                const {id, numero_factura, fecha_emision, estrato, periodo_inicio, periodo_fin, copago, pagado} = factura;
+                const {id, numero_factura, fecha_emision, estrato, periodo_inicio, periodo_fin, copago,ajuste, pagado, saldo_anterior, combinado} = factura;
                
            
                 limpiarHtml();
@@ -185,14 +191,18 @@
                 const accionesMonto = document.createElement('DIV');
                 accionesMonto.classList.add('registrado__datos');
 
+
+           
                 
                 const montoLabel = document.createElement('SPAN');
                 montoLabel.classList.add('registrado__label');
                 montoLabel.textContent = 'Monto '
+
+                const montoTotal = parseFloat(copago)+parseFloat(saldo_anterior)-parseFloat(ajuste)
                 
                 const montoDato = document.createElement('P');
                 montoDato.classList.add('registrado__dato');
-                montoDato.textContent =`$ ${(parseFloat(copago)).toLocaleString('en')}`;
+                montoDato.textContent =`$ ${montoTotal .toLocaleString('en')}`;
                 
 
                 
@@ -230,7 +240,7 @@
 
                
 
-                if(pagado==0){
+                if(pagado==0 && combinado==0){
                     const btnPagar =  document.createElement('SPAN');
                     btnPagar.classList.add('actions__boton');
                     btnPagar.textContent = 'Pago Efectivo';
@@ -401,11 +411,11 @@
                             
                             text: resultado.mensaje
                           })
-                        const body =  document.querySelector('body');
-                        const inputHidden = document.createElement("input");
-                        inputHidden.type = "hidden"; 
-                        inputHidden.id = "confirmacionPago"; 
-                        body.appendChild(inputHidden);
+                    const body =  document.querySelector('body');
+                    const inputHidden = document.createElement("input");
+                    inputHidden.type = "hidden"; 
+                    inputHidden.id = "confirmacionPago"; 
+                    body.appendChild(inputHidden);
 
 
                         while(contenedorFactura.firstChild){

@@ -7,12 +7,25 @@
                 Inicio
             </span>
         </a>
+        <a href="/admin/pagos" class="dashboard__enlace <?php echo pagina_actual('/pagos') ? 'dashboard__enlace--actual':''?>">
+            <i class="fa-solid fa-sack-dollar dashboard__icono"></i>
+            <span class="dashboard__menu-texto">
+                Pagos
+            </span>
+        </a>
+        <a href="/admin/emitidas" class="dashboard__enlace <?php echo pagina_actual('/emitidas') ? 'dashboard__enlace--actual':''?>">
+            <i class="fa-solid fa-file-invoice-dollar dashboard__icono"></i>
+            <span class="dashboard__menu-texto">
+                Emitidas
+            </span>
+        </a>
         <a href="/admin/registrados" class="dashboard__enlace <?php echo pagina_actual('/registrados') ? 'dashboard__enlace--actual':''?>">
             <i class="fa-solid fa-users dashboard__icono"></i>
             <span class="dashboard__menu-texto">
                 Registrados
             </span>
         </a>
+      
        
         <a href="/admin/cajas" class="dashboard__enlace <?php echo pagina_actual('/cajas') ? 'dashboard__enlace--actual':''?>">
             <i class="fa-solid fa-cash-register dashboard__icono" ></i>

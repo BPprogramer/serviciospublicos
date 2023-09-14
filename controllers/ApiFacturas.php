@@ -4,6 +4,7 @@
 
     use DateTime;
     use FPDF;
+    use TCPDF;
     use Model\Estrato;
     use Model\Factura;
     use Model\Registrado;
@@ -26,490 +27,432 @@ echo "</pre>"; */
             $facturas = Factura::fechas($fecha);
         
 
-            $pdf = new FPDF('P','mm','Letter');
-            $contador = 0;
-            foreach($facturas as $factura){
-
-                if(!$factura->registrado_id) continue;
-                $contador = $contador + 1;
-                 //calculamos el total a pagar copago - ajuste
-                $total = number_format($factura->copago - $factura->ajuste);
-
-                //formatear periodo de facturacion
-                $factura->fecha_emision = date("d-m-Y", strtotime($factura->fecha_emision));
-                $fechaInicioObj = strtotime($factura->mes_facturado);
-                $fechaFinObj = strtotime(date('t-m-Y', $fechaInicioObj));
             
-                $factura->periodo_inicio = date('d-m-Y', $fechaInicioObj);
-                $factura->periodo_fin = date('d-m-Y', $fechaFinObj);
-
-                //fecha limite
+            $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+            $pdf->setPrintHeader(false);
+            foreach($facturas as $key=>$factura){
+             
+                $factura->fecha_emision =date('Y-m',strtotime($factura->fecha_emision));
             
-                $factura->fecha_limite  = date('d-m-y',strtotime(date('t-m-Y', strtotime($factura->fecha_emision))));
         
-
-    
-                
-   
-                   
                 $registrado = Registrado::find($factura->registrado_id);
-              
-       
-                    
-               
-      
-              
-                   
-            
-
-                $estrato = Estrato::find($registrado->estrato_id);
+        
+                $facturas_vencidas = $registrado->facturas;
+                if($registrado->facturas>0){
+                    $facturas_vencidas = $registrado->facturas-1;
+                }
+        
                 mb_internal_encoding('UTF-8');
-                $factura->formatearDatosNumber();
-
-
+                // $factura->formatearDatosNumber();
+                $imagen_posicion = 215;
+                $total_pagar_posicion = 369;
+                if($key%2 == 0){
+                    $imagen_posicion = 10;
+                    $total_pagar_posicion = 164;
+                     $pdf->AddPage('p', 'A3');
+                }
+                
            
-            
-                $pdf->SetMargins(17,10,17);
-                $pdf->AddPage();
-
-                # Logo de la empresa formato png #
-                $pdf->Image('../public/build/img/logo.png',97,9,100,25,'PNG');
-
-        
-
-                # Encabezado y datos de la empresa #
-                // $pdf->SetFont('Arial','B',16);
-                // $pdf->SetTextColor(32,100,210);
-                // $pdf->Cell(150,10,(strtoupper("Servicios Publicos")),0,0,'L');
-
-                $pdf->Ln(5);
-
-                $pdf->SetFont('Arial','',10);
-                $pdf->SetTextColor(39,39,51);
-                $pdf->Cell(150,9,("Empresa: serviciosPublicos"),0,0,'L');
-                $pdf->Ln(5);
-
-                $pdf->SetFont('Arial','',10);
-                $pdf->SetTextColor(39,39,51);
-                $pdf->Cell(150,9,("RUT: 0000000000"),0,0,'L');
-
-                $pdf->Ln(5);
-
-                $pdf->Cell(150,9,utf8_decode("Dirección San Salvador, El Salvador"),0,0,'L');
-
-                $pdf->Ln(5);
-
-                $pdf->Cell(150,9,utf8_decode("Teléfono: 00000000"),0,0,'L');
-
-                $pdf->Ln(5);
-
-
-                $pdf->Cell(93,9,utf8_decode("Email: correo@ejemplo.com"),0,0,'L');
-
-
-                $pdf->Ln(10);
-
-            
-
-                $pdf->SetFont('Arial','',10);
-                $pdf->SetTextColor(39,39,51);
-                $pdf->Cell(30,7,utf8_decode("Fecha de emisión:"),0,0);
-                $pdf->SetTextColor(97,97,97);
-                $pdf->Cell(63,7,($factura->fecha_emision),0,0,'L');
 
                 
-                $pdf->SetFont('Arial','',15);
-                $pdf->SetTextColor(39,39,51);
-                $pdf->Cell(29, 6, utf8_decode("Factura No:"), 0, 0);
+                // $pdf = new FPDF('P','mm','Letter');
+
+                // $pdf->AddPage();
+                $pdf->SetMargins(17,10, 17);
+                // # Logo de la empresa formato png #
+
+                $pdf->Image('../public/build/img/logo.png',17,$imagen_posicion,52,38,'PNG');
+                // Relleno rojo (RGB)
+                
+            
+                $pdf->Ln(0);
+            
+            
+                
+
+                // # Encabezado y datos de la empresa #
+                $pdf->Cell(87);
+                $pdf->SetFont('dejavusans','B',11);
+                $pdf->SetTextColor(11,78,187);
+                $pdf->Cell(150,10,'Asociación de usuarios Administradores de Acueducto, Alcantarillado y Aseo',0,0,'C');
+
+                $pdf->Ln(5);
+                $pdf->Cell(87);
+                $pdf->Cell(150,10,'del Casco Urbano del Tablón de Gómez',0,0,'C');
+                $pdf->Ln(6);
+                $pdf->Cell(87);
+                $pdf->SetFont('dejavusans','B',14);
+                $pdf->SetTextColor(0,0,0);
+                $pdf->Cell(150,10,'ASUAAASTAB',0,0,'C');
+                $pdf->Ln(6);
+                $pdf->Cell(87);
+                $pdf->SetFont('dejavusans','B',10);
+                $pdf->SetTextColor(0,0,0);
+                $pdf->Cell(150,10,'Nit: 900324139-0',0,0,'C');
+                $pdf->Ln(6);
+                $pdf->Cell(87);
+                $pdf->SetFont('dejavusans','B',10);
+                $pdf->SetTextColor(0,0,0);
+                $pdf->Cell(150,10,'3216549877',0,0,'C');
+                $pdf->Ln(6);
+                $pdf->Cell(87);
+                $pdf->SetFont('dejavusans','B',10);
+                $pdf->SetTextColor(0,0,0);
+                $pdf->Cell(150,10,'El Tablon de Gómez',0,0,'C');
+
+                $pdf->Ln(10);
+
+                    //informacion cCliente
+                    $pdf->SetLineWidth(0.1);
+                $pdf->SetFont('dejavusans','B',10);
+                $pdf->SetFillColor(11,78,187);
+                $pdf->SetDrawColor(11,78,187);
+                $pdf->SetTextColor(255,255,255);
+                $pdf->Cell(130,7,"Información del Cliente",1,0,'C',true);
+                $pdf->Cell(3);
+                $pdf->Cell(76,7,"Información de la Factura",1,0,'C',true);
+                $pdf->Cell(1);
+                $pdf->Cell(27,7,"Factura No",1,0,'L',true);
+                
+                $pdf->SetFillColor(255, 255, 255);
+                $pdf->SetDrawColor(11,78,187);
                 $pdf->SetTextColor(255,0,0);
-                $pdf->SetFont('Arial','',20);
-                $pdf->Cell(64,7,($factura->numero_factura),0,0,'L');
+                $pdf->Cell(27,7,$factura->numero_factura,1,0,'C',true);
+                
 
-                $pdf->Ln(5);
-
-                $pdf->SetFont('Arial','',10);
-                $pdf->SetTextColor(39,39,51);
-                $pdf->Cell(31,7,utf8_decode("Periodo Facturado:"),0,0);
-                $pdf->SetTextColor(97,97,97);
-                $pdf->Cell(116,7,($factura->periodo_inicio.'  -  '.$factura->periodo_fin),0,0,'L');
-                $pdf->Ln(5);
-
-                $pdf->SetFont('Arial','',10);
-                $pdf->SetTextColor(39,39,51);
-                $pdf->Cell(22,7,utf8_decode("Fecha Limite:"),0,0);
-                $pdf->SetTextColor(97,97,97);
-                $pdf->Cell(116,7,($factura->fecha_limite),0,0,'L');
-    
-
-                $pdf->Ln(10);
-
-                $pdf->SetFont('Arial','',10);
-                $pdf->SetTextColor(39,39,51);
-                $pdf->Cell(13,7,("Cliente:"),0,0);
-                $pdf->SetTextColor(97,97,97);
-                $pdf->Cell(81,7,utf8_decode("$registrado->nombre $registrado->apellido"),0,0,'L');
-
-                $pdf->SetTextColor(39,39,51);
-                $pdf->Cell(20,7,("Nit / Cedula: "),0,0);
-                $pdf->SetTextColor(97,97,97);
-                $pdf->Cell(73,7,utf8_decode($registrado->cedula_nit),0,0);
+                $pdf->Cell(3);
             
 
-                $pdf->Ln(5);
+                $pdf->Ln(7);
+                $pdf->SetFillColor(255,255,255);
+                $pdf->SetTextColor(0,0,0);
 
-                $pdf->SetTextColor(39,39,51);
-                $pdf->Cell(13,7,("Celular: "),0,0);
-                $pdf->SetTextColor(97,97,97);
-                $pdf->Cell(81,7,utf8_decode($registrado->celular),0,0);
+                $pdf->SetFont('dejavusans','',10);
+                $pdf->Cell(30,6,"  Usuario: ", 'L',0,0,'L',true);
+                $pdf->SetFont('dejavusans','B',10);
+                $pdf->Cell(100,6,"$registrado->nombre $registrado->apellido", 'R',0,0,'L',true);
+                $pdf->Cell(3);
 
-                $pdf->SetTextColor(39,39,51);
-                $pdf->Cell(11,7,("Barrio: "),0,0);
-                $pdf->SetTextColor(97,97,97);
-                $pdf->Cell(80,7,utf8_decode($registrado->barrio),0,0);
+                $pdf->SetDrawColor(11,78,187);
+                $pdf->SetFont('dejavusans','',10);
+                $pdf->Cell(76,6,"  Mes Factuardo",1,0,'L',true);
+                $pdf->Cell(1);
+                $pdf->SetFont('dejavusans','B',10);
+                $pdf->Cell(54,6,$factura->mes_facturado.'  ',1,0,'R',true);
+
+
+                $pdf->Ln(6);
+
+                $pdf->SetFont('dejavusans','',10);
+                $pdf->Cell(30,6,"  Cedula/Nit: ", 'L',0,0,'L',true);
+                $pdf->SetFont('dejavusans','B',10);
+                $pdf->Cell(100,6,"$registrado->cedula_nit", 'R',0,0,'L',true);
+                $pdf->SetDrawColor(11,78,187);
+                $pdf->Cell(3);
+                $pdf->SetFont('dejavusans','',10);
+                $pdf->Cell(76,6,"  Fecha de Pago Oportuno",1,0,'L',true);
+                $pdf->Cell(1);
+                $pdf->SetFont('dejavusans','B',10);
+                $pdf->Cell(54,6,$factura->fecha_emision.'-26  ',1,0,'R',true);
+
             
-                $pdf->Ln(5);
 
+                $pdf->Ln(6);
+                $pdf->SetFont('dejavusans','',10);
+                $pdf->Cell(30,6,"  Dirección:", 'L',0,0,'L',true);
+                $pdf->SetFont('dejavusans','B',10);
+                $pdf->Cell(100,6,"$registrado->direccion", 'R',0,0,'L',true);
+                $pdf->Cell(3);
+                $pdf->SetFont('dejavusans','',10);
+                $pdf->Cell(76,6,"  Facturas Vencidas",1,0,'L',true);
+                $pdf->Cell(1);
+                $pdf->SetFont('dejavusans','B',10);
+                $pdf->Cell(54,6,$facturas_vencidas. '  ',1,0,'R',true);
+                $pdf->Ln(6);
+                $pdf->SetFont('dejavusans','',10);
+                $pdf->Cell(30,6,"  Barrio: ", 'L',0,0,'L',true);
+                $pdf->SetFont('dejavusans','B',10);
+                $pdf->Cell(100,6,"$registrado->barrio", 'R',0,0,'L',true);
+                $pdf->Cell(3);
+                $pdf->SetFont('dejavusans','',10);
+                $pdf->Cell(76,6,"  Saldo Anterior",1,0,'L',true);
+                $pdf->Cell(1);
+                $pdf->SetFont('dejavusans','B',10);
+                $pdf->Cell(54,6,'$'.number_format($factura->saldo_anterior). '  ',1,0,'R',true);
+                
+                $pdf->SetFont('dejavusans','',10);
+                $pdf->Ln(6);
+                $pdf->Cell(30,6,"  Código: ", 'L',0,0,'L',true);
+                $pdf->SetFont('dejavusans','B',10);
+                $pdf->Cell(100,6,"$registrado->codigo_ubicacion", 'R',0,0,'L',true);
+                $pdf->Cell(3);
+                $pdf->SetFont('dejavusans','',10);
+                $pdf->Cell(76,6,"  Pago Mensual",1,0,'L',true);
+                $pdf->Cell(1);
+                $pdf->SetFont('dejavusans','B',10);
+                $pdf->Cell(54,6,'$'.number_format($factura->copago-$factura->ajuste). '  ',1,0,'R',true);
+                $pdf->Ln(6);
+                $pdf->SetFont('dejavusans','',10);
+                $pdf->Cell(30,6,"  Estrato: ", 'LB',0,0,'L',true);
+                $pdf->SetFont('dejavusans','B',10);
+                $pdf->Cell(100,6,"$factura->estrato", 'RB',0,0,'L',true);
+                $pdf->Cell(3);
+                $pdf->SetFont('dejavusans','',10);
+                $pdf->Cell(76,6,"  Total Pagar",1,0,'L',true);
+                $pdf->Cell(1);
+                $pdf->SetFont('dejavusans','B',10);
+                $pdf->Cell(54,6,'$'.number_format($factura->copago-$factura->ajuste+$factura->saldo_anterior). '  ',1,0,'R',true);
+
+                /* infomraicon acueducto aseo, alcantarillado y pago fina */
+                $pdf->Ln(8);
+                $pdf->SetLineWidth(0.1);
+                $pdf->SetFont('dejavusans','B',10);
+                $pdf->SetFillColor(11,78,187);
+                $pdf->SetDrawColor(11,78,187);
+                $pdf->SetTextColor(255,255,255);
+                $pdf->Cell(69,6,"Liquidación Acueducto",1,0,'C',true);
+                $pdf->Cell(1);
+                $pdf->Cell(73,6,"Liquidación Alcantarillado",1,0,'C',true);
+                $pdf->Cell(1);
+                $pdf->Cell(65,6,"Liquidación Aseo",1,0,'C',true);
+                $pdf->Cell(1);
+                $pdf->Cell(54,6,"Ajuste",1,0,'C',true);
+
+                $pdf->Ln(6);
+                $pdf->SetFillColor(255,255,255);
+                $pdf->SetTextColor(0,0,0);
+
+                $pdf->SetFont('dejavusans','',10);
+                $pdf->Cell(24,6,"  Cargo Fijo: ", 'L',0,0,'L',true);
+                $pdf->SetFont('dejavusans','B',10);
+                $pdf->Cell(45,6,"$".number_format($factura->copago_acu). '  ', 'R',0,'R',true);
+
+                $pdf->Cell(1);
+                $pdf->SetFont('dejavusans','',10);
+                $pdf->Cell(25,6,"  Cargo Fijo: ", 'L',0,0,'L',true);
+                $pdf->SetFont('dejavusans','B',10);
+                $pdf->Cell(48,6,"$".number_format($factura->copago_alc). '  ', 'R',0,'R',true);
+                $pdf->Cell(1);
+                $pdf->SetFont('dejavusans','',10);
+                $pdf->Cell(25,6,"  Cargo Fijo: ", 'L',0,0,'L',true);
+                $pdf->SetFont('dejavusans','B',10);
+                $pdf->Cell(40,6,"$".number_format($factura->copago_aseo). '  ', 'R',0,'R',true);
+                $pdf->Cell(1);
+                $pdf->SetFont('dejavusans','',10);
+                $pdf->Cell(22,6,"  Tarifario: ", 'L',0,0,'L',true);
+                $pdf->SetFont('dejavusans','B',10);
+                $pdf->Cell(32,6,"$".number_format($factura->copago_aseo). '  ', 'R',0,'R',true);
+
+                $pdf->Ln(6);
+                $pdf->SetFont('dejavusans','',10);
+                $pdf->Cell(24,6,"  Subsidiado: ", 'LB',0,0,'L',true);
+                $pdf->SetFont('dejavusans','B',10);
+                $pdf->Cell(45,6,"$".number_format($factura->subsidio_acu). '  ', 'RB',0,'R',true);
+                $pdf->Cell(1);
+                $pdf->SetFont('dejavusans','',10);
+                $pdf->Cell(25,6,"  Subsidiado: ", 'L',0,0,'L',true);
+                $pdf->SetFont('dejavusans','B',10);
+                $pdf->Cell(48,6,"$".number_format($factura->subsidio_alc). '  ', 'R',0,'R',true);
+                $pdf->Cell(1);
+                $pdf->SetFont('dejavusans','',10);
+                $pdf->Cell(25,6,"  Subsidiado: ", 'L',0,0,'L',true);
+                $pdf->SetFont('dejavusans','B',10);
+                $pdf->Cell(40,6,"$".number_format($factura->subsidio_aseo). '  ', 'R',0,'R',true);
+                $pdf->Cell(1);
+                $pdf->Cell(54,6,"", 'LR',0,'R',true);
+                $pdf->Ln(6);
+
+                $pdf->SetFont('dejavusans','B',10);
+                $pdf->Cell(40,6,"  Total Acueducto", 'LBTR',0,0,'L',true);
+                $pdf->SetFont('dejavusans','B',11);
+                $pdf->Cell(29,6,"$".number_format($factura->copago_acu+$factura->subsidio_acu). '  '. '', 'LRTB',0,'R',true);
+                $pdf->Cell(1);
+                $pdf->SetFont('dejavusans','B',10);
+                $pdf->Cell(45,6,"  Total Alcantarillado", 'LBTR',0,0,'L',true);
+                $pdf->SetFont('dejavusans','B',11);
+                $pdf->Cell(28,6,"$".number_format($factura->copago_alc+$factura->subsidio_alc). '  '. '', 'LRTB',0,'R',true);
+                $pdf->Cell(1);
+                $pdf->SetFont('dejavusans','B',10);
+                $pdf->Cell(35,6,"  Total Aseo", 'LBTR',0,0,'L',true);
+                $pdf->SetFont('dejavusans','B',11);
+                $pdf->Cell(30,6,"$".number_format($factura->copago_aseo+$factura->subsidio_aseo). '  '. '', 'LRTB',0,'R',true);
+                $pdf->Cell(1);
+                $pdf->SetFont('dejavusans','B',10);
+                $pdf->Cell(29,6,"  Total Ajuste", 'LBTR',0,0,'L',true);
+                $pdf->SetFont('dejavusans','B',11);
+                $pdf->Cell(25,6,"$".number_format($factura->ajuste). '  '. '', 'LRTB',0,'R',true);
+
+                $pdf->Ln(8);
             
-                $pdf->SetTextColor(39,39,51);
-                $pdf->Cell(16,7,utf8_decode("Dirección: "),0,0);
-                $pdf->SetTextColor(97,97,97);
-                $pdf->Cell(78,7,($registrado->direccion),0,0);
-
-                $pdf->SetTextColor(39,39,51);
-                $pdf->Cell(13,7,utf8_decode("Código: "),0,0);
-                $pdf->SetTextColor(97,97,97);
-                $pdf->Cell(80,7,($registrado->codigo_ubicacion),0,0);
-
-
-                $pdf->Ln(10);
-            
-                $pdf->SetTextColor(39,39,51);
-                $pdf->SetFont('Arial','',12);
-                $pdf->Cell(15,7,("Estrato:"),0,0,'L');
-    
-                $pdf->SetTextColor(97,97,97);
-                $pdf->SetFont('Arial','',12);
-                $pdf->Cell(80,7,utf8_decode("$estrato->estrato"),0,0);
-
-                $pdf->Ln(9);
-
-                # Tabla de productos #
-                $pdf->SetFont('Arial','',8);
-                $pdf->SetFillColor(23,83,201);
-                $pdf->SetDrawColor(255,255,255);
+                $pdf->write1DBarcode($factura->numero_factura, 'C39', 17, '', '', 18, 0.6);
+                $pdf->Cell(210);
+                $pdf->SetLineWidth(0.1);
+                $pdf->SetFont('dejavusans','B',10);
+                $pdf->SetFillColor(11,78,187);
+                $pdf->SetDrawColor(11,78,187);
                 $pdf->SetTextColor(255,255,255);
                 
-                $pdf->Cell(45,8,("Acueducto"),1,0,'C',true);
-                $pdf->Cell(45,8,("Alcantariilado."),1,0,'C',true);
-                $pdf->Cell(45,8,("Aseo"),1,0,'C',true);
-                $pdf->Cell(46,8,("Tarifa Plena."),1,0,'C',true);
 
-                $pdf->Ln(8);
-
-            
-    
-                $pdf->Cell(23,8,utf8_decode("Descripción"),1,0,'C',true);
-                $pdf->Cell(22,8,("Total"),1,0,'C',true);
-                $pdf->Cell(23,8,utf8_decode("Descripción"),1,0,'C',true);
-                $pdf->Cell(22,8,("Total"),1,0,'C',true);
-                $pdf->Cell(23,8,utf8_decode("Descripción"),1,0,'C',true);
-                $pdf->Cell(22,8,("Total"),1,0,'C',true);
-    
-                $pdf->Cell(23,8,("Concepto"),1,0,'C',true);
-                $pdf->Cell(23,8,("Valor"),1,0,'C',true);
-
-                $pdf->Ln(8);
-
-
-                $pdf->SetFillColor(23,83,201);
-                $pdf->SetDrawColor(23,83,201);
-                $pdf->SetTextColor(39,39,51);
-
-                $pdf->SetX(17.3);
-                /*----------  Detalles de la tabla  ----------*/
-                $pdf->Cell(22.7,8,(""),'LT',0,'C');
-                $pdf->Cell(22.,8,(""),'LT',0,'C');
-                $pdf->Cell(22.9,8,(""),'LT',0,'C');
-                $pdf->Cell(22.,8,(""),'LT',0,'C');
-                $pdf->Cell(23,8,(""),'LT',0,'C');
-                $pdf->Cell(22.,8,(""),'LT',0,'C');
-                $pdf->Cell(23,8,("Tarifa Flena"),'LT',0,'C');
-                $pdf->Cell(22.8,8,("$ $factura->tarifa_plena"),'LTR',0,'C');
-                $pdf->Ln(8);
-
-                $pdf->SetX(17.3);
-                /*----------  Detalles de la tabla  ----------*/
-            
-                $pdf->Cell(22.7,8,("Subsidiado"),'LT',0,'C');
-                $pdf->Cell(22.,8,("$ $factura->copago_acu"),'LT',0,'C');
-                $pdf->Cell(22.9,8,("Subsidiado"),'LT',0,'C');
-                $pdf->Cell(22.,8,("$ $factura->copago_alc"),'LT',0,'C');
-                $pdf->Cell(23,8,("Subsidiado"),'LT',0,'C');
-                $pdf->Cell(22.,8,("$ $factura->copago_aseo"),'LT',0,'C');
-                $pdf->Cell(23,8,("Subsidio"),'LT',0,'C');
-                $pdf->Cell(22.8,8,("$ $factura->copago"),'LTR',0,'C');
-            
-                $pdf->Ln(7);
-                $pdf->SetX(17.3);
-        
-            
-                /*----------  Fin Detalles de la tabla  ----------*/
+                $pdf->Cell(54,6,"TOTAL A PAGAR",1,0,'C',true);
+                $pdf->Ln(6);
+                $pdf->SetFillColor(255,255,255);
+                $pdf->SetDrawColor(11,78,187);
+                $pdf->SetTextColor(0 , 0, 0);
+                $pdf->Cell(210);
+                $pdf->SetFont('dejavusans','B',19);
+                $pdf->Cell(54,12,'$'.number_format($factura->copago+$factura->saldo_anterior-$factura->ajuste),1,0,'C',true);
+                $pdf->Ln(11);
+                $pdf->MultiCell(0,9,"---------------------------------------------------------------------------------------------",0,'C',false);
                 
-                $pdf->Cell(22.7,8,("Cargo Fijo"),'LT',0,'C');
-                $pdf->Cell(22.,8,("$ $factura->copago_acu"),'LT',0,'C');
-                $pdf->Cell(22.9,8,("Cargo Fijo"),'LT',0,'C');
-                $pdf->Cell(22.,8,("$ $factura->copago_alc"),'LT',0,'C');
-                $pdf->Cell(23,8,("Cargo Fijo"),'LT',0,'C');
-                $pdf->Cell(22.,8,("$ $factura->copago_aseo"),'LT',0,'C');
-                $pdf->Cell(23,8,("Copago"),'LT',0,'C');
-                $pdf->Cell(22.8,8,("$ $factura->copago"),'LTR',0,'C');
-                
-                $pdf->Ln(7);
-                $pdf->SetX(17.3);
-        
-            
-                /*----------  Fin Detalles de la tabla  ----------*/
-                
-                $pdf->Cell(22.7,8,(""),'LT',0,'C');
-                $pdf->Cell(22.,8,(""),'LT',0,'C');
-                $pdf->Cell(22.9,8,(""),'LT',0,'C');
-                $pdf->Cell(22.,8,(""),'LT',0,'C');
-                $pdf->Cell(23,8,(""),'LT',0,'C');
-                $pdf->Cell(22.,8,(""),'LT',0,'C');
-                $pdf->Cell(23,8,("Ajuste Tarifario"),'LT',0,'C');
-                $pdf->Cell(22.8,8,("$ $factura->ajuste"),'LTR',0,'C');
+                /* Informacion Recibo */
 
-            
-                $pdf->Ln(7);
-                $pdf->SetX(17.3);
-        
-            
-                /*----------  Fin Detalles de la tabla  ----------*/
-                
-                $pdf->Cell(22.7,8,(""),'LTB',0,'C');
-                $pdf->Cell(22.,8,(""),'LTB',0,'C');
-                $pdf->Cell(22.9,8,(""),'LTB',0,'C');
-                $pdf->Cell(22.,8,(""),'LTB',0,'C');
-                $pdf->Cell(23,8,(""),'LTB',0,'C');
-                $pdf->Cell(22.,8,(""),'LTB',0,'C');
-                
-                //$pdf->SetTextColor(97,97,97);
-                $pdf->SetFont('Arial','B',12);
-            
-                $pdf->Cell(23,8,("Total Pagar"),'LTB',0,'C');
-                $pdf->Cell(22.8,8,("$total"),'LTRB',0,'C');
-            
-                $pdf->Ln(10);
-
-                $pdf->SetTextColor(39,39,51);
-                $pdf->MultiCell(0,9,("-------------------------------------------------------------------------------------------------------------------------------"),0,'C',false);
-        
-
-                // $pdf->Ln(10);
-
-                $pdf->SetFont('Arial','',10);
-                $pdf->SetTextColor(39,39,51);
-                $pdf->Cell(30,7,utf8_decode("Fecha de emisión:"),0,0);
-                $pdf->SetTextColor(97,97,97);
-                $pdf->Cell(63,7,($factura->fecha_emision),0,0,'L');
+                $pdf->Ln(0);
 
                 
-                $pdf->SetFont('Arial','',15);
-                $pdf->SetTextColor(39,39,51);
-                $pdf->Cell(29, 7, utf8_decode("Factura No:"), 0, 0);
-                $pdf->SetTextColor(255,0,0);
-                $pdf->SetFont('Arial','',20);
-                $pdf->Cell(64,7,($factura->numero_factura),0,0,'L');
-
-                $pdf->Ln(5);
-
-                $pdf->SetFont('Arial','',10);
-                $pdf->SetTextColor(39,39,51);
-                $pdf->Cell(31,7,utf8_decode("Periodo Facturado:"),0,0);
-                $pdf->SetTextColor(97,97,97);
-                $pdf->Cell(116,7,($factura->periodo_inicio.'  -  '.$factura->periodo_fin),0,0,'L');
-                $pdf->Ln(5);
-                $pdf->SetFont('Arial','',10);
-                $pdf->SetTextColor(39,39,51);
-                $pdf->Cell(22,7,utf8_decode("Fecha Limite:"),0,0);
-                $pdf->SetTextColor(97,97,97);
-                $pdf->Cell(116,7,($factura->fecha_limite),0,0,'L');
-
-                $pdf->Ln(10);
-
-
             
-                // $pdf->SetFont('Arial','B',12);
-                // $pdf->SetTextColor(255,0,0);
-                // $pdf->Cell(35,7,(strtoupper("$factura->numero_factura")),0,0,'C');
+                
+                // $pdf->Image('../public/build/img/logo.png',17,145,52,32,'PNG');
 
 
-
-                $pdf->SetFont('Arial','',10);
-                $pdf->SetTextColor(39,39,51);
-                $pdf->Cell(13,7,("Cliente:"),0,0);
-                $pdf->SetTextColor(97,97,97);
-                $pdf->Cell(81,7,utf8_decode("$registrado->nombre $registrado->apellido"),0,0,'L');
-
-                $pdf->SetTextColor(39,39,51);
-                $pdf->Cell(20,7,("Nit / Cedula: "),0,0);
-                $pdf->SetTextColor(97,97,97);
-                $pdf->Cell(73,7,utf8_decode($registrado->cedula_nit),0,0);
-            
-
-                $pdf->Ln(5);
-
-                $pdf->SetTextColor(39,39,51);
-                $pdf->Cell(13,7,("Celular: "),0,0);
-                $pdf->SetTextColor(97,97,97);
-                $pdf->Cell(81,7,utf8_decode($registrado->celular),0,0);
-
-                $pdf->SetTextColor(39,39,51);
-                $pdf->Cell(11,7,("Barrio: "),0,0);
-                $pdf->SetTextColor(97,97,97);
-                $pdf->Cell(80,7,utf8_decode($registrado->barrio),0,0);
-            
-                $pdf->Ln(5);
-
-            
-                $pdf->SetTextColor(39,39,51);
-                $pdf->Cell(16,7,utf8_decode("Dirección: "),0,0);
-                $pdf->SetTextColor(97,97,97);
-                $pdf->Cell(78,7,($registrado->direccion),0,0);
-
-                $pdf->SetTextColor(39,39,51);
-                $pdf->Cell(13,7,utf8_decode("Código: "),0,0);
-                $pdf->SetTextColor(97,97,97);
-                $pdf->Cell(80,7,($registrado->codigo_ubicacion),0,0);
-
-
-                $pdf->Ln(10);
-            
-                $pdf->SetTextColor(39,39,51);
-                $pdf->SetFont('Arial','',12);
-                $pdf->Cell(15,7,("Estrato:"),0,0,'L');
-    
-                $pdf->SetTextColor(97,97,97);
-                $pdf->SetFont('Arial','',12);
-                $pdf->Cell(80,7,utf8_decode("$estrato->estrato"),0,0);
-
-                $pdf->Ln(9);
-
-                # Tabla de productos #
-                $pdf->SetFont('Arial','',8);
-                $pdf->SetFillColor(23,83,201);
-                $pdf->SetDrawColor(255,255,255);
+                // $pdf->Cell(70);
+                $pdf->SetLineWidth(0.1);
+                $pdf->SetFont('dejavusans','B',10);
+                $pdf->SetFillColor(11,78,187);
+                $pdf->SetDrawColor(11,78,187);
                 $pdf->SetTextColor(255,255,255);
-                
-                $pdf->Cell(45,8,("Acueducto"),1,0,'C',true);
-                $pdf->Cell(45,8,("Alcantariilado."),1,0,'C',true);
-                $pdf->Cell(45,8,("Aseo"),1,0,'C',true);
-                $pdf->Cell(46,8,("Tarifa Plena."),1,0,'C',true);
-
-                $pdf->Ln(8);
-
-            
-    
-                $pdf->Cell(23,8,utf8_decode("Descripción"),1,0,'C',true);
-                $pdf->Cell(22,8,("Total"),1,0,'C',true);
-                $pdf->Cell(23,8,utf8_decode("Descripción"),1,0,'C',true);
-                $pdf->Cell(22,8,("Total"),1,0,'C',true);
-                $pdf->Cell(23,8,utf8_decode("Descripción"),1,0,'C',true);
-                $pdf->Cell(22,8,("Total"),1,0,'C',true);
-    
-                $pdf->Cell(23,8,("Concepto"),1,0,'C',true);
-                $pdf->Cell(23,8,("Valor"),1,0,'C',true);
-
-                $pdf->Ln(8);
-
-            
-
-                $pdf->SetFillColor(23,83,201);
-                $pdf->SetDrawColor(23,83,201);
-                $pdf->SetTextColor(39,39,51);
-                $pdf->SetX(17.3);
-                $pdf->Cell(22.7,8,(""),'LT',0,'C');
-                $pdf->Cell(22.,8,(""),'LT',0,'C');
-                $pdf->Cell(22.9,8,(""),'LT',0,'C');
-                $pdf->Cell(22.,8,(""),'LT',0,'C');
-                $pdf->Cell(23,8,(""),'LT',0,'C');
-                $pdf->Cell(22.,8,(""),'LT',0,'C');
-                $pdf->Cell(23,8,("Tarifa Plena"),'LT',0,'C');
-                $pdf->Cell(22.8,8,("$ $factura->tarifa_plena"),'LTR',0,'C');
-            
-                $pdf->Ln(7);
-            
+                $pdf->Cell(130,6,"Información del Cliente",1,0,'C',true);
+                $pdf->Cell(3);
+                $pdf->Cell(76,6,"Información de la Factura",1,0,'C',true);
 
 
-                $pdf->SetX(17.3);
-        
-        
-                $pdf->Cell(22.7,8,("Subsidiado"),'LT',0,'C');
-                $pdf->Cell(22.,8,("$ $factura->copago_acu"),'LT',0,'C');
-                $pdf->Cell(22.9,8,("Subsidiado"),'LT',0,'C');
-                $pdf->Cell(22.,8,("$ $factura->copago_alc"),'LT',0,'C');
-                $pdf->Cell(23,8,("Subsidiado"),'LT',0,'C');
-                $pdf->Cell(22.,8,("$ $factura->copago_aseo"),'LT',0,'C');
-                $pdf->Cell(23,8,("Subsidio"),'LT',0,'C');
-                $pdf->Cell(22.8,8,("$ $factura->copago"),'LTR',0,'C');
-            
-                $pdf->Ln(7);
-                $pdf->SetX(17.3);
+                $pdf->Cell(1);
+                $pdf->Cell(27,6,"Factura No",1,0,'L',true);
+                $pdf->SetFillColor(255, 255, 255);
+                $pdf->SetDrawColor(11,78,187);
+                $pdf->SetTextColor(255,0,0);
+                $pdf->Cell(27,6,$factura->numero_factura,1,0,'C',true);
 
-
-                $pdf->Cell(22.7,8,("Cargo Fijo"),'LT',0,'C');
-                $pdf->Cell(22.,8,("$ $factura->copago_acu"),'LT',0,'C');
-                $pdf->Cell(22.9,8,("Cargo Fijo"),'LT',0,'C');
-                $pdf->Cell(22.,8,("$ $factura->copago_alc"),'LT',0,'C');
-                $pdf->Cell(23,8,("Cargo Fijo"),'LT',0,'C');
-                $pdf->Cell(22.,8,("$ $factura->copago_aseo"),'LT',0,'C');
-                $pdf->Cell(23,8,("Copago"),'LT',0,'C');
-                $pdf->Cell(22.8,8,("$ $factura->copago"),'LTR',0,'C');
             
                 
-                $pdf->Ln(7);
-                $pdf->SetX(17.3);
-        
-
-                
-                $pdf->Cell(22.7,8,(""),'LT',0,'C');
-                $pdf->Cell(22.,8,(""),'LT',0,'C');
-                $pdf->Cell(22.9,8,(""),'LT',0,'C');
-                $pdf->Cell(22.,8,(""),'LT',0,'C');
-                $pdf->Cell(23,8,(""),'LT',0,'C');
-                $pdf->Cell(22.,8,(""),'LT',0,'C');
-                $pdf->Cell(23,8,("Ajuste Tarifario"),'LT',0,'C');
-                $pdf->Cell(22.8,8,("$ $factura->ajuste"),'LTR',0,'C');
-
-        
-                $pdf->Ln(7);
-                $pdf->SetX(17.3);
-        
-
-                
-                $pdf->Cell(22.7,8,(""),'LTB',0,'C');
-                $pdf->Cell(22.,8,(""),'LTB',0,'C');
-                $pdf->Cell(22.9,8,(""),'LTB',0,'C');
-                $pdf->Cell(22.,8,(""),'LTB',0,'C');
-                $pdf->Cell(23,8,(""),'LTB',0,'C');
-                $pdf->Cell(22.,8,(""),'LTB',0,'C');
-
-                
-                $pdf->SetFont('Arial','B',12);
-                $pdf->Cell(23,8,("Total Pagar"),'LTB',0,'C');
-                $pdf->Cell(22.8,8,("$total"),'LTRB',0,'C');
             
 
-                // $pdf->SetTextColor(39,39,51);
-                // $pdf->MultiCell(0,9,("*** Precios de productos incluyen impuestos. Para poder realizar un reclamo o devolución debe de presentar esta factura ***"),0,'C',false);
+                $pdf->SetFillColor(255,255,255);
+                $pdf->SetDrawColor(11,78,187);
+                $pdf->SetTextColor(0,0,0);
 
-                $pdf->Ln(9);
+                $pdf->Ln(6);
 
-  
-              
+                
+            
+
+                $pdf->SetFont('dejavusans','',10);
+                $pdf->Cell(30,6,"  Usuario: ", 'L',0,0,'L',true);
+                $pdf->SetFont('dejavusans','B',10);
+                $pdf->Cell(100,6,"$registrado->nombre $registrado->apellido", 'R',0,0,'L',true);
+
+                $pdf->Cell(3);
+                $pdf->SetFont('dejavusans','',10);
+                $pdf->Cell(37,6,"  Mes Factuardo",1,0,'L',true);
+                $pdf->SetFont('dejavusans','B',10);
+                $pdf->Cell(39,6,$factura->mes_facturado.'  ',1,0,'R',true);
+
+            
+
+                
+                
+                
+                $pdf->Ln(6);
+
+                
+                $pdf->SetFont('dejavusans','',10);
+                $pdf->Cell(30,6,"  Cedula Nit: ", 'L',0,0,'L',true);
+                $pdf->SetFont('dejavusans','B',10);
+                $pdf->Cell(100,6,"$registrado->cedula_nit", 'R',0,0,'L',true);
+                $pdf->Cell(3);
+                $pdf->SetFont('dejavusans','',10);
+                $pdf->Cell(37,6,"  Facturas Vencidas",1,0,'L',true);
+                $pdf->SetFont('dejavusans','B',10);
+                $pdf->Cell(39,6,$registrado->facturas.'  ',1,0,'R',true);
+
+                $pdf->Cell(1);
+
+                $pdf->SetLineWidth(0.1);
+                $pdf->SetFont('dejavusans', 'B', 10);
+                $pdf->SetFillColor(11, 78, 187);
+                $pdf->SetDrawColor(11, 78, 187);
+                $pdf->SetTextColor(255, 255, 255);
+                $pdf->Cell(54, 6, "TOTAL A PAGAR", 1, 0, 'C', true);
+
+
+                $pdf->Ln(6);
+
+                $pdf->SetFillColor(255,255,255);
+                $pdf->SetDrawColor(11, 78, 187);
+                $pdf->SetTextColor(0, 0, 0);
+                
+                $pdf->SetFont('dejavusans','',10);
+                $pdf->Cell(30,6,"  Dirección: ", 'L',0,0,'L',true);
+                $pdf->SetFont('dejavusans','B',10);
+                $pdf->Cell(100,6,"$registrado->direccion", 'R',0,0,'L',true);
+            
+                $pdf->Cell(3);
+                $pdf->SetFont('dejavusans','',10);
+                $pdf->Cell(37,6,"  Saldo Anterior",1,0,'L',true);
+                $pdf->SetFont('dejavusans','B',10);
+                $pdf->Cell(39,6,'$'.number_format($factura->saldo_anterior).'  ',1,0,'R',true);
+
+                $pdf->Ln(6);
+
+                
+                $pdf->SetFont('dejavusans','',10);
+                $pdf->Cell(30,6,"  Estrato: ", 'LB',0,0,'L',true);
+                $pdf->SetFont('dejavusans','B',10);
+                $pdf->Cell(100,6,"$factura->estrato", 'RB',0,0,'L',true);
+
+                $pdf->Cell(3);
+            
+                $pdf->SetFont('dejavusans','',10);
+                $pdf->Cell(37,6,"  Pago Mensual",1,0,'L',true);
+                $pdf->SetFont('dejavusans','B',10);
+                $pdf->Cell(39,6,'$'.number_format($factura->copago-$factura->ajuste).'  ',1,0,'R',true);
+
+
+                
+            
+                
+                $pdf->SetY($total_pagar_posicion); // Establece la posición vertical (ajusta según tus necesidades)
+                // $pdf->Cell(210);
+                
+                
+                $pdf->SetFillColor(255,255,255);
+                $pdf->SetDrawColor(11,78,187);
+                $pdf->SetTextColor(0 , 0, 0);
+                $pdf->Cell(210);
+                $pdf->SetFont('dejavusans','B',19);
+                $pdf->Cell(54,12,'$'.number_format($factura->copago+$factura->saldo_anterior-$factura->ajuste),1,0,'C',true);
+
+                $pdf->Ln(15);
+
+                $pdf->SetFont('dejavusans','B',10);
+                $pdf->Cell(264,6,"Punto de pago, oficina principal de ASUAAASTAB ubicada en la antigua Alcaldia ",1,0,'C',true);
+                $pdf->Ln(6);
+
+                
+                $pdf->Cell(264,6,"Vigilada Superintendencia de Servicios Públicos",1,0,'C',true);
+
+                if($key%2==0){
+                    $pdf->Ln(20);
+                    $pdf->MultiCell(0,9,"----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------",0,'C',false);
+                    $pdf->Ln(1);
+                }
+
+
+                    
 
             }
-            $pdf->Output("I","Factura_Nro_1.pdf",true);
+
+            
+            $pdf->Output('example_027.pdf', 'I');
             
         }
 
@@ -546,7 +489,7 @@ echo "</pre>"; */
 
 
       
-            $factura = new Factura();
+            // $factura = new Factura();
             $registrados = Registrado::all();
 
             foreach($registrados as $registrado){
@@ -556,6 +499,9 @@ echo "</pre>"; */
                 if(!$registrado->estrato_id) continue;
                 if($registrado->estado==0) continue;
 
+               
+
+
                 $registrado->facturas = $registrado->facturas + 1;
                 $registrado->guardar();
                 
@@ -563,6 +509,20 @@ echo "</pre>"; */
 
                 $estrato = Estrato::find($registrado->estrato_id);
 
+                $saldo_anterior = 0;
+         
+                if(($registrado->facturas-1)>0){
+                    $factura_anterior = Factura::whereDes( 'registrado_id',$registrado->id);
+                    $copago_anterior =  $estrato->copago;
+                    $ajuste_anterior = $estrato->ajuste??0;
+                    $saldo_anterior = $copago_anterior+$factura_anterior->saldo_anterior - $ajuste_anterior;
+                    $factura_anterior->combinado = 1;
+                    $factura_anterior->guardar();
+                }
+
+               
+                
+              
                 $datos_factura = [
                     'numero_factura'=>$ultimo_numero,
                     'registrado_id'=>$registrado->id,
@@ -580,16 +540,20 @@ echo "</pre>"; */
                     'subsidio_aseo'=>$estrato->subsidio_aseo,
                     'copago_aseo'=>$estrato->copago_aseo,
                     'ajuste'=>$estrato->ajuste??0,
-                    'pagado'=>0
+                    'pagado'=>0,
+                    'combinado' =>0,
+                    'saldo_anterior' =>$saldo_anterior
 
 
                 ];
 
            
-               
+                $factura = new Factura();
                 $factura->sincronizar($datos_factura);
                
-                $factura->guardar();
+                $resultado =  $factura->guardar();
+          
+    
                 
                
                
@@ -713,6 +677,7 @@ echo "</pre>"; */
         }
 
         public static function previsualizarFactura(){
+           
             if(!is_auth()){
                 header('Location:/login');
             }
@@ -735,473 +700,416 @@ echo "</pre>"; */
                 return;
             }
 
-            //calculamos el total a pagar copago - ajuste
-            $total = number_format($factura->copago - $factura->ajuste);
-
-            //formatear periodo de facturacion
-            $factura->fecha_emision = date("d-m-Y", strtotime($factura->fecha_emision));
-            $fechaInicioObj = strtotime($factura->mes_facturado);
-            $fechaFinObj = strtotime(date('t-m-Y', $fechaInicioObj));
+          
+            $factura->fecha_emision =date('Y-m',strtotime($factura->fecha_emision));
         
-            $factura->periodo_inicio = date('d-m-Y', $fechaInicioObj);
-            $factura->periodo_fin = date('d-m-Y', $fechaFinObj);
 
-            //fecha limite
-           
-            $factura->fecha_limite = $fechaLimite = date('d-m-y',strtotime(date('t-m-Y', strtotime($factura->fecha_emision))));
+       
       
         
 
             $registrado = Registrado::find($factura->registrado_id);
+       
+            $facturas_vencidas = $registrado->facturas;
+            if($registrado->facturas>0){
+                $facturas_vencidas = $registrado->facturas-1;
+            }
+           
+        
 
-            $estrato = Estrato::find($registrado->estrato_id);
+        
             mb_internal_encoding('UTF-8');
-            $factura->formatearDatosNumber();
+            // $factura->formatearDatosNumber();
 
-
-
-            $pdf = new FPDF('P','mm','Letter');
-         
-            $pdf->SetMargins(17,10,17);
-            $pdf->AddPage();
-
-            # Logo de la empresa formato png #
-            $pdf->Image('../public/build/img/logo.png',97,9,100,25,'PNG');
-
-       
-
-            # Encabezado y datos de la empresa #
-            // $pdf->SetFont('Arial','B',16);
-            // $pdf->SetTextColor(32,100,210);
-            // $pdf->Cell(150,10,(strtoupper("Servicios Publicos")),0,0,'L');
-
-            $pdf->Ln(5);
-
-            $pdf->SetFont('Arial','',10);
-            $pdf->SetTextColor(39,39,51);
-            $pdf->Cell(150,9,("Empresa: serviciosPublicos"),0,0,'L');
-            $pdf->Ln(5);
-
-            $pdf->SetFont('Arial','',10);
-            $pdf->SetTextColor(39,39,51);
-            $pdf->Cell(150,9,("RUT: 0000000000"),0,0,'L');
-
-            $pdf->Ln(5);
-
-            $pdf->Cell(150,9,utf8_decode("Dirección San Salvador, El Salvador"),0,0,'L');
-
-            $pdf->Ln(5);
-
-            $pdf->Cell(150,9,utf8_decode("Teléfono: 00000000"),0,0,'L');
-
-            $pdf->Ln(5);
-
-
-            $pdf->Cell(93,9,utf8_decode("Email: correo@ejemplo.com"),0,0,'L');
-
-
-            $pdf->Ln(10);
-
+            $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+            $pdf->setPrintHeader(false);
           
-
-            $pdf->SetFont('Arial','',10);
-            $pdf->SetTextColor(39,39,51);
-            $pdf->Cell(30,7,utf8_decode("Fecha de emisión:"),0,0);
-            $pdf->SetTextColor(97,97,97);
-            $pdf->Cell(63,7,($factura->fecha_emision),0,0,'L');
-
-            
-            $pdf->SetFont('Arial','',15);
-            $pdf->SetTextColor(39,39,51);
-            $pdf->Cell(29, 6, utf8_decode("Factura No:"), 0, 0);
-            $pdf->SetTextColor(255,0,0);
-            $pdf->SetFont('Arial','',20);
-            $pdf->Cell(64,7,($factura->numero_factura),0,0,'L');
-
-            $pdf->Ln(5);
-
-            $pdf->SetFont('Arial','',10);
-            $pdf->SetTextColor(39,39,51);
-            $pdf->Cell(31,7,utf8_decode("Periodo Facturado:"),0,0);
-            $pdf->SetTextColor(97,97,97);
-            $pdf->Cell(116,7,($factura->periodo_inicio.'  -  '.$factura->periodo_fin),0,0,'L');
-            $pdf->Ln(5);
-
-            $pdf->SetFont('Arial','',10);
-            $pdf->SetTextColor(39,39,51);
-            $pdf->Cell(22,7,utf8_decode("Fecha Limite:"),0,0);
-            $pdf->SetTextColor(97,97,97);
-            $pdf->Cell(116,7,($factura->fecha_limite),0,0,'L');
-   
-
-            $pdf->Ln(10);
-
-            $pdf->SetFont('Arial','',10);
-            $pdf->SetTextColor(39,39,51);
-            $pdf->Cell(13,7,("Cliente:"),0,0);
-            $pdf->SetTextColor(97,97,97);
-            $pdf->Cell(81,7,utf8_decode("$registrado->nombre $registrado->apellido"),0,0,'L');
-
-            $pdf->SetTextColor(39,39,51);
-            $pdf->Cell(20,7,("Nit / Cedula: "),0,0);
-            $pdf->SetTextColor(97,97,97);
-            $pdf->Cell(73,7,utf8_decode($registrado->cedula_nit),0,0);
-         
-
-            $pdf->Ln(5);
-
-            $pdf->SetTextColor(39,39,51);
-            $pdf->Cell(13,7,("Celular: "),0,0);
-            $pdf->SetTextColor(97,97,97);
-            $pdf->Cell(81,7,utf8_decode($registrado->celular),0,0);
-
-            $pdf->SetTextColor(39,39,51);
-            $pdf->Cell(11,7,("Barrio: "),0,0);
-            $pdf->SetTextColor(97,97,97);
-            $pdf->Cell(80,7,utf8_decode($registrado->barrio),0,0);
-        
-            $pdf->Ln(5);
-
-        
-            $pdf->SetTextColor(39,39,51);
-            $pdf->Cell(16,7,utf8_decode("Dirección: "),0,0);
-            $pdf->SetTextColor(97,97,97);
-            $pdf->Cell(78,7,($registrado->direccion),0,0);
-
-            $pdf->SetTextColor(39,39,51);
-            $pdf->Cell(13,7,utf8_decode("Código: "),0,0);
-            $pdf->SetTextColor(97,97,97);
-            $pdf->Cell(80,7,($registrado->codigo_ubicacion),0,0);
-
-
-            $pdf->Ln(10);
-          
-            $pdf->SetTextColor(39,39,51);
-            $pdf->SetFont('Arial','',12);
-            $pdf->Cell(15,7,("Estrato:"),0,0,'L');
-  
-            $pdf->SetTextColor(97,97,97);
-            $pdf->SetFont('Arial','',12);
-            $pdf->Cell(80,7,utf8_decode("$estrato->estrato"),0,0);
-
-            $pdf->Ln(9);
-
-            # Tabla de productos #
-            $pdf->SetFont('Arial','',8);
-            $pdf->SetFillColor(23,83,201);
-            $pdf->SetDrawColor(255,255,255);
-            $pdf->SetTextColor(255,255,255);
-            
-            $pdf->Cell(45,8,("Acueducto"),1,0,'C',true);
-            $pdf->Cell(45,8,("Alcantariilado."),1,0,'C',true);
-            $pdf->Cell(45,8,("Aseo"),1,0,'C',true);
-            $pdf->Cell(46,8,("Tarifa Plena."),1,0,'C',true);
-
-            $pdf->Ln(8);
-
-         
-  
-            $pdf->Cell(23,8,utf8_decode("Descripción"),1,0,'C',true);
-            $pdf->Cell(22,8,("Total"),1,0,'C',true);
-            $pdf->Cell(23,8,utf8_decode("Descripción"),1,0,'C',true);
-            $pdf->Cell(22,8,("Total"),1,0,'C',true);
-            $pdf->Cell(23,8,utf8_decode("Descripción"),1,0,'C',true);
-            $pdf->Cell(22,8,("Total"),1,0,'C',true);
-   
-            $pdf->Cell(23,8,("Concepto"),1,0,'C',true);
-            $pdf->Cell(23,8,("Valor"),1,0,'C',true);
-
-            $pdf->Ln(8);
-
-
-            $pdf->SetFillColor(23,83,201);
-            $pdf->SetDrawColor(23,83,201);
-            $pdf->SetTextColor(39,39,51);
-
-            $pdf->SetX(17.3);
-            /*----------  Detalles de la tabla  ----------*/
-            $pdf->Cell(22.7,8,(""),'LT',0,'C');
-            $pdf->Cell(22.,8,(""),'LT',0,'C');
-            $pdf->Cell(22.9,8,(""),'LT',0,'C');
-            $pdf->Cell(22.,8,(""),'LT',0,'C');
-            $pdf->Cell(23,8,(""),'LT',0,'C');
-            $pdf->Cell(22.,8,(""),'LT',0,'C');
-            $pdf->Cell(23,8,("Tarifa Flena"),'LT',0,'C');
-            $pdf->Cell(22.8,8,("$ $factura->tarifa_plena"),'LTR',0,'C');
-            $pdf->Ln(8);
-
-            $pdf->SetX(17.3);
-            /*----------  Detalles de la tabla  ----------*/
+            $pdf->AddPage('p', 'A3');
            
-            $pdf->Cell(22.7,8,("Subsidiado"),'LT',0,'C');
-            $pdf->Cell(22.,8,("$ $factura->copago_acu"),'LT',0,'C');
-            $pdf->Cell(22.9,8,("Subsidiado"),'LT',0,'C');
-            $pdf->Cell(22.,8,("$ $factura->copago_alc"),'LT',0,'C');
-            $pdf->Cell(23,8,("Subsidiado"),'LT',0,'C');
-            $pdf->Cell(22.,8,("$ $factura->copago_aseo"),'LT',0,'C');
-            $pdf->Cell(23,8,("Subsidio"),'LT',0,'C');
-            $pdf->Cell(22.8,8,("$ $factura->copago"),'LTR',0,'C');
-           
-            $pdf->Ln(7);
-            $pdf->SetX(17.3);
-       
-        
-            /*----------  Fin Detalles de la tabla  ----------*/
-            
-            $pdf->Cell(22.7,8,("Cargo Fijo"),'LT',0,'C');
-            $pdf->Cell(22.,8,("$ $factura->copago_acu"),'LT',0,'C');
-            $pdf->Cell(22.9,8,("Cargo Fijo"),'LT',0,'C');
-            $pdf->Cell(22.,8,("$ $factura->copago_alc"),'LT',0,'C');
-            $pdf->Cell(23,8,("Cargo Fijo"),'LT',0,'C');
-            $pdf->Cell(22.,8,("$ $factura->copago_aseo"),'LT',0,'C');
-            $pdf->Cell(23,8,("Copago"),'LT',0,'C');
-            $pdf->Cell(22.8,8,("$ $factura->copago"),'LTR',0,'C');
-            
-            $pdf->Ln(7);
-            $pdf->SetX(17.3);
-       
-        
-            /*----------  Fin Detalles de la tabla  ----------*/
-            
-            $pdf->Cell(22.7,8,(""),'LT',0,'C');
-            $pdf->Cell(22.,8,(""),'LT',0,'C');
-            $pdf->Cell(22.9,8,(""),'LT',0,'C');
-            $pdf->Cell(22.,8,(""),'LT',0,'C');
-            $pdf->Cell(23,8,(""),'LT',0,'C');
-            $pdf->Cell(22.,8,(""),'LT',0,'C');
-            $pdf->Cell(23,8,("Ajuste Tarifario"),'LT',0,'C');
-            $pdf->Cell(22.8,8,("$ $factura->ajuste"),'LTR',0,'C');
-
-         
-            $pdf->Ln(7);
-            $pdf->SetX(17.3);
-       
-        
-            /*----------  Fin Detalles de la tabla  ----------*/
-            
-            $pdf->Cell(22.7,8,(""),'LTB',0,'C');
-            $pdf->Cell(22.,8,(""),'LTB',0,'C');
-            $pdf->Cell(22.9,8,(""),'LTB',0,'C');
-            $pdf->Cell(22.,8,(""),'LTB',0,'C');
-            $pdf->Cell(23,8,(""),'LTB',0,'C');
-            $pdf->Cell(22.,8,(""),'LTB',0,'C');
-            
-            //$pdf->SetTextColor(97,97,97);
-            $pdf->SetFont('Arial','B',12);
-           
-            $pdf->Cell(23,8,("Total Pagar"),'LTB',0,'C');
-            $pdf->Cell(22.8,8,("$total"),'LTRB',0,'C');
-         
-            $pdf->Ln(10);
-
-            $pdf->SetTextColor(39,39,51);
-            $pdf->MultiCell(0,9,("-------------------------------------------------------------------------------------------------------------------------------"),0,'C',false);
-       
-
-            // $pdf->Ln(10);
-
-            $pdf->SetFont('Arial','',10);
-            $pdf->SetTextColor(39,39,51);
-            $pdf->Cell(30,7,utf8_decode("Fecha de emisión:"),0,0);
-            $pdf->SetTextColor(97,97,97);
-            $pdf->Cell(63,7,($factura->fecha_emision),0,0,'L');
-
-            
-            $pdf->SetFont('Arial','',15);
-            $pdf->SetTextColor(39,39,51);
-            $pdf->Cell(29, 7, utf8_decode("Factura No:"), 0, 0);
-            $pdf->SetTextColor(255,0,0);
-            $pdf->SetFont('Arial','',20);
-            $pdf->Cell(64,7,($factura->numero_factura),0,0,'L');
-
-            $pdf->Ln(5);
-
-            $pdf->SetFont('Arial','',10);
-            $pdf->SetTextColor(39,39,51);
-            $pdf->Cell(31,7,utf8_decode("Periodo Facturado:"),0,0);
-            $pdf->SetTextColor(97,97,97);
-            $pdf->Cell(116,7,($factura->periodo_inicio.'  -  '.$factura->periodo_fin),0,0,'L');
-            $pdf->Ln(5);
-            $pdf->SetFont('Arial','',10);
-            $pdf->SetTextColor(39,39,51);
-            $pdf->Cell(22,7,utf8_decode("Fecha Limite:"),0,0);
-            $pdf->SetTextColor(97,97,97);
-            $pdf->Cell(116,7,($factura->fecha_limite),0,0,'L');
-
-            $pdf->Ln(10);
-
-
-         
-            // $pdf->SetFont('Arial','B',12);
-            // $pdf->SetTextColor(255,0,0);
-            // $pdf->Cell(35,7,(strtoupper("$factura->numero_factura")),0,0,'C');
-
-
-
-            $pdf->SetFont('Arial','',10);
-            $pdf->SetTextColor(39,39,51);
-            $pdf->Cell(13,7,("Cliente:"),0,0);
-            $pdf->SetTextColor(97,97,97);
-            $pdf->Cell(81,7,utf8_decode("$registrado->nombre $registrado->apellido"),0,0,'L');
-
-            $pdf->SetTextColor(39,39,51);
-            $pdf->Cell(20,7,("Nit / Cedula: "),0,0);
-            $pdf->SetTextColor(97,97,97);
-            $pdf->Cell(73,7,utf8_decode($registrado->cedula_nit),0,0);
-         
-
-            $pdf->Ln(5);
-
-            $pdf->SetTextColor(39,39,51);
-            $pdf->Cell(13,7,("Celular: "),0,0);
-            $pdf->SetTextColor(97,97,97);
-            $pdf->Cell(81,7,utf8_decode($registrado->celular),0,0);
-
-            $pdf->SetTextColor(39,39,51);
-            $pdf->Cell(11,7,("Barrio: "),0,0);
-            $pdf->SetTextColor(97,97,97);
-            $pdf->Cell(80,7,utf8_decode($registrado->barrio),0,0);
-        
-            $pdf->Ln(5);
-
-        
-            $pdf->SetTextColor(39,39,51);
-            $pdf->Cell(16,7,utf8_decode("Dirección: "),0,0);
-            $pdf->SetTextColor(97,97,97);
-            $pdf->Cell(78,7,($registrado->direccion),0,0);
-
-            $pdf->SetTextColor(39,39,51);
-            $pdf->Cell(13,7,utf8_decode("Código: "),0,0);
-            $pdf->SetTextColor(97,97,97);
-            $pdf->Cell(80,7,($registrado->codigo_ubicacion),0,0);
-
-
-             $pdf->Ln(10);
-          
-            $pdf->SetTextColor(39,39,51);
-            $pdf->SetFont('Arial','',12);
-            $pdf->Cell(15,7,("Estrato:"),0,0,'L');
-  
-            $pdf->SetTextColor(97,97,97);
-            $pdf->SetFont('Arial','',12);
-            $pdf->Cell(80,7,utf8_decode("$estrato->estrato"),0,0);
-
-            $pdf->Ln(9);
-
-            # Tabla de productos #
-            $pdf->SetFont('Arial','',8);
-            $pdf->SetFillColor(23,83,201);
-            $pdf->SetDrawColor(255,255,255);
-            $pdf->SetTextColor(255,255,255);
-            
-            $pdf->Cell(45,8,("Acueducto"),1,0,'C',true);
-            $pdf->Cell(45,8,("Alcantariilado."),1,0,'C',true);
-            $pdf->Cell(45,8,("Aseo"),1,0,'C',true);
-            $pdf->Cell(46,8,("Tarifa Plena."),1,0,'C',true);
-
-            $pdf->Ln(8);
-
-         
-  
-            $pdf->Cell(23,8,utf8_decode("Descripción"),1,0,'C',true);
-            $pdf->Cell(22,8,("Total"),1,0,'C',true);
-            $pdf->Cell(23,8,utf8_decode("Descripción"),1,0,'C',true);
-            $pdf->Cell(22,8,("Total"),1,0,'C',true);
-            $pdf->Cell(23,8,utf8_decode("Descripción"),1,0,'C',true);
-            $pdf->Cell(22,8,("Total"),1,0,'C',true);
-   
-            $pdf->Cell(23,8,("Concepto"),1,0,'C',true);
-            $pdf->Cell(23,8,("Valor"),1,0,'C',true);
-
-            $pdf->Ln(8);
-
-          
-
-            $pdf->SetFillColor(23,83,201);
-            $pdf->SetDrawColor(23,83,201);
-            $pdf->SetTextColor(39,39,51);
-            $pdf->SetX(17.3);
-            $pdf->Cell(22.7,8,(""),'LT',0,'C');
-            $pdf->Cell(22.,8,(""),'LT',0,'C');
-            $pdf->Cell(22.9,8,(""),'LT',0,'C');
-            $pdf->Cell(22.,8,(""),'LT',0,'C');
-            $pdf->Cell(23,8,(""),'LT',0,'C');
-            $pdf->Cell(22.,8,(""),'LT',0,'C');
-            $pdf->Cell(23,8,("Tarifa Plena"),'LT',0,'C');
-            $pdf->Cell(22.8,8,("$ $factura->tarifa_plena"),'LTR',0,'C');
-           
-            $pdf->Ln(7);
-         
-
-
-            $pdf->SetX(17.3);
      
-       
-            $pdf->Cell(22.7,8,("Subsidiado"),'LT',0,'C');
-            $pdf->Cell(22.,8,("$ $factura->copago_acu"),'LT',0,'C');
-            $pdf->Cell(22.9,8,("Subsidiado"),'LT',0,'C');
-            $pdf->Cell(22.,8,("$ $factura->copago_alc"),'LT',0,'C');
-            $pdf->Cell(23,8,("Subsidiado"),'LT',0,'C');
-            $pdf->Cell(22.,8,("$ $factura->copago_aseo"),'LT',0,'C');
-            $pdf->Cell(23,8,("Subsidio"),'LT',0,'C');
-            $pdf->Cell(22.8,8,("$ $factura->copago"),'LTR',0,'C');
+            $pdf->SetMargins(17,10, 17);
+            // # Logo de la empresa formato png #
+
+             $pdf->Image('../public/build/img/logo.png',17,10,52,38,'PNG');
+                // Relleno rojo (RGB)
+             
+         
+             $pdf->Ln(0);
            
-            $pdf->Ln(7);
-            $pdf->SetX(17.3);
-
-
-            $pdf->Cell(22.7,8,("Cargo Fijo"),'LT',0,'C');
-            $pdf->Cell(22.,8,("$ $factura->copago_acu"),'LT',0,'C');
-            $pdf->Cell(22.9,8,("Cargo Fijo"),'LT',0,'C');
-            $pdf->Cell(22.,8,("$ $factura->copago_alc"),'LT',0,'C');
-            $pdf->Cell(23,8,("Cargo Fijo"),'LT',0,'C');
-            $pdf->Cell(22.,8,("$ $factura->copago_aseo"),'LT',0,'C');
-            $pdf->Cell(23,8,("Copago"),'LT',0,'C');
-            $pdf->Cell(22.8,8,("$ $factura->copago"),'LTR',0,'C');
-           
+          
             
-            $pdf->Ln(7);
-            $pdf->SetX(17.3);
+
+            // # Encabezado y datos de la empresa #
+            $pdf->Cell(87);
+            $pdf->SetFont('dejavusans','B',11);
+            $pdf->SetTextColor(11,78,187);
+            $pdf->Cell(150,10,'Asociación de usuarios Administradores de Acueducto, Alcantarillado y Aseo',0,0,'C');
+
+            $pdf->Ln(5);
+            $pdf->Cell(87);
+            $pdf->Cell(150,10,'del Casco Urbano del Tablón de Gómez',0,0,'C');
+            $pdf->Ln(6);
+            $pdf->Cell(87);
+            $pdf->SetFont('dejavusans','B',14);
+            $pdf->SetTextColor(0,0,0);
+            $pdf->Cell(150,10,'ASUAAASTAB',0,0,'C');
+            $pdf->Ln(6);
+            $pdf->Cell(87);
+            $pdf->SetFont('dejavusans','B',10);
+            $pdf->SetTextColor(0,0,0);
+            $pdf->Cell(150,10,'Nit: 900324139-0',0,0,'C');
+            $pdf->Ln(6);
+            $pdf->Cell(87);
+            $pdf->SetFont('dejavusans','B',10);
+            $pdf->SetTextColor(0,0,0);
+            $pdf->Cell(150,10,'3216549877',0,0,'C');
+            $pdf->Ln(6);
+            $pdf->Cell(87);
+            $pdf->SetFont('dejavusans','B',10);
+            $pdf->SetTextColor(0,0,0);
+            $pdf->Cell(150,10,'El Tablon de Gómez',0,0,'C');
+
+            $pdf->Ln(10);
+
+              //informacion cCliente
+              $pdf->SetLineWidth(0.1);
+            $pdf->SetFont('dejavusans','B',10);
+            $pdf->SetFillColor(11,78,187);
+            $pdf->SetDrawColor(11,78,187);
+            $pdf->SetTextColor(255,255,255);
+            $pdf->Cell(130,7,"Información del Cliente",1,0,'C',true);
+            $pdf->Cell(3);
+            $pdf->Cell(76,7,"Información de la Factura",1,0,'C',true);
+            $pdf->Cell(1);
+            $pdf->Cell(27,7,"Factura No",1,0,'L',true);
+           
+            $pdf->SetFillColor(255, 255, 255);
+            $pdf->SetDrawColor(11,78,187);
+            $pdf->SetTextColor(255,0,0);
+            $pdf->Cell(27,7,$factura->numero_factura,1,0,'C',true);
+            
+
+            $pdf->Cell(3);
        
 
-            
-            $pdf->Cell(22.7,8,(""),'LT',0,'C');
-            $pdf->Cell(22.,8,(""),'LT',0,'C');
-            $pdf->Cell(22.9,8,(""),'LT',0,'C');
-            $pdf->Cell(22.,8,(""),'LT',0,'C');
-            $pdf->Cell(23,8,(""),'LT',0,'C');
-            $pdf->Cell(22.,8,(""),'LT',0,'C');
-            $pdf->Cell(23,8,("Ajuste Tarifario"),'LT',0,'C');
-            $pdf->Cell(22.8,8,("$ $factura->ajuste"),'LTR',0,'C');
+            $pdf->Ln(7);
+            $pdf->SetFillColor(255,255,255);
+            $pdf->SetTextColor(0,0,0);
+
+            $pdf->SetFont('dejavusans','',10);
+            $pdf->Cell(30,6,"  Usuario: ", 'L',0,0,'L',true);
+            $pdf->SetFont('dejavusans','B',10);
+            $pdf->Cell(100,6,"$registrado->nombre $registrado->apellido", 'R',0,0,'L',true);
+            $pdf->Cell(3);
+ 
+            $pdf->SetDrawColor(11,78,187);
+            $pdf->SetFont('dejavusans','',10);
+            $pdf->Cell(76,6,"  Mes Factuardo",1,0,'L',true);
+            $pdf->Cell(1);
+            $pdf->SetFont('dejavusans','B',10);
+            $pdf->Cell(54,6,$factura->mes_facturado.'  ',1,0,'R',true);
+
+
+            $pdf->Ln(6);
+
+            $pdf->SetFont('dejavusans','',10);
+            $pdf->Cell(30,6,"  Cedula/Nit: ", 'L',0,0,'L',true);
+            $pdf->SetFont('dejavusans','B',10);
+            $pdf->Cell(100,6,"$registrado->cedula_nit", 'R',0,0,'L',true);
+            $pdf->SetDrawColor(11,78,187);
+            $pdf->Cell(3);
+            $pdf->SetFont('dejavusans','',10);
+            $pdf->Cell(76,6,"  Fecha de Pago Oportuno",1,0,'L',true);
+            $pdf->Cell(1);
+            $pdf->SetFont('dejavusans','B',10);
+            $pdf->Cell(54,6,$factura->fecha_emision.'-26  ',1,0,'R',true);
 
      
-            $pdf->Ln(7);
-            $pdf->SetX(17.3);
+
+            $pdf->Ln(6);
+            $pdf->SetFont('dejavusans','',10);
+            $pdf->Cell(30,6,"  Dirección:", 'L',0,0,'L',true);
+            $pdf->SetFont('dejavusans','B',10);
+            $pdf->Cell(100,6,"$registrado->direccion", 'R',0,0,'L',true);
+            $pdf->Cell(3);
+            $pdf->SetFont('dejavusans','',10);
+            $pdf->Cell(76,6,"  Facturas Vencidas",1,0,'L',true);
+            $pdf->Cell(1);
+            $pdf->SetFont('dejavusans','B',10);
+            $pdf->Cell(54,6,$facturas_vencidas. '  ',1,0,'R',true);
+            $pdf->Ln(6);
+            $pdf->SetFont('dejavusans','',10);
+            $pdf->Cell(30,6,"  Barrio: ", 'L',0,0,'L',true);
+            $pdf->SetFont('dejavusans','B',10);
+            $pdf->Cell(100,6,"$registrado->barrio", 'R',0,0,'L',true);
+            $pdf->Cell(3);
+            $pdf->SetFont('dejavusans','',10);
+            $pdf->Cell(76,6,"  Saldo Anterior",1,0,'L',true);
+            $pdf->Cell(1);
+            $pdf->SetFont('dejavusans','B',10);
+            $pdf->Cell(54,6,'$'.number_format($factura->saldo_anterior). '  ',1,0,'R',true);
+            
+            $pdf->SetFont('dejavusans','',10);
+            $pdf->Ln(6);
+            $pdf->Cell(30,6,"  Código: ", 'L',0,0,'L',true);
+            $pdf->SetFont('dejavusans','B',10);
+            $pdf->Cell(100,6,"$registrado->codigo_ubicacion", 'R',0,0,'L',true);
+            $pdf->Cell(3);
+            $pdf->SetFont('dejavusans','',10);
+            $pdf->Cell(76,6,"  Pago Mensual",1,0,'L',true);
+            $pdf->Cell(1);
+            $pdf->SetFont('dejavusans','B',10);
+            $pdf->Cell(54,6,'$'.number_format($factura->copago-$factura->ajuste). '  ',1,0,'R',true);
+            $pdf->Ln(6);
+            $pdf->SetFont('dejavusans','',10);
+            $pdf->Cell(30,6,"  Estrato: ", 'LB',0,0,'L',true);
+            $pdf->SetFont('dejavusans','B',10);
+            $pdf->Cell(100,6,"$factura->estrato", 'RB',0,0,'L',true);
+            $pdf->Cell(3);
+            $pdf->SetFont('dejavusans','',10);
+            $pdf->Cell(76,6,"  Total Pagar",1,0,'L',true);
+            $pdf->Cell(1);
+            $pdf->SetFont('dejavusans','B',10);
+            $pdf->Cell(54,6,'$'.number_format($factura->copago-$factura->ajuste+$factura->saldo_anterior). '  ',1,0,'R',true);
+
+          /* infomraicon acueducto aseo, alcantarillado y pago fina */
+            $pdf->Ln(8);
+            $pdf->SetLineWidth(0.1);
+            $pdf->SetFont('dejavusans','B',10);
+            $pdf->SetFillColor(11,78,187);
+            $pdf->SetDrawColor(11,78,187);
+            $pdf->SetTextColor(255,255,255);
+            $pdf->Cell(69,6,"Liquidación Acueducto",1,0,'C',true);
+            $pdf->Cell(1);
+            $pdf->Cell(73,6,"Liquidación Alcantarillado",1,0,'C',true);
+            $pdf->Cell(1);
+            $pdf->Cell(65,6,"Liquidación Aseo",1,0,'C',true);
+            $pdf->Cell(1);
+            $pdf->Cell(54,6,"Ajuste",1,0,'C',true);
+
+            $pdf->Ln(6);
+            $pdf->SetFillColor(255,255,255);
+            $pdf->SetTextColor(0,0,0);
+
+            $pdf->SetFont('dejavusans','',10);
+            $pdf->Cell(24,6,"  Cargo Fijo: ", 'L',0,0,'L',true);
+            $pdf->SetFont('dejavusans','B',10);
+            $pdf->Cell(45,6,"$".number_format($factura->copago_acu). '  ', 'R',0,'R',true);
+
+             $pdf->Cell(1);
+             $pdf->SetFont('dejavusans','',10);
+             $pdf->Cell(25,6,"  Cargo Fijo: ", 'L',0,0,'L',true);
+             $pdf->SetFont('dejavusans','B',10);
+             $pdf->Cell(48,6,"$".number_format($factura->copago_alc). '  ', 'R',0,'R',true);
+             $pdf->Cell(1);
+             $pdf->SetFont('dejavusans','',10);
+             $pdf->Cell(25,6,"  Cargo Fijo: ", 'L',0,0,'L',true);
+             $pdf->SetFont('dejavusans','B',10);
+             $pdf->Cell(40,6,"$".number_format($factura->copago_aseo). '  ', 'R',0,'R',true);
+             $pdf->Cell(1);
+             $pdf->SetFont('dejavusans','',10);
+             $pdf->Cell(22,6,"  Tarifario: ", 'L',0,0,'L',true);
+             $pdf->SetFont('dejavusans','B',10);
+             $pdf->Cell(32,6,"$".number_format($factura->copago_aseo). '  ', 'R',0,'R',true);
+
+            $pdf->Ln(6);
+            $pdf->SetFont('dejavusans','',10);
+            $pdf->Cell(24,6,"  Subsidiado: ", 'LB',0,0,'L',true);
+            $pdf->SetFont('dejavusans','B',10);
+            $pdf->Cell(45,6,"$".number_format($factura->subsidio_acu). '  ', 'RB',0,'R',true);
+            $pdf->Cell(1);
+            $pdf->SetFont('dejavusans','',10);
+            $pdf->Cell(25,6,"  Subsidiado: ", 'L',0,0,'L',true);
+            $pdf->SetFont('dejavusans','B',10);
+            $pdf->Cell(48,6,"$".number_format($factura->subsidio_alc). '  ', 'R',0,'R',true);
+            $pdf->Cell(1);
+            $pdf->SetFont('dejavusans','',10);
+            $pdf->Cell(25,6,"  Subsidiado: ", 'L',0,0,'L',true);
+            $pdf->SetFont('dejavusans','B',10);
+            $pdf->Cell(40,6,"$".number_format($factura->subsidio_aseo). '  ', 'R',0,'R',true);
+            $pdf->Cell(1);
+            $pdf->Cell(54,6,"", 'LR',0,'R',true);
+            $pdf->Ln(6);
+
+            $pdf->SetFont('dejavusans','B',10);
+            $pdf->Cell(40,6,"  Total Acueducto", 'LBTR',0,0,'L',true);
+            $pdf->SetFont('dejavusans','B',11);
+            $pdf->Cell(29,6,"$".number_format($factura->copago_acu+$factura->subsidio_acu). '  '. '', 'LRTB',0,'R',true);
+            $pdf->Cell(1);
+            $pdf->SetFont('dejavusans','B',10);
+            $pdf->Cell(45,6,"  Total Alcantarillado", 'LBTR',0,0,'L',true);
+            $pdf->SetFont('dejavusans','B',11);
+            $pdf->Cell(28,6,"$".number_format($factura->copago_alc+$factura->subsidio_alc). '  '. '', 'LRTB',0,'R',true);
+            $pdf->Cell(1);
+            $pdf->SetFont('dejavusans','B',10);
+            $pdf->Cell(35,6,"  Total Aseo", 'LBTR',0,0,'L',true);
+            $pdf->SetFont('dejavusans','B',11);
+            $pdf->Cell(30,6,"$".number_format($factura->copago_aseo+$factura->subsidio_aseo). '  '. '', 'LRTB',0,'R',true);
+            $pdf->Cell(1);
+            $pdf->SetFont('dejavusans','B',10);
+            $pdf->Cell(29,6,"  Total Ajuste", 'LBTR',0,0,'L',true);
+            $pdf->SetFont('dejavusans','B',11);
+            $pdf->Cell(25,6,"$".number_format($factura->ajuste). '  '. '', 'LRTB',0,'R',true);
+
+            $pdf->Ln(8);
        
+            $pdf->write1DBarcode($factura->numero_factura, 'C39', 17, '', '', 18, 0.6);
+            $pdf->Cell(210);
+            $pdf->SetLineWidth(0.1);
+            $pdf->SetFont('dejavusans','B',10);
+            $pdf->SetFillColor(11,78,187);
+            $pdf->SetDrawColor(11,78,187);
+            $pdf->SetTextColor(255,255,255);
+            
+    
+            $pdf->Cell(54,6,"TOTAL A PAGAR",1,0,'C',true);
+            $pdf->Ln(6);
+            $pdf->SetFillColor(255,255,255);
+            $pdf->SetDrawColor(11,78,187);
+            $pdf->SetTextColor(0 , 0, 0);
+            $pdf->Cell(210);
+            $pdf->SetFont('dejavusans','B',19);
+            $pdf->Cell(54,12,'$'.number_format($factura->copago+$factura->saldo_anterior-$factura->ajuste),1,0,'C',true);
+            $pdf->Ln(11);
+            $pdf->MultiCell(0,9,"---------------------------------------------------------------------------------------------",0,'C',false);
+            
+            /* Informacion Recibo */
+
+            $pdf->Ln(0);
 
             
-            $pdf->Cell(22.7,8,(""),'LTB',0,'C');
-            $pdf->Cell(22.,8,(""),'LTB',0,'C');
-            $pdf->Cell(22.9,8,(""),'LTB',0,'C');
-            $pdf->Cell(22.,8,(""),'LTB',0,'C');
-            $pdf->Cell(23,8,(""),'LTB',0,'C');
-            $pdf->Cell(22.,8,(""),'LTB',0,'C');
+     
+            
+            // $pdf->Image('../public/build/img/logo.png',17,145,52,32,'PNG');
+
+
+            // $pdf->Cell(70);
+            $pdf->SetLineWidth(0.1);
+            $pdf->SetFont('dejavusans','B',10);
+            $pdf->SetFillColor(11,78,187);
+            $pdf->SetDrawColor(11,78,187);
+            $pdf->SetTextColor(255,255,255);
+            $pdf->Cell(130,6,"Información del Cliente",1,0,'C',true);
+            $pdf->Cell(3);
+            $pdf->Cell(76,6,"Información de la Factura",1,0,'C',true);
+
+   
+            $pdf->Cell(1);
+            $pdf->Cell(27,6,"Factura No",1,0,'L',true);
+            $pdf->SetFillColor(255, 255, 255);
+            $pdf->SetDrawColor(11,78,187);
+            $pdf->SetTextColor(255,0,0);
+            $pdf->Cell(27,6,$factura->numero_factura,1,0,'C',true);
+
+      
+            
+     
+
+            $pdf->SetFillColor(255,255,255);
+            $pdf->SetDrawColor(11,78,187);
+            $pdf->SetTextColor(0,0,0);
+
+            $pdf->Ln(6);
+
+          
+      
+   
+            $pdf->SetFont('dejavusans','',10);
+            $pdf->Cell(30,6,"  Usuario: ", 'L',0,0,'L',true);
+            $pdf->SetFont('dejavusans','B',10);
+            $pdf->Cell(100,6,"$registrado->nombre $registrado->apellido", 'R',0,0,'L',true);
+
+            $pdf->Cell(3);
+            $pdf->SetFont('dejavusans','',10);
+            $pdf->Cell(37,6,"  Mes Factuardo",1,0,'L',true);
+            $pdf->SetFont('dejavusans','B',10);
+            $pdf->Cell(39,6,$factura->mes_facturado.'  ',1,0,'R',true);
+
+        
+
+    
+            
+            $pdf->Ln(6);
+
+          
+            $pdf->SetFont('dejavusans','',10);
+            $pdf->Cell(30,6,"  Cedula Nit: ", 'L',0,0,'L',true);
+            $pdf->SetFont('dejavusans','B',10);
+            $pdf->Cell(100,6,"$registrado->cedula_nit", 'R',0,0,'L',true);
+            $pdf->Cell(3);
+            $pdf->SetFont('dejavusans','',10);
+            $pdf->Cell(37,6,"  Facturas Vencidas",1,0,'L',true);
+            $pdf->SetFont('dejavusans','B',10);
+            $pdf->Cell(39,6,$registrado->facturas.'  ',1,0,'R',true);
+
+            $pdf->Cell(1);
+
+            $pdf->SetLineWidth(0.1);
+            $pdf->SetFont('dejavusans', 'B', 10);
+            $pdf->SetFillColor(11, 78, 187);
+            $pdf->SetDrawColor(11, 78, 187);
+            $pdf->SetTextColor(255, 255, 255);
+            $pdf->Cell(54, 6, "TOTAL A PAGAR", 1, 0, 'C', true);
+
+
+            $pdf->Ln(6);
+
+            $pdf->SetFillColor(255,255,255);
+            $pdf->SetDrawColor(11, 78, 187);
+            $pdf->SetTextColor(0, 0, 0);
+          
+            $pdf->SetFont('dejavusans','',10);
+            $pdf->Cell(30,6,"  Dirección: ", 'L',0,0,'L',true);
+            $pdf->SetFont('dejavusans','B',10);
+            $pdf->Cell(100,6,"$registrado->direccion", 'R',0,0,'L',true);
+       
+            $pdf->Cell(3);
+            $pdf->SetFont('dejavusans','',10);
+            $pdf->Cell(37,6,"  Saldo Anterior",1,0,'L',true);
+            $pdf->SetFont('dejavusans','B',10);
+            $pdf->Cell(39,6,'$'.number_format($factura->saldo_anterior).'  ',1,0,'R',true);
+
+            $pdf->Ln(6);
 
             
-            $pdf->SetFont('Arial','B',12);
-            $pdf->Cell(23,8,("Total Pagar"),'LTB',0,'C');
-            $pdf->Cell(22.8,8,("$total"),'LTRB',0,'C');
+            $pdf->SetFont('dejavusans','',10);
+            $pdf->Cell(30,6,"  Estrato: ", 'LB',0,0,'L',true);
+            $pdf->SetFont('dejavusans','B',10);
+            $pdf->Cell(100,6,"$factura->estrato", 'RB',0,0,'L',true);
+
+            $pdf->Cell(3);
+     
+            $pdf->SetFont('dejavusans','',10);
+            $pdf->Cell(37,6,"  Pago Mensual",1,0,'L',true);
+            $pdf->SetFont('dejavusans','B',10);
+            $pdf->Cell(39,6,'$'.number_format($factura->copago-$factura->ajuste).'  ',1,0,'R',true);
+
+    
          
+             // Establece la posición horizontal (ajusta según tus necesidades)
+            $pdf->SetY(164); // Establece la posición vertical (ajusta según tus necesidades)
+            // $pdf->Cell(210);
+           
+            
+            $pdf->SetFillColor(255,255,255);
+            $pdf->SetDrawColor(11,78,187);
+            $pdf->SetTextColor(0 , 0, 0);
+            $pdf->Cell(210);
+            $pdf->SetFont('dejavusans','B',19);
+            $pdf->Cell(54,12,'$'.number_format($factura->copago+$factura->saldo_anterior-$factura->ajuste),1,0,'C',true);
 
-            // $pdf->SetTextColor(39,39,51);
-            // $pdf->MultiCell(0,9,("*** Precios de productos incluyen impuestos. Para poder realizar un reclamo o devolución debe de presentar esta factura ***"),0,'C',false);
+            $pdf->Ln(15);
 
-            $pdf->Ln(9);
+            $pdf->SetFont('dejavusans','B',10);
+            $pdf->Cell(264,6,"Punto de pago, oficina principal de ASUAAASTAB ubicada en la antigua Alcaldia ",1,0,'C',true);
+            $pdf->Ln(6);
+
+            
+            $pdf->Cell(264,6,"Vigilada Superintendencia de Servicios Públicos",1,0,'C',true);
 
 
-            $pdf->Output("I","Factura_Nro_1.pdf",true);
 
-
+            $pdf->Output('example_027.pdf', 'I');
             //echo json_encode($registrado);
         }
 
@@ -1251,5 +1159,6 @@ echo "</pre>"; */
            
         }
 
+       
     
     }

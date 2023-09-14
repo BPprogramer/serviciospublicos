@@ -19,6 +19,7 @@
         "phpmailer/phpmailer": "^6.5",
         "vlucas/phpdotenv": "^5.4",
         "intervention/image": "^2.7",
-        "setasign/fpdf": "^1.8"
+        "setasign/fpdf": "^1.8",
+        "tecnickcom/tcpdf": "^6.6"
     }
 }

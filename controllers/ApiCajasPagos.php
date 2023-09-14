@@ -31,15 +31,15 @@ use Model\Usuario;
                     $i++;
 
                     $pago = Pago::find($caja->pago_id);
+             
+ 
+                    
+  
                     $factura = Factura::find($pago->factura_id);
                     $usuario = Usuario::find($pago->usuario_id);
                     $registrado = Registrado::find($factura->registrado_id);
                    
-          
-
-
-
-
+                    
                     $responsable = '';
                     if($usuario){
                         $responsable= explode(' ',trim($usuario->nombre))[0] .' '. explode(' ',trim($usuario->apellido))[0];
@@ -49,7 +49,24 @@ use Model\Usuario;
                         $metodo = 'Transferencia';
                     }
  
-                 
+                    if($pago->estado==0){
+                        $datoJson.= '[
+                            "anulado",
+                            "anulado",
+                            "anulado",
+                         
+                            
+                            "anulado",
+                            "anulado",
+                            "anulado",
+                    
+                            "anulado"
+                    ]';
+                    if($key != count($cajas_pagos)-1){
+                        $datoJson.=",";
+                    }
+                    continue;
+                    }
               
                 
        
@@ -59,7 +76,7 @@ use Model\Usuario;
                             "Pago",
                          
                             
-                            "$'.number_format($factura->copago).'",
+                            "$'.number_format($factura->copago-$factura->ajuste+$factura->saldo_anterior).'",
                             "'.$metodo.'",
                             "'.$registrado->nombre.'",
                     

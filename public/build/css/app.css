@@ -316,6 +316,7 @@ html {
 body {
   font-family: "Outfit", sans-serif;
   font-size: 1.8rem;
+  zoom: 0.8;
 }
 
 a {
@@ -681,6 +682,9 @@ h4 {
   margin-top: 5rem;
   padding-top: 3rem;
   color: #FFFFFF;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
 .footer__grid {
   width: min(95%, 140rem);
@@ -1505,5 +1509,62 @@ input:checked + .slider:before {
   font-size: 2rem;
   margin-bottom: 2rem;
   width: 100%;
+}
+.cajas__formulario {
+  margin-bottom: 2rem;
+}
+
+.informacion {
+  margin-top: 5rem;
+}
+@media (min-width: 768px) {
+  .informacion {
+    display: grid;
+    grid-column-gap: 5rem;
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.informacion__pago {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 2rem;
+}
+.informacion__info {
+  margin: 0;
+  font-size: 3rem;
+  color: #007df4;
+  font-weight: 700;
+}
+.informacion__texto {
+  font-weight: 700;
+  font-size: 2rem;
+}
+.informacion__btnPagar {
+  text-align: right;
+  background-color: #007df4;
+  padding: 1.5rem 4rem;
+  color: #FFFFFF;
+  font-size: 1.8rem;
+  font-weight: 700;
+  border: none;
+  transition-property: background-color;
+  transition-duration: 0.3s;
+  text-align: center;
+  width: 100%;
+  display: inline-block;
+  max-width: 30rem;
+}
+.informacion__btnPagar:hover {
+  background-color: #0063c1;
+  cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  .pagar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 }
 /*# sourceMappingURL=app.css.map */

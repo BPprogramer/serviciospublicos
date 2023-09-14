@@ -35,6 +35,47 @@
          
             <span class="cajas__dato" id="ingreso">50</span>
         </div>
+        <div class="cajas__caja">
+            <div class="cajas__caja-contenedor">
+                <p class="cajas__descripcion">Recaudos Mensuales</p>
+                <form action="" class="formulario cajas__formulario">
+                    <div class="formularo__campo">
+                        <div class="formulario__grid cajas__formularario">
+                  
+                            <select class="formulario__select" name="" id="mes">
+                                <option value="01" <?php echo date('m')=="01"?'selected':'' ?>>Enero</option>
+                                <option value="02" <?php echo date('m')=="02"?'selected':'' ?>>Febrero</option>
+                                <option value="03" <?php echo date('m')=="03"?'selected':'' ?>>Marzo</option>
+                                <option value="04" <?php echo date('m')=="04"?'selected':'' ?>>Abril</option>
+                                <option value="05" <?php echo date('m')=="05"?'selected':'' ?>>Mayo</option>
+                                <option value="06" <?php echo date('m')=="06"?'selected':'' ?>>Junio</option>
+                                <option value="07" <?php echo date('m')=="07"?'selected':'' ?>>Julio</option>
+                                <option value="08" <?php echo date('m')=="08"?'selected':'' ?>>Agosto</option>
+                                <option value="09" <?php echo date('m')=="09"?'selected':'' ?>>Septiembre</option>
+                                <option value="10" <?php echo date('m')=="10"?'selected':'' ?>>Octubre</option>
+                                <option value="11" <?php echo date('m')=="11"?'selected':'' ?>>Noviembre</option>
+                                <option value="12" <?php echo date('m')=="12"?'selected':'' ?>>Diciembre</option>
+                            </select>
+                            <select class="formulario__select" name="" id="year">
+                               <?php $year = date('Y')-3;
+                                    for($i=0; $i<=3; $i++){
+                                ?>
+                                        <option  value="<?php echo $year+$i?>" <?php echo date('Y')==$year+$i?'selected':'' ?>><?php echo $year+$i?></option>
+                                    
+                                <?php }?>
+                            </select>
+                        </div>
+          
+                    </div>
+                    
+                </form>
+               
+               
+            </div>
+            
+         
+            <span class="cajas__dato" id="ingresosMensuales">50</span>
+        </div>
     </div>
 </section>
 

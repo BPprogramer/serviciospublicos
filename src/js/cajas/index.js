@@ -19,12 +19,15 @@
         
             tablaCajasData.on('draw', function(){
                 const estadoCaja = document.querySelector('#estadoCaja');
-           
-                estadoCaja.addEventListener('dblclick',function(e){
+                if(estadoCaja){
+
+                    estadoCaja.addEventListener('dblclick',function(e){
                    
-                    const id = e.target.dataset.cajaId;
-                    alertaCierre(id);
-                })
+                        const id = e.target.dataset.cajaId;
+                        alertaCierre(id);
+                    })
+                }
+           
             });
         }
 

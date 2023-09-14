@@ -76,6 +76,7 @@
                 const respuesta = await fetch('/api/generar-facturas-manual');
             
                 const resultado = await respuesta.json()
+                console.log(resultado)
                 btnGenerarFacturas.classList.remove('inicio__boton-generar--inactivo');
                 btnGenerarFacturas.addEventListener('click', alertaGenerarFacturasAuto)
                     Swal.fire({
@@ -177,3 +178,6 @@
     }
 
 })();
+
+
+

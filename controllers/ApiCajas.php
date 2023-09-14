@@ -34,7 +34,7 @@ use Model\Usuario;
 
                     $efectivo_inicial = number_format($caja->efectivo_inicial);
                     $total_recaudo = number_format($caja->total_recaudo);
-                    $total_efectivo = number_format($caja->total_efectivo);
+                    $total_efectivo = number_format($caja->total_efectivo+$caja->efectivo_inicial);
                     $total_transferencias = number_format($caja->total_transferencias);
                     $estado = "<span id='estadoCaja' data-caja-id = '$caja->id'  class='table__td--activo'>Abierta</span>";
                     if($caja->estado == 0){
@@ -86,16 +86,17 @@ use Model\Usuario;
                 $transferencias = 0;
                 foreach($cajaPagos as $cajaPago){
                     $pago = Pago::find($cajaPago->pago_id);
+                    if($pago->estado==0) continue;
                    
                     $factura = Factura::find($pago->factura_id);
                     if($pago->metodo==1){
-                        $efectivo_caja = $efectivo_caja + $factura->copago;
+                        $efectivo_caja = $efectivo_caja + $factura->copago-$factura->ajuste+$factura->saldo_anterior;
                     }else{
-                        $transferencias = $transferencias + $factura->copago;
+                        $transferencias = $transferencias + $factura->copago-$factura->ajuste+$factura->saldo_anterior;
                     }
             
                  
-                    $recaudo = $recaudo + $factura->copago;
+                    $recaudo = $recaudo + $factura->copago+$factura->saldo_anterior-$factura->ajuste;
     
                  
                 }

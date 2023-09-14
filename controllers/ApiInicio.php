@@ -18,8 +18,9 @@ use Model\Registrado;
             $pagos = Pago::all();
             $ingresos = 0;
             foreach($pagos as $pago){
+                if($pago->estado==0) continue;
                 $factura= Factura::find($pago->factura_id);
-                $ingresos =$ingresos+ $factura->copago;
+                $ingresos =$ingresos+ $factura->copago+$factura->saldo_anterior-$factura->ajuste;
             }
 
          
@@ -30,12 +31,13 @@ use Model\Registrado;
 
         public static function fecha(){
             if($_SERVER['REQUEST_METHOD']=='POST'){
-
-                $pagos = Pago::registrosAnteriores($_POST['fecha']);
+       
+                $pagos = Pago::registrosPosteriores($_POST['fecha']);
                 $pago_total = 0;
                 foreach($pagos as $pago){
+                    if($pago->estado==0) continue;
                     $factura= Factura::find($pago->factura_id);
-                    $pago_total =$pago_total+ $factura->copago;
+                    $pago_total =$pago_total+ $factura->copago+$factura->saldo_anterior-$factura->ajuste;
                 }
                 
 
@@ -46,5 +48,24 @@ use Model\Registrado;
                 return;
             }
           
+        }
+        public static function ingresosMensuales(){
+            if($_SERVER['REQUEST_METHOD']=='POST'){
+       
+                $pagos = Pago::datosPorFecha('fecha_pago',$_POST['fecha']);
+                $ingresos = 0;
+                foreach($pagos as $pago){
+                    if($pago->estado==0) continue;
+                    $factura= Factura::find($pago->factura_id);
+                    $ingresos =$ingresos+ $factura->copago+$factura->saldo_anterior-$factura->ajuste;
+                }
+                
+
+                echo json_encode(number_format($ingresos));
+                
+
+                
+                return;
+            }
         }
     }

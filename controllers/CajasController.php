@@ -36,16 +36,17 @@ use Model\Usuario;
             $transferencias = 0;
             foreach($cajaPagos as $cajaPago){
                 $pago = Pago::find($cajaPago->pago_id);
+                if($pago->estado==0) continue; //para pagos anulados
                
                 $factura = Factura::find($pago->factura_id);
                 if($pago->metodo==1){
-                    $efectivo_caja = $efectivo_caja + $factura->copago;
+                    $efectivo_caja = $efectivo_caja + $factura->copago+$factura->saldo_anterior-$factura->ajuste;
                 }else{
                     $transferencias = $transferencias + $factura->copago;
                 }
         
              
-                $recaudo = $recaudo + $factura->copago;
+                $recaudo = $recaudo + $factura->copago+$factura->saldo_anterior-$factura->ajuste;
 
              
             }

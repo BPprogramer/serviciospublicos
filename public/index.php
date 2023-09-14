@@ -9,16 +9,18 @@ use Controllers\ApiPagos;
 use Controllers\ApiRegistrados;
 use Controllers\ApiUsuarios;
 use Controllers\ApiCajasPagos;
+use Controllers\ApiEmitidas;
 use Controllers\ApiInicio;
+use Controllers\ApiPagar;
 use MVC\Router;
 use Controllers\AuthController;
 use Controllers\CajasController;
 use Controllers\DashboardController;
-
-
+use Controllers\EmitidasController;
 use Controllers\UsuariosController;
 use Controllers\EstratosController;
 use Controllers\GeneraAutoController;
+use Controllers\PagarController;
 use Controllers\RegistradosController;
 use Model\GeneraAuto;
 
@@ -41,6 +43,8 @@ $router->post('/registro', [AuthController::class, 'registro']);
 //area de administracion
 $router->get('/admin/dashboard', [DashboardController::class, 'index']);
 
+$router->get('/admin/pagos/pagar',[ PagarController::class, 'index']);
+$router->get('/admin/pagos',[ PagarController::class, 'pagos']);
 
 
 $router->get('/admin/registrados', [RegistradosController::class, 'index']);
@@ -67,6 +71,9 @@ $router->get('/admin/estratos/editar', [EstratosController::class, 'editar']);
 $router->post('/admin/estratos/editar', [EstratosController::class, 'editar']);
 $router->post('/admin/estratos/eliminar', [EstratosController::class, 'eliminar']);
 
+
+$router->get('/admin/emitidas', [EmitidasController::class, 'index']);
+
 //cajas
 
 $router->get('/admin/cajas', [CajasController::class, 'index']);
@@ -77,8 +84,17 @@ $router->get('/admin/cajas/pagos', [CajasController::class, 'cajasPagos']);
 
 $router->get('/api/inicio/registrados',[ApiInicio::class, 'registrados'] );
 $router->post('/api/inicio/fecha',[ApiInicio::class, 'fecha'] );
+$router->post('/api/inicio/ingresos-mensuales',[ApiInicio::class, 'ingresosMensuales'] );
 
 $router->get('/api/facturas',[ApiFacturas::class, 'facturas']);
+
+$router->get('/api/facturas-por-pagar',[ApiPagar::class, 'facturasPorPagar']);
+$router->post('/api/subir-pagos',[ApiPagar::class, 'pagar']);
+$router->get('/api/lista-pagos',[ApiPagar::class, 'pagos']);
+
+$router->get('/api/emitidas',[ApiEmitidas::class, 'emitidasPendientes']);
+
+
 
 $router->get('/api/registrados',[ApiRegistrados::class, 'index'] );
 $router->get('/api/registrados/eliminar',[ApiRegistrados::class, 'eliminar'] );
@@ -114,6 +130,7 @@ $router->post('/api/generar-auto', [GeneraAutoController::class, 'generarAuto'])
 $router->post('/api/pagar', [ApiPagos::class, 'pagar']);
 $router->post('/api/pagos', [ApiPagos::class, 'pagosRegistrado']);
 $router->get('/api/previsualizar-pago', [ApiPagos::class, 'previsualizarPago']);
+$router->post('/api/anular-pago', [ApiPagos::class, 'anularPago']);
 
 
 //area pupblica

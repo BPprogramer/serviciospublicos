@@ -24,7 +24,7 @@
             //     }
             // })
 
-           const body  =  document.querySelector('body')
+           const body  =  document.querySelector('body');
            body.addEventListener('click',function(){
                 const inputHidden = document.querySelector('#confirmacionPago')
                 if(inputHidden){
@@ -80,7 +80,7 @@
 
                 pagos.forEach(pago => {
   
-                    const {id, numero_factura, fecha_pago, periodo_fin, periodo_inicio, monto, numero_pago} = pago
+                    const {id, numero_factura, fecha_pago, periodo_fin, periodo_inicio, monto, numero_pago, estado} = pago
                     const tr = document.createElement('TR');
                     tr.classList.add('table__tr')
                     // tr.dataset.facturaId = id;
@@ -109,15 +109,24 @@
                     tdNumeroPago.classList.add('table__td');
                     tdNumeroPago.innerHTML = ` <span class="table__span">Pago #&nbsp; </span> ${numero_pago}`
 
-                  
+                    
 
+                   
 
+                
 
                     tr.appendChild(tdNumeroFactura)
                     tr.appendChild(tdFechaPago)
                     tr.appendChild(tdPeriodo)
                     tr.appendChild(tdMonto)
                     tr.appendChild(tdNumeroPago)
+                    if(estado==0){
+                        console.log('asdf')
+                        const tdPagoAnulado = document.createElement('TD');
+                        tdPagoAnulado.classList.add('table__td');
+                        tdPagoAnulado.innerHTML = `<span class="table__boton table__boton--vencida">Anulado</span>`
+                        tr.appendChild(tdPagoAnulado);
+                    }
                     tabla.appendChild(tr);
 
 
@@ -131,7 +140,7 @@
             }
 
             function informacionPago(pago){
-                const {id, numero_factura,numero_pago, estrato, metodo, periodo_inicio, periodo_fin, monto, recaudador} = pago;
+                const {id, numero_factura,numero_pago, estrato, metodo, periodo_inicio, periodo_fin, monto, recaudador, factura_id} = pago;
                
                 limpiarHtml();
                 const acciones = document.querySelector('#payments')
@@ -249,7 +258,7 @@
                 btnVerFactura.classList.add('actions__boton');
 
                 btnVerFactura.onclick = function(){
-                    previsualizarComprobante(numero_pago);
+                    previsualizarComprobante(factura_id);
                 }
                 btnVerFactura.textContent = 'Previzualizar';
 
@@ -260,10 +269,10 @@
 
             }
 
-            async function previsualizarComprobante(numero_pago){
+            async function previsualizarComprobante(factura_id){
                
 
-                const url =`/api/previsualizar-pago?key=${btoa(numero_pago)}`;
+                const url =`/api/previsualizar-pago?key=${btoa(factura_id)}`;
                 // Abre la URL en una nueva pestaña
                 window.open(url, '_blank');
 

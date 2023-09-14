@@ -154,6 +154,13 @@ class ActiveRecord {
     
         return array_shift( $resultado ) ;
     }
+    public static function whereDes($columna, $valor) {
+        $query = "SELECT * FROM " . static::$tabla . " WHERE $columna = '$valor' ORDER BY id DESC";
+        
+        $resultado = self::consultarSQL($query);
+    
+        return array_shift( $resultado ) ;
+    }
 
    
 
@@ -164,7 +171,22 @@ class ActiveRecord {
     
         return  $resultado  ;
     }
-    public static function registrosAnteriores($fecha) {
+    public static function datosPorFecha($columna, $valor) {
+        $query = "SELECT * FROM " . static::$tabla . " WHERE LEFT($columna, 7) = '$valor'";
+      
+        $resultado = self::consultarSQL($query);
+    
+        return  $resultado  ;
+    }
+
+    public static function rangoFecha($columna, $fechaMin, $fechaMax){
+        $query = "SELECT * FROM " . static::$tabla . " WHERE LEFT($columna, 7) >= '$fechaMin' AND LEFT($columna, 7) <= '$fechaMax';";
+        
+        $resultado = self::consultarSQL($query);
+    
+        return  $resultado  ;
+    }
+    public static function registrosPosteriores($fecha) {
         $query = "SELECT * FROM " . static::$tabla . " WHERE fecha_pago>= '$fecha';";
     
         $resultado = self::consultarSQL($query);
@@ -220,7 +242,7 @@ class ActiveRecord {
         $query .= join("', '", array_values($atributos));
         $query .= " ') ";
 
-        debuguear($query);
+    
 
 
       

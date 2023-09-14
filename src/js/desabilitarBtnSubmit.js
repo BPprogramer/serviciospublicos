@@ -7,8 +7,11 @@
     if(formulario){
         
         const btnSubmit = document.querySelector('.formulario [type="submit"]');
+        if(btnSubmit){
+            btnSubmit.addEventListener('click',deshabilitarBoton);
+        }
         
-        btnSubmit.addEventListener('click',deshabilitarBoton);
+       
         function deshabilitarBoton(e){
             setTimeout(()=>{
                 e.target.disabled = true;

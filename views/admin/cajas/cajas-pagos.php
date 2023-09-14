@@ -52,7 +52,7 @@
                 </div>
                 <div class="registrado__datos">
                     <span class="registrado__label">Efectivo en Caja </span>
-                    <p class="registrado__dato"><?php echo number_format($caja->total_efectivo)?></p>
+                    <p class="registrado__dato"><?php echo number_format($caja->total_efectivo+$caja->efectivo_inicial)?></p>
                 </div>
                 <div class="registrado__datos">
                     <span class="registrado__label">transferencias </span>
@@ -72,7 +72,7 @@
     </section>
 </div>
 
-<div class="dashboard__contenedor" id="contenedorCajasPagas">
+<div class="dashboard__contenedor" id="">
 
 
         <table class="display responsive table" id="tablaCajasPagos">

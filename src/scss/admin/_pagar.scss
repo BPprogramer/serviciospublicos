@@ -1,0 +1,41 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+
+.informacion{
+    margin-top: 5rem;
+    @include m.tablet{
+        @include m.grid(3, 5rem);
+    }
+
+    &__pago{
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 2rem;
+    }
+    
+    &__info{
+        margin: 0;
+        font-size: 3rem;
+        color: v.$azul;
+        font-weight: v.$bold;
+    }
+    &__texto{
+        font-weight: v.$bold;
+        font-size: 2rem;
+    }
+    &__btnPagar{
+        text-align: right;
+        @include m.boton(v.$azul, v.$blanco);
+        max-width: 30rem;
+    }
+}
+
+.pagar{
+    @include m.tablet{
+        display: flex;
+        align-items: center;
+        justify-content: space-between
+    };
+}
