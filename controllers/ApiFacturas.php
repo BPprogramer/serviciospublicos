@@ -513,14 +513,14 @@ echo "</pre>"; */
          
                 if(($registrado->facturas-1)>0){
                     $factura_anterior = Factura::whereDes( 'registrado_id',$registrado->id);
-                    $copago_anterior =  $estrato->copago;
-                    $ajuste_anterior = $estrato->ajuste??0;
+                    $copago_anterior =  $factura_anterior->copago;
+                    $ajuste_anterior = $factura_anterior->ajuste??0;
                     $saldo_anterior = $copago_anterior+$factura_anterior->saldo_anterior - $ajuste_anterior;
                     $factura_anterior->combinado = 1;
                     $factura_anterior->guardar();
                 }
 
-               
+                
                 
               
                 $datos_factura = [
@@ -667,7 +667,7 @@ echo "</pre>"; */
             }
             $deuda=0;
             foreach($facturas as $factura){
-                if($factura->pagado ==0){
+                if($factura->pagado ==0 && $factura->combinado==0){
                     $deuda = $factura->copago + $deuda - $factura->ajuste;
                 }
             }

@@ -13,7 +13,7 @@ use Model\Registrado;
 
             $registrados = Registrado::total();
             $registrados_activos = Registrado::total('estado', 1);
-            $pagos_vigentes = Pago::total();
+            $pagos_vigentes = Pago::total('estado',1);
 
             $pagos = Pago::all();
             $ingresos = 0;
