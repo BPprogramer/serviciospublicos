@@ -15,8 +15,11 @@
             
             $alertas = [];
             $estratos = new Estrato();
+            
 
             if($_SERVER['REQUEST_METHOD']=='POST'){
+
+                debuguear($_POST);
                 
              
                 $estratos->sincronizar($_POST);
