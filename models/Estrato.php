@@ -88,7 +88,7 @@
                 self::$alertas['error'][] = 'Los Datos del Aseo son obliatorios';
             }
             if($this->porcentaje_acu!='' && $this->porcentaje_alc!='' && $this->porcentaje_aseo!=''){
-                $suma_100 = $this->porcentaje_acu+$this->porcentaje_alc+$this->porcentaje_aseo;
+                $suma_100 = $this->porcentaje_acu+$this->porcentaje_alc+$this->porcentaje_aseo+$this->porcentaje_ajuste;
                 if($suma_100!=100){
                     self::$alertas['error'][] = 'La suma de los Porcentajes del Acueducto, Alcantarillado y Aseo debe ser Igual a 100%';
                 }
