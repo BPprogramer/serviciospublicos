@@ -749,7 +749,7 @@ echo "</pre>"; */
 
              $pdf->Image('../public/build/img/logo.png',17,10,52,38,'PNG');
                 // Relleno rojo (RGB)
-                debuguear($registrado);
+             
          
              $pdf->Ln(0);
            
