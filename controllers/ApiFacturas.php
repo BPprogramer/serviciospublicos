@@ -472,9 +472,9 @@ echo "</pre>"; */
         public static function generarFacturasManual(){
 
 
-            $factura = Factura::get(1);
-            if($factura){
-                $fecha_emision =date("Y-m",strtotime($factura->fecha_emision)) ;
+            $factura_mes_anterior = Factura::get(1);
+            if($factura_mes_anterior){
+                $fecha_emision =date("Y-m",strtotime($factura_mes_anterior->fecha_emision)) ;
                 $fecha_actual = date("Y-m");
               
                 if($fecha_emision == $fecha_actual){
@@ -486,8 +486,8 @@ echo "</pre>"; */
             ob_clean();
          
             $ultimo_numero = 0;
-            if($factura){
-                $ultimo_numero = $factura->numero_factura;
+            if($factura_mes_anterior){
+                $ultimo_numero = $factura_mes_anterior->numero_factura;
             }else{
                 $ultimo_numero = 1000;
             }
@@ -521,7 +521,7 @@ echo "</pre>"; */
 
                 $saldo_anterior = 0;
 
-                if($factura){
+                if($factura_mes_anterior){
 
                     if(($registrado->facturas-1)>0){
                         $factura_anterior = Factura::whereDes( 'registrado_id',$registrado->id);
@@ -556,7 +556,7 @@ echo "</pre>"; */
                     'ajuste'=>$estrato->ajuste??0,
                     'pagado'=>0,
                     'combinado' =>0,
-                    'saldo_anterior' =>$saldo_anterior??0
+                    'saldo_anterior' =>$saldo_anterior
 
 
                 ];
