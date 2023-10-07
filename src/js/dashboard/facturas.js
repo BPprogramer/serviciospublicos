@@ -73,8 +73,8 @@
             btnGenerarFacturas.classList.add('inicio__boton-generar--inactivo');
               
             try {
-                const respuesta = await fetch(`${location.origin}/api/generar-facturas-manual`);
-            
+                const respuesta = await fetch(`/api/generar-facturas-manual`);
+    
                 const resultado = await respuesta.json()
                 console.log(resultado)
                 btnGenerarFacturas.classList.remove('inicio__boton-generar--inactivo');
