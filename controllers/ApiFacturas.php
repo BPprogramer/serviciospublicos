@@ -735,9 +735,12 @@ echo "</pre>"; */
             // $factura->formatearDatosNumber();
 
             $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+
             $pdf->setPrintHeader(false);
           
             $pdf->AddPage('p', 'A3');
+
+           
            
      
             $pdf->SetMargins(17,10, 17);
@@ -745,7 +748,7 @@ echo "</pre>"; */
 
              $pdf->Image('../public/build/img/logo.png',17,10,52,38,'PNG');
                 // Relleno rojo (RGB)
-             
+                debuguear($registrado);
          
              $pdf->Ln(0);
            
