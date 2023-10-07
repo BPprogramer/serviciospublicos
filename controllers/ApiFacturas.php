@@ -472,21 +472,18 @@ echo "</pre>"; */
         public static function generarFacturasManual(){
 
 
-
             $factura = Factura::get(1);
-            $fecha_emision =date("Y-m",strtotime($factura->fecha_emision)) ;
-            $fecha_actual = date("Y-m");
-          
-            if($fecha_emision == $fecha_actual){
-                echo json_encode(['type'=>'error', 'msg'=>'Las facturas ya han sido generadas con anterioridad']);
-                return;
+            if($factura){
+                $fecha_emision =date("Y-m",strtotime($factura->fecha_emision)) ;
+                $fecha_actual = date("Y-m");
+              
+                if($fecha_emision == $fecha_actual){
+                    echo json_encode(['type'=>'error', 'msg'=>'Las facturas ya han sido generadas con anterioridad']);
+                    return;
+                }
             }
-            ob_clean();
-
-    
-          
-    
             
+            ob_clean();
          
             $ultimo_numero = 0;
             if($factura){
@@ -523,15 +520,19 @@ echo "</pre>"; */
                 $estrato = Estrato::find($registrado->estrato_id);
 
                 $saldo_anterior = 0;
-         
-                if(($registrado->facturas-1)>0){
-                    $factura_anterior = Factura::whereDes( 'registrado_id',$registrado->id);
-                    $copago_anterior =  $factura_anterior->copago;
-                    $ajuste_anterior = $factura_anterior->ajuste??0;
-                    $saldo_anterior = $copago_anterior+$factura_anterior->saldo_anterior - $ajuste_anterior;
-                    $factura_anterior->combinado = 1;
-                    $factura_anterior->guardar();
+
+                if($factura){
+
+                    if(($registrado->facturas-1)>0){
+                        $factura_anterior = Factura::whereDes( 'registrado_id',$registrado->id);
+                        $copago_anterior =  $factura_anterior->copago;
+                        $ajuste_anterior = $factura_anterior->ajuste??0;
+                        $saldo_anterior = $copago_anterior+$factura_anterior->saldo_anterior - $ajuste_anterior;
+                        $factura_anterior->combinado = 1;
+                        $factura_anterior->guardar();
+                    }
                 }
+         
 
                 
                 
@@ -555,7 +556,7 @@ echo "</pre>"; */
                     'ajuste'=>$estrato->ajuste??0,
                     'pagado'=>0,
                     'combinado' =>0,
-                    'saldo_anterior' =>$saldo_anterior
+                    'saldo_anterior' =>$saldo_anterior??0
 
 
                 ];
