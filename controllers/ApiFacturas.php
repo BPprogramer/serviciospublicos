@@ -74,11 +74,11 @@ echo "</pre>"; */
                 $pdf->Cell(87);
                 $pdf->SetFont('dejavusans','B',11);
                 $pdf->SetTextColor(11,78,187);
-                $pdf->Cell(150,10,'Asociación de usuarios Administradores de Acueducto, Alcantarillado y Aseo',0,0,'C');
+                $pdf->Cell(150,10,'Asociación de Usuarios Administradores de Acueducto, Alcantarillado y Aseo',0,0,'C');
 
                 $pdf->Ln(5);
                 $pdf->Cell(87);
-                $pdf->Cell(150,10,'del Casco Urbano del Tablón de Gómez',0,0,'C');
+                $pdf->Cell(150,10,'del Casco Urbano de El Tablón de Gómez',0,0,'C');
                 $pdf->Ln(6);
                 $pdf->Cell(87);
                 $pdf->SetFont('dejavusans','B',14);
@@ -98,7 +98,7 @@ echo "</pre>"; */
                 $pdf->Cell(87);
                 $pdf->SetFont('dejavusans','B',10);
                 $pdf->SetTextColor(0,0,0);
-                $pdf->Cell(150,10,'El Tablon de Gómez',0,0,'C');
+                $pdf->Cell(150,10,'El Tablón de Gómez',0,0,'C');
 
                 $pdf->Ln(10);
 
@@ -447,7 +447,7 @@ echo "</pre>"; */
                 $pdf->Ln(15);
 
                 $pdf->SetFont('dejavusans','B',10);
-                $pdf->Cell(264,6,"Punto de pago, oficina principal de ASUAAASTAB ubicada en la antigua Alcaldia ",1,0,'C',true);
+                $pdf->Cell(264,6,"Punto de pago, oficina principal de ASUAAASTAB ubicada en la antigua Alcaldía ",1,0,'C',true);
                 $pdf->Ln(6);
 
                 
@@ -760,11 +760,11 @@ echo "</pre>"; */
             $pdf->Cell(87);
             $pdf->SetFont('dejavusans','B',11);
             $pdf->SetTextColor(11,78,187);
-            $pdf->Cell(150,10,'Asociación de usuarios Administradores de Acueducto, Alcantarillado y Aseo',0,0,'C');
+            $pdf->Cell(150,10,'Asociación de Usuarios Administradores de Acueducto, Alcantarillado y Aseo',0,0,'C');
 
             $pdf->Ln(5);
             $pdf->Cell(87);
-            $pdf->Cell(150,10,'del Casco Urbano del Tablón de Gómez',0,0,'C');
+            $pdf->Cell(150,10,'del Casco Urbano de El Tablón de Gómez',0,0,'C');
             $pdf->Ln(6);
             $pdf->Cell(87);
             $pdf->SetFont('dejavusans','B',14);
@@ -784,7 +784,7 @@ echo "</pre>"; */
             $pdf->Cell(87);
             $pdf->SetFont('dejavusans','B',10);
             $pdf->SetTextColor(0,0,0);
-            $pdf->Cell(150,10,'El Tablon de Gómez',0,0,'C');
+            $pdf->Cell(150,10,'El Tablón de Gómez',0,0,'C');
 
             $pdf->Ln(10);
 
