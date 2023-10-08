@@ -22,6 +22,7 @@
                         body: datos
                     });
                     const resultado = await respuesta.json();
+             
                     if(resultado){
                   
                         imprimirDeuda(resultado.deuda);

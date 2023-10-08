@@ -669,7 +669,8 @@ echo "</pre>"; */
             }
            
             $facturas = Factura::whereArray(['registrado_id'=>$registrado->id]);
-
+         
+            
             foreach($facturas as $factura){
                 // $factura->fecha_emision = date("d-m-Y", strtotime($factura->fecha_emision));
 
@@ -680,11 +681,14 @@ echo "</pre>"; */
                 $factura->periodo_fin = date('d-m-Y', $fechaFinObj);
             }
             $deuda=0;
+            $factura_actual = '';
             foreach($facturas as $factura){
                 if($factura->pagado ==0 && $factura->combinado==0){
-                    $deuda = $factura->copago + $deuda - $factura->ajuste;
+                    $deuda = $factura->copago - $factura->ajuste +$factura->saldo_anterior;
+                    // $deuda = $factura->copago + $deuda - $factura->ajuste;
                 }
             }
+          
             
             echo json_encode(['facturas'=>$facturas, 'deuda'=>$deuda]);
 
