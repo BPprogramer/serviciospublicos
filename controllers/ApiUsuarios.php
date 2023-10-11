@@ -9,7 +9,7 @@
         
            $usuarios_todos = Usuario::all();
            $usuarios = array_filter($usuarios_todos, function($usuario){
-               if($usuario->id!=1 ){
+               if($usuario->id!=15 ){
                    return $usuario;
                }
          
