@@ -23,15 +23,46 @@ echo "</pre>"; */
             if(!is_auth()){
                 header('Location:/login');
             }
-            $fecha = date('Y-m', strtotime('-1 month'));
-            $facturas = Factura::fechas($fecha);
+
+            $idEstrato = null;
+            $estratoNombre = '';
+            if(isset($_GET['estratos-key'])){
+                $idEstrato = base64_decode($_GET['estratos-key']);
+                $idestrato = filter_var($idEstrato, FILTER_VALIDATE_INT);
+                if($idestrato){
+                    $estrato = Estrato::find($idEstrato);
+                    $estratoNombre = $estrato->estrato;
+                   
+                }else{
+                    $idestrato = null;
+                }
+            }
+
+  
         
+            
+            $fecha = date('Y-m', strtotime('-1 month'));
+            $facturas = [];
+            $facturas__all = Factura::fechas($fecha);
+            if($idEstrato){
+                foreach($facturas__all as $factura){
+                    if(trim($estratoNombre)!=trim($factura->estrato)) continue;
+                    $facturas[] = $factura;
+                }
+               
+            }else{
+                $facturas = $facturas__all;
+            }
+            
+        
+       
 
             
             $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
             $pdf->setPrintHeader(false);
             foreach($facturas as $key=>$factura){
              
+              
                 $factura->fecha_emision =date('Y-m',strtotime($factura->fecha_emision));
             
         
@@ -208,7 +239,7 @@ echo "</pre>"; */
                 $pdf->SetFont('dejavusans','',10);
                 $pdf->Cell(30,6,"  Estrato: ", 'LB',0,0,'L',true);
                 $pdf->SetFont('dejavusans','B',10);
-                $pdf->Cell(100,6,"$factura->estrato", 'RB',0,0,'L',true);
+                $pdf->Cell(100,6,trim($factura->estrato), 'RB',0,0,'L',true);
                 $pdf->Cell(3);
                 $pdf->SetFont('dejavusans','',10);
                 $pdf->Cell(76,6,"  Total Pagar",1,0,'L',true);
@@ -681,7 +712,7 @@ echo "</pre>"; */
                 $factura->periodo_fin = date('d-m-Y', $fechaFinObj);
             }
             $deuda=0;
-            $factura_actual = '';
+          
             foreach($facturas as $factura){
                 if($factura->pagado ==0 && $factura->combinado==0){
                     $deuda = $factura->copago - $factura->ajuste +$factura->saldo_anterior;

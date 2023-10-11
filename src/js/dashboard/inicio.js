@@ -12,6 +12,11 @@
         const totalPagos = document.querySelector('#totalPagos');
         const selectYear = document.querySelector('#year');
         const selectMes = document.querySelector('#mes');
+
+        const contenedor_estratos = document.querySelector('#estratos');
+        const btnImprimirFacturasFiltradas = document.querySelector('#btnImprimirFacturasFiltradas');
+
+
         
 
         selectYear.addEventListener('change',leerInputs);
@@ -22,11 +27,49 @@
         informacionUsuario();
         fechaActual();
         leerInputs();
+        consultarEstratos();
+
+
+        btnImprimirFacturasFiltradas.addEventListener('click',function(e){
+            const estratoId = contenedor_estratos.value;
+            if(estratoId==0){
+                Swal.fire({
+                    icon: 'error',
+        
+                    text: 'Porfavor seleccione un estrato'
+                })
+            }else{
+                const url = `/api/facturas?estratos-key=${btoa(estratoId)}`
+                //const url = `${location.origin}/api/facturas`
+                window.open(url, '_blank');
+            }
+        })
 
         fecha.addEventListener('change',function(e){
             const fechaSeleccionada = e.target.value;
             consultarIngresosFecha(fechaSeleccionada)
         })
+     
+        async function consultarEstratos(){
+            const url = `${location.origin}/api/estratos-all`;
+            try {
+                const respuesta = await fetch(url);
+                const resultado = await respuesta.json();
+                mostrarEstratos(resultado);
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        function mostrarEstratos(estratos){
+            console.log(estratos)
+            estratos.forEach(estrato => {
+                const option = document.createElement('OPTION');
+                option.value=estrato.id
+                option.textContent = estrato.estrato
+                contenedor_estratos.appendChild(option)
+            });
+        }
 
         function leerInputs(){
             const year = selectYear.value;

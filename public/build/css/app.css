@@ -440,6 +440,9 @@ h4 {
   padding: 0.5rem;
   border-radius: 0.5rem;
 }
+.formulario__select--estratos {
+  width: auto;
+}
 .formulario__option {
   background-color: #FFFFFF;
   color: #333;
@@ -897,7 +900,7 @@ h4 {
 @media (min-width: 768px) {
   .dashboard__contenedor-boton {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     margin-bottom: 2rem;
   }
 }
@@ -922,7 +925,7 @@ h4 {
 }
 @media (min-width: 768px) {
   .dashboard__boton {
-    width: auto;
+    width: 100%;
   }
 }
 .dashboard__contenedor, .dashboard__formulario {

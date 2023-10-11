@@ -3,6 +3,12 @@
     use Model\Estrato;
 
     class ApiEstratos{
+        public static function estratos(){
+            $estratos = Estrato::all();
+            echo json_encode($estratos);
+          
+      
+        }
         public static function index(){
             $estratos = Estrato::all();
           

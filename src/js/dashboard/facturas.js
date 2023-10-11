@@ -34,7 +34,7 @@
             try {
                 const respuesta = await fetch('/api/eliminar-facturas');
                 const resultado = await respuesta.json();
-                console.log(resultado)
+             
                 Swal.fire({
                     icon: resultado.type,
         

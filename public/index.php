@@ -108,6 +108,7 @@ $router->get('/api/usuarios/eliminar',[ApiUsuarios::class, 'eliminar'] );
 $router->get('/api/usuarios/editar-estado',[ApiUsuarios::class, 'editar_estado'] );
 
 $router->get('/api/estratos',[ApiEstratos::class, 'index'] );
+$router->get('/api/estratos-all',[ApiEstratos::class, 'estratos'] );
 $router->get('/api/estratos/eliminar',[ApiEstratos::class, 'eliminar'] );
 $router->get('/api/estratos/info',[ApiEstratos::class, 'informacion'] );
 
