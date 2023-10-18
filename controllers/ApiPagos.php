@@ -170,7 +170,8 @@ use TCPDF;
                 return;
             }
 
-            $pago = Pago::where('numero_pago', $id);
+       
+            $pago = Pago::where('factura_id', $id);
 
             if(!$pago){
                 echo json_encode(['type'=>'error','res'=>'Hubo un error, Intenta Nuevamente d' ]);

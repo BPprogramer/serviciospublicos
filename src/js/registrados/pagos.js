@@ -121,7 +121,7 @@
                     tr.appendChild(tdMonto)
                     tr.appendChild(tdNumeroPago)
                     if(estado==0){
-                        console.log('asdf')
+                      
                         const tdPagoAnulado = document.createElement('TD');
                         tdPagoAnulado.classList.add('table__td');
                         tdPagoAnulado.innerHTML = `<span class="table__boton table__boton--vencida">Anulado</span>`
