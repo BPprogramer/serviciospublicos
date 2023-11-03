@@ -89,7 +89,7 @@ use Model\Registrado;
                     if($factura->pagado==1){
                         
                      
-                        //$factor = round(($factura->copago - $factura->ajuste + $factura->saldo_anterior)/($factura->copago - $factura->ajuste));
+                        $factor = round(($factura->copago - $factura->ajuste + $factura->saldo_anterior)/($factura->copago - $factura->ajuste));
                        
                     
                       
