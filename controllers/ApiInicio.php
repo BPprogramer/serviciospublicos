@@ -19,18 +19,24 @@ ini_set('display_errors', 1);
 
             $pagos = Pago::all();
             $ingresos = 0;
+            $consignaciones = 0;
          
             foreach($pagos as $pago){
                 if($pago->estado==0) continue;
                 $factura= Factura::find($pago->factura_id);
+                $pago = Pago::where('factura_id', $factura->id);
+                if($pago->metodo_pago==1){
+                    $ingresos =$ingresos+ $factura->copago+$factura->saldo_anterior-$factura->ajuste;
+                }else{
+                    $consignaciones =$consignaciones+ $factura->copago+$factura->saldo_anterior-$factura->ajuste;
+                }
                 
-                $ingresos =$ingresos+ $factura->copago+$factura->saldo_anterior-$factura->ajuste;
               
             }
 
          
             $registrados_inactivos = $registrados-$registrados_activos;
-            echo json_encode(['registrados'=>$registrados, 'registrados_activos'=>$registrados_activos,'registrados_inactivos'=>$registrados_inactivos, 'pagos_vigentes'=>$pagos_vigentes, 'ingresos'=>number_format($ingresos)]);
+            echo json_encode(['registrados'=>$registrados, 'registrados_activos'=>$registrados_activos,'registrados_inactivos'=>$registrados_inactivos, 'pagos_vigentes'=>$pagos_vigentes, 'ingresos'=>number_format($ingresos), 'consignaciones'=>number_format($consignaciones)]);
 
         }
 

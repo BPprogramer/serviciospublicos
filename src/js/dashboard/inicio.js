@@ -10,6 +10,7 @@
         const ingreso = document.querySelector('#ingreso');
         const ingresosMensuales = document.querySelector('#ingresosMensuales');
         const totalPagos = document.querySelector('#totalPagos');
+        const totalConsignaciones = document.querySelector('#totalConsignaciones');
         const selectYear = document.querySelector('#year');
         const selectMes = document.querySelector('#mes');
 
@@ -152,12 +153,13 @@
 
         function mostrarResultados(resultado){
             
-            const {registrados, registrados_activos, registrados_inactivos, pagos_vigentes, ingresos} = resultado;
+            const {registrados, registrados_activos, registrados_inactivos, pagos_vigentes, ingresos, consignaciones} = resultado;
             subscriptores.textContent = registrados;
             subscriptoresVigentes.textContent = registrados_activos;
             subscriptoresInactivos.textContent = registrados_inactivos;
             pagosVigentes.textContent = pagos_vigentes;
             totalPagos.textContent = '$'+ingresos
+            totalConsignaciones.textContent = '$'+consignaciones
 
         }
         

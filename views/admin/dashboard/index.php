@@ -28,6 +28,10 @@
             <span class="cajas__dato" id="totalPagos"></span>
         </div>
         <div class="cajas__caja">
+            <p class="cajas__descripcion">Total Consigaciones</p>
+            <span class="cajas__dato" id="totalConsignaciones"></span>
+        </div>
+        <div class="cajas__caja">
             <div class="cajas__caja-contenedor">
                 <p class="cajas__descripcion">Recaudos a la Fecha</p>
                 <input type="date" class="cajas__fecha" id="fecha" max="<?php echo date('Y-m-d') ?>">
