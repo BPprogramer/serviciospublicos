@@ -87,14 +87,14 @@ use Model\Registrado;
                 $factor = 1;
                 foreach($facturas as $factura){
                     if($factura->pagado==1){
-
-                        // if($factura->saldo_anterior>0){
-                        //     $factor = round(($factura->copago - $factura->ajuste + $factura->saldo_anterior)/($factura->copago - $factura->ajuste));
+                        
+                        if($factura->saldo_anterior>0){
+                            $factor = ($factura->copago - $factura->ajuste + $factura->saldo_anterior)/($factura->copago - $factura->ajuste);
                        
                     
-                        // }else{
-                        //     $factor = 1;
-                        // }
+                        }else{
+                            $factor = 1;
+                        }
                         $aseo = $aseo + $factor*$factura->copago_aseo;
                         $alcantarillado = $alcantarillado +$factor*$factura->copago_alc;
                         $acueducto = $acueducto + $factor*$factura->copago_acu;
