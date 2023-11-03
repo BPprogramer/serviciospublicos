@@ -443,6 +443,9 @@ h4 {
 .formulario__select--estratos {
   width: auto;
 }
+.formulario__select--columna {
+  width: auto;
+}
 .formulario__option {
   background-color: #FFFFFF;
   color: #333;
@@ -1490,6 +1493,11 @@ input:checked + .slider:before {
     grid-row-gap: 2rem;
   }
 }
+.cajas__display {
+  display: grid;
+  grid-column-gap: 2rem;
+  grid-template-columns: repeat(2, 1fr);
+}
 .cajas__caja {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -1500,6 +1508,11 @@ input:checked + .slider:before {
 }
 .cajas__descripcion {
   margin: 0 0 2rem 0;
+}
+.cajas__descripcion--center {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 5rem;
 }
 .cajas__dato {
   color: #007df4;

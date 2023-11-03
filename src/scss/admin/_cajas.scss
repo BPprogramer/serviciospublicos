@@ -18,6 +18,11 @@
        
 
     }
+
+    &__display{
+   
+        @include m.grid(2,2rem);
+    }
     &__caja{
         @include m.shadow;
         padding: 2rem  2rem;
@@ -26,6 +31,11 @@
     }
     &__descripcion{
         margin: 0 0 2rem 0;
+        &--center{
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 5rem;
+        }
     }
     &__dato{
         color: v.$azul;

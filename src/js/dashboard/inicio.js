@@ -13,6 +13,15 @@
         const selectYear = document.querySelector('#year');
         const selectMes = document.querySelector('#mes');
 
+        //selects para la consignacion
+        const selectYearConsignacion = document.querySelector('#year_consignacion')
+        const selectMesConsignacion = document.querySelector('#mes_consignacion')
+
+
+        const consignacionAseo = document.querySelector('#consignacionAseo')
+        const consignacionAlc = document.querySelector('#consignacionAlc')
+        const consignacionAcu = document.querySelector('#consignacionAcu')
+
         const contenedor_estratos = document.querySelector('#estratos');
         const btnImprimirFacturasFiltradas = document.querySelector('#btnImprimirFacturasFiltradas');
 
@@ -21,6 +30,9 @@
 
         selectYear.addEventListener('change',leerInputs);
         selectMes.addEventListener('change',leerInputs);
+
+        selectYearConsignacion.addEventListener('change',leerInputsConsignacion);
+        selectMesConsignacion.addEventListener('change',leerInputsConsignacion);
 
 
 
@@ -62,7 +74,7 @@
         }
 
         function mostrarEstratos(estratos){
-            console.log(estratos)
+     
             estratos.forEach(estrato => {
                 const option = document.createElement('OPTION');
                 option.value=estrato.id
@@ -76,6 +88,14 @@
             const mes = selectMes.value;
             const fecha = year+"-"+mes;
             consultarIngresosMensuales(fecha);
+        }
+        function leerInputsConsignacion(){
+            const year = selectYearConsignacion.value;
+            const mes = selectMesConsignacion.value;
+            const fecha = year+"-"+mes;
+      
+       
+            consultarConsignaciones(fecha);
         }
 
         async function consultarIngresosMensuales(fecha){
@@ -93,6 +113,31 @@
             } catch (error) {
                 
             }
+        }
+        async function consultarConsignaciones(fecha){
+            const datos = new FormData();
+            datos.append('fecha', fecha);
+            const url = '/api/inicio/consignaciones';
+            try {
+                const respuesta = await fetch(url, {
+                    body:datos,
+                    method:'POST'
+                });
+                const resultado = await respuesta.json();
+               
+                imprimirDatosConsignacion(resultado);
+
+            } catch (error) {
+                
+            }
+        }
+        function imprimirDatosConsignacion(resultado){
+            consignacionAseo.textContent = '';
+            consignacionAcu.textContent = '';
+            consignacionAlc.textContent = '';
+            consignacionAseo.textContent = '$'+(resultado.aseo||0);
+            consignacionAcu.textContent = '$'+(resultado.acueducto || 0);
+            consignacionAlc.textContent = '$'+(resultado.alcantarillado || 0);
         }
 
         async function informacionUsuario(){

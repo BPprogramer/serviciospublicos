@@ -68,4 +68,35 @@ use Model\Registrado;
                 return;
             }
         }
+        public static function consignaciones(){
+    
+            if($_SERVER['REQUEST_METHOD']=='POST'){
+       
+                $facturas = Factura::datosPorFecha('mes_facturado',$_POST['fecha']);
+                if(!$facturas){
+                    echo json_encode(['error'=>'No Hay facturacion para el mes seleccionado']);
+                    return;
+                }
+
+                $aseo= 0;
+                $alcantarillado = 0;
+                $acueducto = 0;
+            
+                foreach($facturas as $factura){
+                    if($factura->pagado==1){
+                        $aseo = $aseo + $factura->copago_aseo;
+                        $alcantarillado = $alcantarillado + $factura->copago_alc;
+                        $acueducto = $acueducto + $factura->copago_acu;
+                    }
+                   
+                }
+                
+
+                echo json_encode(['aseo'=>number_format($aseo), 'alcantarillado'=>number_format($alcantarillado), 'acueducto'=>number_format($acueducto)]);
+                
+
+                
+                return;
+            }
+        }
     }

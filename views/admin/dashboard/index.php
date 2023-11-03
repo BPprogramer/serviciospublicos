@@ -132,9 +132,9 @@
                         <div class="formulario__grid cajas__formularario">
 
                             <select class="formulario__select formulario__select--estratos" name="" id="estratos">
-                                    <option value="0" disabled selected>--Seleccione--</option>
+                                <option value="0" disabled selected>--Seleccione--</option>
                             </select>
-                           
+
                         </div>
 
                     </div>
@@ -155,7 +155,7 @@
         <div class="cajas__caja">
             <div class="cajas__caja-contenedor">
                 <p class="cajas__descripcion">Imprimir Facturas</p>
-               
+
 
             </div>
 
@@ -166,6 +166,68 @@
                 </span>
             </div>
         </div>
+
+    </div>
+</div>
+
+<div class="cajas">
+    <div class="cajas__caja">
+        <div class="cajas__caja-contenedor">
+            <p class="cajas__descripcion cajas__descripcion--center">Consignaciones</p>
+            <div class="cajas__display">
+
+                <div>
+                    <p class="cajas__descripcion">Elija año y mes facturado</p>
+
+                    <form action="" class="formulario cajas__formulario">
+                        <div class="formularo__campo">
+                            <div class="">
+                                <select class="formulario__select formulario__select--columna" name="" id="year_consignacion">
+                                    <?php $year = date('Y') - 3;
+                                    for ($i = 0; $i <= 3; $i++) {
+                                    ?>
+                                        <option value="<?php echo $year + $i ?>" <?php echo date('Y') == $year + $i ? 'selected' : '' ?>><?php echo $year + $i ?></option>
+
+                                    <?php } ?>
+                                </select>
+
+                                <select class="formulario__select formulario__select--columna" name="" id="mes_consignacion">
+                                    <option disabled selected>--Seleccione mes facturado--</option>
+                                    <option value="01">Enero</option>
+                                    <option value="02">Febrero</option>
+                                    <option value="03">Marzo</option>
+                                    <option value="04">Abril</option>
+                                    <option value="05">Mayo</option>
+                                    <option value="06">Junio</option>
+                                    <option value="07">Julio</option>
+                                    <option value="08">Agosto</option>
+                                    <option value="09">Septiembre</option>
+                                    <option value="10">Octubre</option>
+                                    <option value="11">Noviembre</option>
+                                    <option value="12">Diciembre</option>
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+                </div>
+
+
+
+
+                <div class="cajas__info">
+                    <p class="cajas__descripcion">Aseo: <span class="cajas__dato" id="consignacionAseo">$0</span></p>
+                    <p class="cajas__descripcion">Acueducto: <span class="cajas__dato" id="consignacionAlc">$0</span></p>
+                    <p class="cajas__descripcion">Alcantarillado: <span class="cajas__dato" id="consignacionAcu">$0</span></p>
+                </div>
+            </div>
+
+
+
+        </div>
+
 
     </div>
 </div>

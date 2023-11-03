@@ -85,6 +85,7 @@ $router->get('/admin/cajas/pagos', [CajasController::class, 'cajasPagos']);
 $router->get('/api/inicio/registrados',[ApiInicio::class, 'registrados'] );
 $router->post('/api/inicio/fecha',[ApiInicio::class, 'fecha'] );
 $router->post('/api/inicio/ingresos-mensuales',[ApiInicio::class, 'ingresosMensuales'] );
+$router->post('/api/inicio/consignaciones',[ApiInicio::class, 'consignaciones'] );
 
 $router->get('/api/facturas',[ApiFacturas::class, 'facturas']);
 
