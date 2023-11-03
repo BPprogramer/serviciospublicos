@@ -173,7 +173,7 @@ use Model\Usuario;
                     
                      $acciones = "<div class='table__td--acciones'>";
 
-                     $acciones .= "<button  class='table__accion table__accion--editar' id='btn_previsualizar' data-numero-pago='$pago->numero_pago'><i class='fa-solid fa-print'></i></button>";
+                     $acciones .= "<button  class='table__accion table__accion--editar' id='btn_previsualizar' data-numero-pago='$pago->factura_id'><i class='fa-solid fa-print'></i></button>";
                      $acciones .= "<button  class='table__accion table__accion--eliminar' id='btn_anular' data-numero-pago='$pago->numero_pago'><i class='fa-solid fa-trash'></i></button>";
 
                      
