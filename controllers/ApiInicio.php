@@ -92,13 +92,16 @@ ini_set('display_errors', 1);
                         
                      
                         if($factura->copago != $factura->ajuste){
-                            $factor = round(( $factura->saldo_anterior)/($factura->copago - $factura->ajuste )) + 1;
-                       
-                    
+                            $pago = Pago::where('factura_id', $factura->id);
+                            $metodo_pago = $pago->metodo;
+                            if($metodo_pago == 1){
+                                $factor = round(( $factura->saldo_anterior)/($factura->copago - $factura->ajuste )) + 1;
                       
-                            $aseo = $aseo + $factor*$factura->copago_aseo;
-                            $alcantarillado = $alcantarillado +$factor*$factura->copago_alc;
-                            $acueducto = $acueducto + $factor*$factura->copago_acu;
+                                $aseo = $aseo + $factor*$factura->copago_aseo;
+                                $alcantarillado = $alcantarillado +$factor*$factura->copago_alc;
+                                $acueducto = $acueducto + $factor*$factura->copago_acu;
+                            }
+                           
                         }
                         
                     }
