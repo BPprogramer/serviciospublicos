@@ -25,7 +25,7 @@ ini_set('display_errors', 1);
                 if($pago->estado==0) continue;
                 $factura= Factura::find($pago->factura_id);
                 $pago = Pago::where('factura_id', $factura->id);
-                if($pago->metodo_pago==1){
+                if($pago->metodo==1){
                     $ingresos =$ingresos+ $factura->copago+$factura->saldo_anterior-$factura->ajuste;
                 }else{
                     $consignaciones =$consignaciones+ $factura->copago+$factura->saldo_anterior-$factura->ajuste;
