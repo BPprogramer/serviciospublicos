@@ -106,7 +106,7 @@
                     )
                     return;
                 }, 1)
-            } else if (trim(facturaEncontrada.estrato) == "TEMPORALES") {
+            } else if (facturaEncontrada.estrato == "TEMPORALES") {
                 setTimeout(() => {
                     Swal.fire(
                         'Error',
