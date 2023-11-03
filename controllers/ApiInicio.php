@@ -4,6 +4,8 @@
 use Model\Factura;
 use Model\Pago;
 use Model\Registrado;
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
     class ApiInicio{
         public static function registrados(){
@@ -89,7 +91,7 @@ use Model\Registrado;
                     if($factura->pagado==1){
                         
                      
-                        $factor = round(($factura->copago - $factura->ajuste + $factura->saldo_anterior)/($factura->copago - $factura->ajuste));
+                        $factor = round(( $factura->saldo_anterior)/($factura->copago - $factura->ajuste )) + 1;
                        
                     
                       
