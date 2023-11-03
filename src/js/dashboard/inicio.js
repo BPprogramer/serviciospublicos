@@ -151,6 +151,7 @@
         }
 
         function mostrarResultados(resultado){
+            
             const {registrados, registrados_activos, registrados_inactivos, pagos_vigentes, ingresos} = resultado;
             subscriptores.textContent = registrados;
             subscriptoresVigentes.textContent = registrados_activos;

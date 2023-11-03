@@ -17,10 +17,13 @@ use Model\Registrado;
 
             $pagos = Pago::all();
             $ingresos = 0;
+         
             foreach($pagos as $pago){
                 if($pago->estado==0) continue;
                 $factura= Factura::find($pago->factura_id);
+                
                 $ingresos =$ingresos+ $factura->copago+$factura->saldo_anterior-$factura->ajuste;
+              
             }
 
          
@@ -81,12 +84,19 @@ use Model\Registrado;
                 $aseo= 0;
                 $alcantarillado = 0;
                 $acueducto = 0;
-            
+                $factor = 1;
                 foreach($facturas as $factura){
                     if($factura->pagado==1){
-                        $aseo = $aseo + $factura->copago_aseo;
-                        $alcantarillado = $alcantarillado + $factura->copago_alc;
-                        $acueducto = $acueducto + $factura->copago_acu;
+
+                        if($factura->saldo_anterior>0){
+                            $factor = round(($factura->copago - $factura->ajuste + $factura->saldo_anterior)/($factura->copago - $factura->ajuste));
+                    
+                        }else{
+                            $factor = 1;
+                        }
+                        $aseo = $aseo + $factor*$factura->copago_aseo;
+                        $alcantarillado = $alcantarillado +$factor*$factura->copago_alc;
+                        $acueducto = $acueducto + $factor*$factura->copago_acu;
                     }
                    
                 }
