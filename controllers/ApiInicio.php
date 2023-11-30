@@ -111,14 +111,14 @@ ini_set('display_errors', 1);
                                 $aseo = $aseo + $factor*$factura->copago_aseo;
                                 $alcantarillado = $alcantarillado +$factor*$factura->copago_alc;
                                 $acueducto = $acueducto + $factor*$factura->copago_acu;
-                                $a_consignar = $a_consignar + $factor*$factura->copago;
+                                $a_consignar = $a_consignar + $factura->copago+$factura->saldo_anterior-$factura->ajuste;;
                             }
                             if($metodo_pago ==0){
-                                $ya_consignado = $ya_consignado +  $factor*$factura->copago;
+                                $ya_consignado = $ya_consignado +  $factura->copago+$factura->saldo_anterior-$factura->ajuste;
                             }
                             
 
-                            $total_del_mes = $total_del_mes + $factor*$factura->copago;
+                            $total_del_mes = $factura->copago+$factura->saldo_anterior-$factura->ajuste;
                            
                         }
                         
