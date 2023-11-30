@@ -92,6 +92,9 @@ ini_set('display_errors', 1);
                 $aseo= 0;
                 $alcantarillado = 0;
                 $acueducto = 0;
+                $ya_consignado = 0;
+                $a_consignar = 0;
+                $total_del_mes = 0;
                 $factor = 1;
                 foreach($facturas as $factura){
                     if($factura->pagado==1){
@@ -100,13 +103,22 @@ ini_set('display_errors', 1);
                         if($factura->copago != $factura->ajuste){
                             $pago = Pago::where('factura_id', $factura->id);
                             $metodo_pago = $pago->metodo;
+                            $factor = round(( $factura->saldo_anterior)/($factura->copago - $factura->ajuste )) + 1;
                             if($metodo_pago == 1){
-                                $factor = round(( $factura->saldo_anterior)/($factura->copago - $factura->ajuste )) + 1;
+                                //$factor = round(( $factura->saldo_anterior)/($factura->copago - $factura->ajuste )) + 1;
+                                
                       
                                 $aseo = $aseo + $factor*$factura->copago_aseo;
                                 $alcantarillado = $alcantarillado +$factor*$factura->copago_alc;
                                 $acueducto = $acueducto + $factor*$factura->copago_acu;
+                                $a_consignar = $a_consignar + $factor*$factura->copago;
                             }
+                            if($metodo_pago ==0){
+                                $ya_consignado = $ya_consignado +  $factor*$factura->copago;
+                            }
+                            
+
+                            $total_del_mes = $total_del_mes + $factor*$factura->copago;
                            
                         }
                         
@@ -115,7 +127,13 @@ ini_set('display_errors', 1);
                 }
                 
 
-                echo json_encode(['aseo'=>number_format($aseo), 'alcantarillado'=>number_format($alcantarillado), 'acueducto'=>number_format($acueducto)]);
+                echo json_encode(['aseo'=>number_format($aseo),
+                 'alcantarillado'=>number_format($alcantarillado),
+                  'acueducto'=>number_format($acueducto), 
+                  'ya_consignado'=>number_format($ya_consignado),
+                    'a_consignar'=>number_format($a_consignar),
+                    'total_del_mes'=>number_format($total_del_mes)
+                ]);
                 
 
                 

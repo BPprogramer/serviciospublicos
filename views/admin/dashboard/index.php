@@ -226,6 +226,13 @@
                     <p class="cajas__descripcion">Acueducto: <span class="cajas__dato" id="consignacionAlc">$0</span></p>
                     <p class="cajas__descripcion">Alcantarillado: <span class="cajas__dato" id="consignacionAcu">$0</span></p>
                 </div>
+
+                <div class="cajas__info">
+                    <p class="cajas__descripcion">Total: <span class="cajas__dato" id="total_del_mes">$0</span></p>
+                    <p class="cajas__descripcion">Ya Consignado: <span class="cajas__dato" id="ya_consignado">$0</span></p>
+                    <p class="cajas__descripcion">Por Consignar: <span class="cajas__dato" id="a_consignar">$0</span></p>
+                </div>
+               
             </div>
 
 

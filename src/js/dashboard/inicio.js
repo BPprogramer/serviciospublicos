@@ -22,6 +22,9 @@
         const consignacionAseo = document.querySelector('#consignacionAseo')
         const consignacionAlc = document.querySelector('#consignacionAlc')
         const consignacionAcu = document.querySelector('#consignacionAcu')
+        const total_del_mes = document.querySelector('#total_del_mes')
+        const ya_consignado = document.querySelector('#ya_consignado')
+        const a_consginar = document.querySelector('#a_consignar')
 
         const contenedor_estratos = document.querySelector('#estratos');
         const btnImprimirFacturasFiltradas = document.querySelector('#btnImprimirFacturasFiltradas');
@@ -116,6 +119,7 @@
             }
         }
         async function consultarConsignaciones(fecha){
+        
             const datos = new FormData();
             datos.append('fecha', fecha);
             const url = '/api/inicio/consignaciones';
@@ -125,7 +129,7 @@
                     method:'POST'
                 });
                 const resultado = await respuesta.json();
-               
+        
                 imprimirDatosConsignacion(resultado);
 
             } catch (error) {
@@ -133,12 +137,22 @@
             }
         }
         function imprimirDatosConsignacion(resultado){
+      
             consignacionAseo.textContent = '';
             consignacionAcu.textContent = '';
             consignacionAlc.textContent = '';
+            total_del_mes.textContent = '';
+            ya_consignado.textContent = '';
+
+            a_consginar.textContent = '';
+         
+        
             consignacionAseo.textContent = '$'+(resultado.aseo||0);
             consignacionAcu.textContent = '$'+(resultado.acueducto || 0);
             consignacionAlc.textContent = '$'+(resultado.alcantarillado || 0);
+            total_del_mes.textContent = '$'+(resultado.total_del_mes || 0);
+            ya_consignado.textContent = '$'+(resultado.ya_consignado || 0);
+            a_consginar.textContent = '$'+(resultado.a_consignar || 0);
         }
 
         async function informacionUsuario(){
