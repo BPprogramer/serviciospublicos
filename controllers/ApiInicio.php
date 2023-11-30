@@ -118,7 +118,7 @@ ini_set('display_errors', 1);
                             }
                             
 
-                            $total_del_mes = $factura->copago+$factura->saldo_anterior-$factura->ajuste;
+                            $total_del_mes = $total_del_mes +  $factura->copago+$factura->saldo_anterior-$factura->ajuste;
                            
                         }
                         
