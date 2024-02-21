@@ -28,6 +28,7 @@
 
         const contenedor_estratos = document.querySelector('#estratos');
         const btnImprimirFacturasFiltradas = document.querySelector('#btnImprimirFacturasFiltradas');
+     
 
 
         
@@ -45,6 +46,7 @@
         leerInputs();
         consultarEstratos();
 
+       
 
         btnImprimirFacturasFiltradas.addEventListener('click',function(e){
             const estratoId = contenedor_estratos.value;

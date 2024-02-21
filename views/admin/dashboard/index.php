@@ -170,6 +170,20 @@
                 </span>
             </div>
         </div>
+        <div class="cajas__caja">
+            <div class="cajas__caja-contenedor">
+                <p class="cajas__descripcion">Cuentas Por pagar</p>
+
+
+            </div>
+
+            <div class="dashboard__contenedor-boton">
+                <span class="dashboard__boton" id="btnCuentasPorPagar">
+                    <i class="fa-solid fa-print"></i>
+                    cuentas por pagar
+                </span>
+            </div>
+        </div>
 
     </div>
 </div>

@@ -4,13 +4,15 @@
     
     const btnImprimirFacturas = document.querySelector('#btnImprimirFacturas');
     if(btnImprimirFacturas){
+        const btnCuentasPorPagar = document.querySelector('#btnCuentasPorPagar');
+
         const contenedorSwitch = document.querySelector('#switch');
         const btnGenerarFacturas = document.querySelector('#btnGenerarFacturas');
      
         const btnEliminarFacturas  = document.querySelector('#btnEliminarFacturas');
 
         btnEliminarFacturas.addEventListener('click',alertaEliminarFacturas)
-      
+       
 
         revisarGeneraAuto();
 
@@ -47,6 +49,12 @@
 
         btnImprimirFacturas.addEventListener('click',function(){
             const url = '/api/facturas'
+            //const url = `${location.origin}/api/facturas`
+            window.open(url, '_blank');
+        })
+
+        btnCuentasPorPagar.addEventListener('click',function(){
+            const url = '/api/cuentas-por-pagar'
             //const url = `${location.origin}/api/facturas`
             window.open(url, '_blank');
         })

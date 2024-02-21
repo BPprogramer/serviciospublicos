@@ -9,6 +9,7 @@ use Controllers\ApiPagos;
 use Controllers\ApiRegistrados;
 use Controllers\ApiUsuarios;
 use Controllers\ApiCajasPagos;
+use Controllers\ApiCuentasPorPagar;
 use Controllers\ApiEmitidas;
 use Controllers\ApiInicio;
 use Controllers\ApiPagar;
@@ -88,6 +89,9 @@ $router->post('/api/inicio/ingresos-mensuales',[ApiInicio::class, 'ingresosMensu
 $router->post('/api/inicio/consignaciones',[ApiInicio::class, 'consignaciones'] );
 
 $router->get('/api/facturas',[ApiFacturas::class, 'facturas']);
+
+
+$router->get('/api/cuentas-por-pagar',[ApiCuentasPorPagar::class, 'cuentasPorPagar']);
 
 $router->get('/api/facturas-por-pagar',[ApiPagar::class, 'facturasPorPagar']);
 $router->post('/api/subir-pagos',[ApiPagar::class, 'pagar']);
