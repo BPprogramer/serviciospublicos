@@ -20,6 +20,8 @@ echo "</pre>"; */
     class ApiFacturas{
 
         public static function facturas(){
+
+      
             if(!is_auth()){
                 header('Location:/login');
             }
@@ -134,7 +136,7 @@ echo "</pre>"; */
                 $pdf->Ln(10);
 
                     //informacion cCliente
-                    $pdf->SetLineWidth(0.1);
+                $pdf->SetLineWidth(0.1);
                 $pdf->SetFont('dejavusans','B',10);
                 $pdf->SetFillColor(11,78,187);
                 $pdf->SetDrawColor(11,78,187);
