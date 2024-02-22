@@ -86,7 +86,7 @@ class ApiCuentasPorPagar
         $pdf->SetTextColor(0,0,0);
         $total = 0;
         foreach ($facturas as $factura) {
-            if($factura->saldo_anterior>0){
+            if($factura->saldo_anterior>0 && $factura->pagado==0){
                 $total = $total + $factura->saldo_anterior;
                 $registrado= Registrado::find($factura->registrado_id);
                 $pdf->Cell(130,7,$registrado->nombre." ".$registrado->apellido,1,0,'L',true);
