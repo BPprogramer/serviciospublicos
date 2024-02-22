@@ -54,9 +54,10 @@
         })
 
         btnCuentasPorPagar.addEventListener('click',function(){
-            const url = '/api/cuentas-por-pagar'
-            //const url = `${location.origin}/api/facturas`
-            window.open(url, '_blank');
+            console.log('click en ver cuentas')
+            // const url = '/api/cuentas-por-pagar'
+            // //const url = `${location.origin}/api/facturas`
+            // window.open(url, '_blank');
         })
 
         function alertaGenerarFacturasAuto(){
