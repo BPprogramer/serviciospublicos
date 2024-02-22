@@ -11,7 +11,7 @@ class ApiCuentasPorPagar
     public static function cuentasPorPagar()
     {
 
-        debuguear('desde facturas pagar');
+   
         if(!is_auth()){
             header('Location:/login');
         }
