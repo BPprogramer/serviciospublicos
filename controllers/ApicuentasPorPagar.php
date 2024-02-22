@@ -72,13 +72,15 @@ class ApiCuentasPorPagar
         
         $pdf->SetMargins(17, 10, 17);
 
-        $pdf->Cell(130,7,"Cliente",1,0,'C',true);
-        $pdf->Cell(3);
-        $pdf->Cell(76,7,"Numero de Facturas",1,0,'C',true);
-        $pdf->Cell(1);
+        $pdf->Cell(90,7,"Cliente",1,0,'C',true);
+        $pdf->Cell(60,7,"Dirección",1,0,'C',true);
+        $pdf->Cell(50,7,"estrato",1,0,'C',true);
+        // $pdf->Cell(1);
+        $pdf->Cell(20,7,"Facturas",1,0,'C',true);
+        // $pdf->Cell(1);
         $pdf->Cell(27,7,"Deuda",1,0,'L',true);
 
-        $pdf->Ln(5);
+        $pdf->Ln(8);
         $pdf->SetLineWidth(0.1);
         $pdf->SetFont('dejavusans','B',10);
         $pdf->SetDrawColor(11,78,187);
@@ -89,10 +91,12 @@ class ApiCuentasPorPagar
             if($factura->saldo_anterior>0 && $factura->pagado==0){
                 $total = $total + $factura->saldo_anterior;
                 $registrado= Registrado::find($factura->registrado_id);
-                $pdf->Cell(130,7,$registrado->nombre." ".$registrado->apellido,1,0,'L',true);
-                $pdf->Cell(3);
-                $pdf->Cell(76,7,$registrado->facturas,1,0,'C',true);
-                $pdf->Cell(1);
+                $pdf->Cell(90,7,$registrado->nombre." ".$registrado->apellido,1,0,'L',true);
+                $pdf->Cell(60,7,$registrado->direccion,1,0,'L',true);
+                $pdf->Cell(50,7,$factura->estrato,1,0,'L',true);
+                // $pdf->Cell(1);
+                $pdf->Cell(20,7,$registrado->facturas,1,0,'C',true);
+                // $pdf->Cell(1);
                 $pdf->Cell(27,7,number_format($factura->saldo_anterior),1,0,'L',true);
                 $pdf->Ln(7);
             }
