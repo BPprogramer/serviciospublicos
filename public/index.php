@@ -91,7 +91,7 @@ $router->post('/api/inicio/consignaciones',[ApiInicio::class, 'consignaciones'] 
 $router->get('/api/facturas',[ApiFacturas::class, 'facturas']);
 
 
-$router->get('/api/cuentas-por-pagar',[ApiCuentasPorPagar::class, 'cuentasPorPagar']);
+$router->get('/api/cuentas',[ApiCuentasPorPagar::class, 'cuentasPorPagar']);
 
 $router->get('/api/facturas-por-pagar',[ApiPagar::class, 'facturasPorPagar']);
 $router->post('/api/subir-pagos',[ApiPagar::class, 'pagar']);
