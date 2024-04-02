@@ -104,6 +104,7 @@ $router->get('/api/emitidas',[ApiEmitidas::class, 'emitidasPendientes']);
 $router->get('/api/registrados',[ApiRegistrados::class, 'index'] );
 $router->get('/api/registrados/eliminar',[ApiRegistrados::class, 'eliminar'] );
 $router->get('/api/registrados/info',[ApiRegistrados::class, 'informacion'] );
+$router->get('/api/registrados/download',[ApiRegistrados::class, 'downloadXlsx'] );
 
 
 

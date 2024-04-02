@@ -5,6 +5,11 @@ use Model\Estrato;
 use Model\Registrado;
 
     class ApiRegistrados{
+
+        public static function downloadXlsx(){
+            $registrados = Registrado::all();
+            echo json_encode(($registrados));
+        }
         public static function index(){
             $registrados = Registrado::all();
          

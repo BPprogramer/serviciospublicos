@@ -4,7 +4,12 @@
         <i class="fa-solid fa-circle-plus"></i>
         Añadir Suscriptor
     </a>
+    <button style="margin-left: 2rem;" class="dashboard__boton" id="downloadUsersXlsx">
+        <i class="fa-solid fa-print"></i>
+        Descargar
+    </button >
 </div>
+
 
 <div class="dashboard__contenedor" id="contenedorRegistrados">
     <?php //include_once __DIR__.'/../../templates/alertas.php'?>
@@ -28,4 +33,10 @@
         </table>
    
 </div>
+
+<script>
+  
+
+  
+</script>
 

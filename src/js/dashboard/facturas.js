@@ -4,6 +4,8 @@
     
     const btnImprimirFacturas = document.querySelector('#btnImprimirFacturas');
     if(btnImprimirFacturas){
+
+       
         const btnCuentasPorPagar = document.querySelector('#btnCuentasPorPagar');
 
         const contenedorSwitch = document.querySelector('#switch');

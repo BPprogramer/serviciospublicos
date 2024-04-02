@@ -6,6 +6,11 @@
  
     if(tablaRegistrados){
 
+        const downloadUsersXlsxBtn = document.querySelector('#downloadUsersXlsx');
+        downloadUsersXlsxBtn.addEventListener('click', downloadUsersXlsx)
+
+      
+
         $('#tablaRegistrados').on('click', '#btn_eliminar_registrado', function(e) {
             // Manejar el evento aquí
             leerAccion(e);
@@ -61,7 +66,7 @@
               })
         }
         async function enviarInformacionEliminar(id){
-      
+       
             url = `/api/registrados/eliminar?id=${id}`;
             try {
                 const respuesta = await fetch(url)
@@ -116,5 +121,49 @@
                 
             // })
         }
+
+     async function downloadUsersXlsx(){
+
+       
+        const url = `/api/registrados/download`;
+
+        try {
+            
+            const respuesta = await fetch(url)
+          
+           
+            const resultado = await respuesta.json();
+
+            console.log(resultado)
+
+
+   // Crear un nuevo libro de Excel
+   var workbook = XLSX.utils.book_new();
+        
+   // Convertir el JSON en una hoja de Excel
+   var worksheet = XLSX.utils.json_to_sheet(resultado);
+
+   // Agregar la hoja de Excel al libro
+   XLSX.utils.book_append_sheet(workbook, worksheet, "Datos");
+
+   // Guardar el libro como un archivo XLSX
+   XLSX.writeFile(workbook, "registrados.xlsx");
+        
+          
+            // tablaRegistradosData.ajax.reload(); 
+        } catch (error) {
+            console.log(error)
+        }
+
+ 
+            // var jsonData = [
+            //     { Nombre: "Juan", Apellido: "Pérez", Edad: 30 },
+            //     { Nombre: "María", Apellido: "Gómez", Edad: 25 },
+            //     { Nombre: "Carlos", Apellido: "López", Edad: 35 }
+            // ];
+        
+         
+        }
+        
     }
 })();
