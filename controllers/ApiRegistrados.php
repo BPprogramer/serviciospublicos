@@ -8,6 +8,19 @@ use Model\Registrado;
 
         public static function downloadXlsx(){
             $registrados = Registrado::all();
+
+            foreach($registrados as $registrado){
+                $estrato = Estrato::find($registrado->estrato_id);
+                unset($registrado->estrato_id);
+                $registrado->estrato = $estrato->estrato;
+                if($registrado->estado == 1){
+                    $registrado->estado = 'Activo';
+                }else{
+                    $registrado->estado = 'Inactivo';
+                }
+                unset($registrado->facturas);
+            }
+            
             echo json_encode(($registrados));
         }
         public static function index(){
