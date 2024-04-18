@@ -109,12 +109,14 @@
     //   }
 
     &__contenedor-boton{
+        
        @include m.tablet{
             display: flex;
             justify-content: center;
             margin-bottom: 2rem
         
        }
+     
     }
 
     &__boton{
@@ -122,7 +124,7 @@
         text-transform: uppercase;
         font-size: 1.4rem;
         @include m.tablet{
-            width: 20%;
+            width: 100%;
         }
     }
 

@@ -928,7 +928,7 @@ h4 {
 }
 @media (min-width: 768px) {
   .dashboard__boton {
-    width: 20%;
+    width: 100%;
   }
 }
 .dashboard__contenedor, .dashboard__formulario {

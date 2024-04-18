@@ -21,6 +21,7 @@ echo "</pre>"; */
     class ApiFacturas{
 
         public static function facturas(){
+           
 
       
             if(!is_auth()){
@@ -40,22 +41,33 @@ echo "</pre>"; */
                     $idestrato = null;
                 }
             }
-
-  
-        
-            
+     
             $fecha = date('Y-m', strtotime('-1 month'));
-            $facturas = [];
+          
             $facturas__all = Factura::fechas($fecha);
             if($idEstrato){
+              
                 foreach($facturas__all as $factura){
                     if(trim($estratoNombre)!=trim($factura->estrato)) continue;
+                  
+                    if($factura->registrado_id==null) continue;
                     $facturas[] = $factura;
                 }
                
             }else{
-                $facturas = $facturas__all;
+                foreach($facturas__all as $factura){
+               
+                  
+                    if($factura->registrado_id==null) continue;
+                    $facturas[] = $factura;
+                }
+           
             }
+
+       
+
+            
+   
             
         
        
@@ -67,7 +79,8 @@ echo "</pre>"; */
              
               
                 $factura->fecha_emision =date('Y-m',strtotime($factura->fecha_emision));
-            
+                
+               
         
                 $registrado = Registrado::find($factura->registrado_id);
         
