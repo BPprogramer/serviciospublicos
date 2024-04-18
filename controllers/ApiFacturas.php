@@ -688,6 +688,7 @@ echo "</pre>"; */
        
 
         public static function facturasRegistrado(){
+          
             if(!is_auth()){
                 header('Location:/login');
             }
@@ -738,6 +739,7 @@ echo "</pre>"; */
             $id = base64_decode($_GET['key']);
       
             $id = filter_var($id, FILTER_VALIDATE_INT);
+          
       
             if(!$id){
                
@@ -758,7 +760,11 @@ echo "</pre>"; */
 
        
       
-        
+            if(!$factura->registrado_id){
+                print('Al parecer el Subscriptor ha sido eleiminado');
+                return;
+            }
+            
 
             $registrado = Registrado::find($factura->registrado_id);
        

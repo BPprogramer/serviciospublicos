@@ -5,7 +5,7 @@
     const tablaRegistrados = document.querySelector('#tablaRegistrados');
  
     if(tablaRegistrados){
-
+       
         const downloadUsersXlsxBtn = document.querySelector('#downloadUsersXlsx');
         downloadUsersXlsxBtn.addEventListener('click', downloadUsersXlsx)
 
@@ -48,6 +48,7 @@
         function eliminarRegistrado(e){
             const registrado = e.currentTarget.parentNode.parentNode.parentNode.children[1].textContent;
             const id = e.currentTarget.dataset.registradoId;
+
             
             Swal.fire({
                 title: `Esta seguro que desea eliminar el estrato ${registrado}?`,
@@ -59,6 +60,7 @@
               }).then((result) => {
                 /* Read more about isConfirmed, isDenied below */
                 if (result.isConfirmed) {
+                   
                     enviarInformacionEliminar(id);
                     
                   //Swal.fire('Saved!', '', 'success')
@@ -66,8 +68,11 @@
               })
         }
         async function enviarInformacionEliminar(id){
+           
        
-            url = `/api/registrados/eliminar?id=${id}`;
+            const url = `/api/registrados/eliminar?id=${id}`;
+           
+  
             try {
                 const respuesta = await fetch(url)
                 const resultado = await respuesta.json();

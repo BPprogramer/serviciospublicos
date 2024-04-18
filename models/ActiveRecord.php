@@ -37,6 +37,7 @@ class ActiveRecord {
         // Consultar la base de datos
 
         $resultado = self::$db->query($query);
+       
     
   
         // Iterar los resultados

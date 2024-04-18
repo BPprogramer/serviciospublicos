@@ -15,19 +15,23 @@ use Model\Registrado;
                 }
           
             });
-         
+          
      
             $i=0;
             $datoJson = '{
              "data": [';
                  foreach($emitidasPendientes as $key=>$emitidaPendiente){
                      $i++;
-
+                     
+                    $registrado = false;
+                    if($emitidaPendiente->registrado_id){
+                        $registrado = Registrado::find($emitidaPendiente->registrado_id) ;
+                    }
                     
-                    $registrado = Registrado::find($emitidaPendiente->registrado_id);
+                   
         
                     if(!$registrado){
-                        $nombre_completo = 'No identificado';
+                        $nombre_completo = 'No identificadon / eliminados';
                      
                     }else{
                         $nombre_completo = $registrado->nombre.' '.$registrado->apellido;
