@@ -172,7 +172,7 @@
         </div>
         <div class="cajas__caja">
             <div class="cajas__caja-contenedor">
-                <p class="cajas__descripcion">Cuentas Por pagar</p>
+                <p class="cajas__descripcion">Cuentas Por Cobrar</p>
 
 
             </div>
@@ -180,7 +180,7 @@
             <div class="dashboard__contenedor-boton">
                 <span class="dashboard__boton" id="btnCuentasPorPagar">
                     <i class="fa-solid fa-print"></i>
-                    cuentas por pagar
+                    cuentas por cobrar
                 </span>
             </div>
         </div>

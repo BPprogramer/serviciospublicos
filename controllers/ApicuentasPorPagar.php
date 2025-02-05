@@ -18,6 +18,11 @@ class ApiCuentasPorPagar
         $fecha = date('Y-m', strtotime('-1 month'));
 
         $facturas = Factura::fechas($fecha);
+        if (empty($facturas)) {
+            // Si $facturas está vacío, restamos 2 meses a la fecha
+            $fecha = date('Y-m', strtotime('-2 months'));
+            $facturas = Factura::fechas($fecha);
+        }
 
    
         $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
@@ -61,7 +66,7 @@ class ApiCuentasPorPagar
         $pdf->Cell(50);
         $pdf->SetFont('dejavusans', 'B', 15);
         $pdf->SetTextColor(0, 0, 0);
-        $pdf->Cell(150, 10, 'Cuentas por pagar', 0, 0, 'C');
+        $pdf->Cell(150, 10, 'Cuentas por cobrar', 0, 0, 'C');
         $pdf->Ln(15);
 
         $pdf->SetLineWidth(0.1);
@@ -111,7 +116,7 @@ class ApiCuentasPorPagar
 
         $pdf->Ln(15);
         $pdf->Cell(133);
-        $pdf->Cell(76,7,"Total por pagar",1,0,'C',true);
+        $pdf->Cell(76,7,"Total por cobrar",1,0,'C',true);
         $pdf->Cell(1);
         $pdf->Cell(27,7,number_format($total),1,0,'L',true);
         
