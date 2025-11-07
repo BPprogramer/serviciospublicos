@@ -11,6 +11,7 @@ class ApiCuentasPorPagar
     public static function cuentasPorPagar()
     {
 
+
    
         if(!is_auth()){
             header('Location:/login');
