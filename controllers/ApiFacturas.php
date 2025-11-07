@@ -3,13 +3,12 @@
     namespace Controllers;
     
 
-    use DateTime;
-    use FPDF;
-    use TCPDF;
+
+
     use Model\Estrato;
     use Model\Factura;
     use Model\Registrado;
-    use Model\GeneraAuto;
+        use TCPDF;
 
     // require __DIR__.'/../vendor/setasign/fpdf/fpdf.php';
 

@@ -56,8 +56,8 @@
         })
 
         btnCuentasPorPagar.addEventListener('click',function(){
-       
-            const url = '/api/cuentas-por-pagar'
+            console.log('asdf')
+            const url = '/api/cuentas-por-cobrar'
             // const url = `${location.origin}/api/cuentas-por-pagar`
             
             window.open(url, '_blank');

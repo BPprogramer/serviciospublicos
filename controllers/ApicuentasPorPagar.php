@@ -8,9 +8,13 @@ use TCPDF;
 
 class ApiCuentasPorPagar
 {
-    public static function cuentasPorPagar()
+    public static function cuentasPorCobrar()
     {
 
+
+
+
+        
 
    
         if(!is_auth()){
