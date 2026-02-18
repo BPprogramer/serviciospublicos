@@ -56,11 +56,11 @@
         })
 
         btnCuentasPorPagar.addEventListener('click',function(){
-            console.log('asdf')
+            console.log('descargar cuentas por pagar')
             const url = '/api/cuentas-por-cobrar'
             // const url = `${location.origin}/api/cuentas-por-pagar`
             
-            window.open(url, '_blank');
+            // window.open(url, '_blank');
         })
 
         function alertaGenerarFacturasAuto(){
