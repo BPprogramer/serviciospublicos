@@ -859,7 +859,7 @@ h4 {
 }
 .dashboard__sidebar {
   background-color: #2f405d;
-  width: 12rem;
+  width: auto;
 }
 .dashboard__menu {
   padding: 1rem;
@@ -870,17 +870,15 @@ h4 {
 .dashboard__enlace {
   color: #6f8ab6;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 1rem;
-  margin-top: 0.5rem;
-  padding: 2rem;
-  transition: 300ms background-color ease, 300ms color ease, 300ms border-readius ease;
+  gap: 0.8rem;
+  padding: 1rem 1.2rem;
+  border-radius: 0.6rem;
+  transition: 300ms background-color ease, 300ms color ease;
 }
 .dashboard__enlace:hover, .dashboard__enlace--actual {
   color: #FFFFFF;
   background-color: #40587f;
-  border-radius: 1rem;
 }
 .dashboard__icono {
   font-size: 2rem;
@@ -900,14 +898,17 @@ h4 {
     padding: 1rem 5rem 3rem 5rem;
   }
 }
-@media (min-width: 768px) {
+.dashboard__contenedor-boton {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 2rem;
+}
+@media (min-width: 480px) {
   .dashboard__contenedor-boton {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 2rem;
+    justify-content: stretch;
   }
 }
-.dashboard__boton {
+.dashboard .dashboard__boton {
   background-color: #007df4;
   padding: 1.5rem 4rem;
   color: #FFFFFF;
@@ -922,14 +923,16 @@ h4 {
   text-transform: uppercase;
   font-size: 1.4rem;
 }
-.dashboard__boton:hover {
+.dashboard .dashboard__boton:hover {
   background-color: #0063c1;
   cursor: pointer;
 }
-@media (min-width: 768px) {
-  .dashboard__boton {
-    width: 100%;
-  }
+.dashboard .dashboard__boton--inline {
+  width: auto !important;
+  display: inline-flex !important;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1.2rem 2rem;
 }
 .dashboard__contenedor, .dashboard__formulario {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -1582,5 +1585,26 @@ input:checked + .slider:before {
     align-items: center;
     justify-content: space-between;
   }
+}
+
+.tab-btn {
+  padding: 10px 15px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.tab-btn.active {
+  border-bottom: 3px solid #0d6efd;
+  color: #0d6efd;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
 }
 /*# sourceMappingURL=app.css.map */

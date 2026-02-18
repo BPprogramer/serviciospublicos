@@ -41,6 +41,10 @@
     }
 }
 
+
+
+
+
 @mixin grid($columnas, $espaciado ) {
     display: grid;
     grid-column-gap: $espaciado;

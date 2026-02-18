@@ -2,3 +2,24 @@
 @use 'paginas';
 @use 'ui';
 @use 'admin';
+
+.tab-btn {
+    padding:10px 15px;
+    border:none;
+    background:none;
+    cursor:pointer;
+    font-weight:600;
+}
+
+.tab-btn.active {
+    border-bottom:3px solid #0d6efd;
+    color:#0d6efd;
+}
+
+.tab-content {
+    display:none;
+}
+
+.tab-content.active {
+    display:block;
+}
