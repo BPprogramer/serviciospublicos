@@ -14,7 +14,7 @@ class ApiCuentasPorPagar
 
 
 
-        if(!is_auth()){
+        if (!is_auth()) {
             header('Location:/login');
         }
         $fecha = date('Y-m', strtotime('-1 month'));
@@ -26,7 +26,7 @@ class ApiCuentasPorPagar
             $facturas = Factura::fechas($fecha);
         }
 
-   
+
         $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
         $pdf->setPrintHeader(false);
         $pdf->AddPage('p', 'A3');
@@ -72,61 +72,63 @@ class ApiCuentasPorPagar
         $pdf->Ln(15);
 
         $pdf->SetLineWidth(0.1);
-        $pdf->SetFont('dejavusans','B',10);
-        $pdf->SetFillColor(11,78,187);
-        $pdf->SetDrawColor(11,78,187);
-        $pdf->SetTextColor(255,255,255);
-        
+        $pdf->SetFont('dejavusans', 'B', 10);
+        $pdf->SetFillColor(11, 78, 187);
+        $pdf->SetDrawColor(11, 78, 187);
+        $pdf->SetTextColor(255, 255, 255);
+
         $pdf->SetMargins(17, 10, 17);
 
-        $pdf->Cell(90,7,"Cliente",1,0,'C',true);
-        $pdf->Cell(60,7,"Dirección",1,0,'C',true);
-        $pdf->Cell(50,7,"estrato",1,0,'C',true);
+        $pdf->Cell(90, 7, "Cliente", 1, 0, 'C', true);
+        $pdf->Cell(60, 7, "Dirección", 1, 0, 'C', true);
+        $pdf->Cell(50, 7, "estrato", 1, 0, 'C', true);
         // $pdf->Cell(1);
-        $pdf->Cell(20,7,"Facturas",1,0,'C',true);
+        $pdf->Cell(20, 7, "Facturas", 1, 0, 'C', true);
         // $pdf->Cell(1);
-        $pdf->Cell(27,7,"Deuda",1,0,'L',true);
+        $pdf->Cell(27, 7, "Deuda", 1, 0, 'L', true);
 
         $pdf->Ln(8);
         $pdf->SetLineWidth(0.1);
-        $pdf->SetFont('dejavusans','B',10);
-        $pdf->SetDrawColor(11,78,187);
-        $pdf->setFillColor(255,255,255);
-        $pdf->SetTextColor(0,0,0);
+        $pdf->SetFont('dejavusans', 'B', 10);
+        $pdf->SetDrawColor(11, 78, 187);
+        $pdf->setFillColor(255, 255, 255);
+        $pdf->SetTextColor(0, 0, 0);
         $total = 0;
         foreach ($facturas as $factura) {
-            if($factura->saldo_anterior>0 && $factura->pagado==0){
+            if ($factura->saldo_anterior > 0 && $factura->pagado == 0) {
+                if (!$factura->registrado_id) {
+                    continue;
+                }
                 $total = $total + $factura->saldo_anterior;
-                $registrado= Registrado::find($factura->registrado_id);
-                $pdf->Cell(90,7,$registrado->nombre." ".$registrado->apellido,1,0,'L',true);
-                $pdf->Cell(60,7,$registrado->direccion,1,0,'L',true);
-                $pdf->Cell(50,7,$factura->estrato,1,0,'L',true);
+                $registrado = Registrado::find($factura->registrado_id);
+                $pdf->Cell(90, 7, $registrado->nombre . " " . $registrado->apellido, 1, 0, 'L', true);
+                $pdf->Cell(60, 7, $registrado->direccion, 1, 0, 'L', true);
+                $pdf->Cell(50, 7, $factura->estrato, 1, 0, 'L', true);
                 // $pdf->Cell(1);
-                $pdf->Cell(20,7,$registrado->facturas,1,0,'C',true);
+                $pdf->Cell(20, 7, $registrado->facturas, 1, 0, 'C', true);
                 // $pdf->Cell(1);
-                $pdf->Cell(27,7,number_format($factura->saldo_anterior),1,0,'L',true);
+                $pdf->Cell(27, 7, number_format($factura->saldo_anterior), 1, 0, 'L', true);
                 $pdf->Ln(7);
             }
-           
         }
-      
+
         $pdf->SetLineWidth(0.1);
-        $pdf->SetFont('dejavusans','B',10);
-        $pdf->SetFillColor(11,78,187);
-        $pdf->SetDrawColor(11,78,187);
-        $pdf->SetTextColor(255,255,255);
+        $pdf->SetFont('dejavusans', 'B', 10);
+        $pdf->SetFillColor(11, 78, 187);
+        $pdf->SetDrawColor(11, 78, 187);
+        $pdf->SetTextColor(255, 255, 255);
 
         $pdf->Ln(15);
         $pdf->Cell(133);
-        $pdf->Cell(76,7,"Total por cobrar",1,0,'C',true);
+        $pdf->Cell(76, 7, "Total por cobrar", 1, 0, 'C', true);
         $pdf->Cell(1);
-        $pdf->Cell(27,7,number_format($total),1,0,'L',true);
-        
-   
+        $pdf->Cell(27, 7, number_format($total), 1, 0, 'L', true);
 
-     
 
-   
+
+
+
+
 
 
 
