@@ -183,6 +183,14 @@
                     cuentas por cobrar
                 </span>
             </div>
+            <a href="/api/cuentas-por-cobrar"
+                class="dashboard__boton"
+                target="_blank"
+                rel="noopener noreferrer">
+                <i class="fa-solid fa-print"></i>
+                Cuentas por cobrar
+            </a>
+
         </div>
 
     </div>
@@ -246,7 +254,7 @@
                     <p class="cajas__descripcion">Ya Consignado: <span class="cajas__dato" id="ya_consignado">$0</span></p>
                     <p class="cajas__descripcion">Por Consignar: <span class="cajas__dato" id="a_consignar">$0</span></p>
                 </div>
-               
+
             </div>
 
 
@@ -256,4 +264,3 @@
 
     </div>
 </div>
-

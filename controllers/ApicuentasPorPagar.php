@@ -12,8 +12,7 @@ class ApiCuentasPorPagar
     {
 
 
-   echo json_encode(['adf']);
-        return;
+
 
         if(!is_auth()){
             header('Location:/login');
