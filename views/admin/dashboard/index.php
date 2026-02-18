@@ -183,13 +183,7 @@
                     cuentas por cobrar
                 </span>
             </div>
-            <a href="/api/cuentas-por-cobrar"
-                class="dashboard__boton"
-                target="_blank"
-                rel="noopener noreferrer">
-                <i class="fa-solid fa-print"></i>
-                Cuentas por cobrar
-            </a>
+         
 
         </div>
 
