@@ -303,20 +303,23 @@ template {
 }
 
 /** Media Queries **/
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
 html {
   font-size: 62.5%;
   box-sizing: border-box;
   height: 100%;
 }
 
-*, *:before, *:after {
-  box-sizing: inherit;
-}
-
 body {
   font-family: "Outfit", sans-serif;
   font-size: 1.8rem;
   zoom: 0.8;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 a {
@@ -688,8 +691,6 @@ h4 {
   margin-top: 5rem;
   padding-top: 3rem;
   color: #FFFFFF;
-  position: absolute;
-  bottom: 0;
   width: 100%;
 }
 .footer__grid {

@@ -1,18 +1,24 @@
 @use 'variables' as v;
 @use 'mixins' as m;
 
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
 html {
     font-size: 62.5%;
     box-sizing: border-box;
     height: 100%;
 }
-*, *:before, *:after {
-    box-sizing: inherit;
-}
+
 body {
     font-family: v.$fuente_principal;
     font-size: 1.8rem;
     zoom: 0.8;
+
+    min-height: 100vh;       // 👈 añadir
+    display: flex;           // 👈 añadir
+    flex-direction: column;  // 👈 añadir
 }
 a {
     text-decoration: none;
@@ -25,7 +31,4 @@ img {
     font-size: 1.5rem !important;
 }
 
-// body.swal2-height-auto {
-//     height: unset !important;
-// }
 
